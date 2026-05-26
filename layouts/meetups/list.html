@@ -1,0 +1,71 @@
+{{ define "main" }}
+
+{{ if .Parent.IsHome }}
+  {{/* Root /meetups/ — show current month calendar, then past months list */}}
+  {{ $now := now }}
+  {{ $currentMonthStr := $now.Format "2006-01" }}
+
+  {{ $monthEvents := slice }}
+  {{ range .RegularPagesRecursive }}
+    {{ if eq (.Date.Format "2006-01") $currentMonthStr }}
+      {{ $monthEvents = $monthEvents | append . }}
+    {{ end }}
+  {{ end }}
+
+  {{ $prevMonth := $now.AddDate 0 -1 0 }}
+  {{ $nextMonth := $now.AddDate 0 1 0 }}
+
+  <nav class="month-nav">
+    <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }} {{ $prevMonth.Year }}</a>
+    {{ $monthPermalink := printf "/meetups/%s/" ($now.Format "2006-01") | absURL }}
+    <h1>{{ partial "fr-month-name.html" $now }} {{ $now.Year }} <button class="permalink-btn" title="Copier le lien" onclick="navigator.clipboard.writeText('{{ $monthPermalink }}').then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</button></h1>
+    <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }} {{ $nextMonth.Year }} →</a>
+  </nav>
+
+  {{ partial "month-calendar.html" (dict "events" $monthEvents "month" $now) }}
+
+  {{/* List of other months (excluding current) */}}
+  {{ $otherMonths := slice }}
+  {{ range .Sections.ByDate.Reverse }}
+    {{ if ne (.Date.Format "2006-01") $currentMonthStr }}
+      {{ $otherMonths = $otherMonths | append . }}
+    {{ end }}
+  {{ end }}
+  {{ if $otherMonths }}
+    <section class="past-months">
+      <h2>Autres mois</h2>
+      <ul class="month-list">
+        {{ range $otherMonths }}
+          <li>
+            <a href="{{ .RelPermalink }}">{{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}</a>
+            <span class="event-count">{{ len .RegularPages }} événement{{ if gt (len .RegularPages) 1 }}s{{ end }}</span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+
+{{ else }}
+  {{/* Month page /meetups/YYYY-MM/ — show that month's calendar */}}
+  {{ $month := .Date }}
+  {{ $prevMonth := $month.AddDate 0 -1 0 }}
+  {{ $nextMonth := $month.AddDate 0 1 0 }}
+
+  <nav class="month-nav">
+    <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }} {{ $prevMonth.Year }}</a>
+    <h1>{{ partial "fr-month-name.html" $month }} {{ $month.Year }} <button class="permalink-btn" title="Copier le lien" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</button></h1>
+    <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }} {{ $nextMonth.Year }} →</a>
+  </nav>
+
+  {{ if not .Pages }}
+    <div class="todo-banner">
+      <span class="todo-label">TODO</span>
+      <span class="todo-sub">Aucun événement annoncé pour ce mois.</span>
+    </div>
+  {{ end }}
+
+  {{ partial "month-calendar.html" (dict "events" .Pages "month" $month) }}
+
+{{ end }}
+
+{{ end }}

@@ -1,0 +1,100 @@
+{{/*
+  month-calendar.html
+  Receives: dict "events" ([]page) "month" (time.Time)
+
+  Renders a responsive 7-column calendar grid (desktop) / day list (mobile).
+  Supports multi-day events via optional `endDate` front matter field.
+*/}}
+{{ $events := .events }}
+{{ $month := .month }}
+{{ $year := $month.Year }}
+{{ $monthNum := int ($month.Format "1") }}
+
+{{/* First weekday of month: Mon=0 … Sun=6 */}}
+{{ $firstDay := time (printf "%d-%02d-01T12:00:00Z" $year $monthNum) }}
+{{ $offsetMap := dict "Mon" 0 "Tue" 1 "Wed" 2 "Thu" 3 "Fri" 4 "Sat" 5 "Sun" 6 }}
+{{ $offset := index $offsetMap ($firstDay.Format "Mon") }}
+
+{{/* Days in month: jump to first of next month, subtract 1 day */}}
+{{ $daysInMonth := (($firstDay.AddDate 0 1 0).AddDate 0 0 -1).Day }}
+
+{{/* Build day → []page map, expanding multi-day events across each spanned day */}}
+{{ $s := newScratch }}
+{{ range $events }}
+  {{ $event := . }}
+  {{ $startDay := $event.Date.Day }}
+  {{ $endDay := $startDay }}
+
+  {{/* Expand endDate if present and within or overlapping this month */}}
+  {{ with $event.Params.endDate }}
+    {{ $end := time . }}
+    {{ $endYear := $end.Year }}
+    {{ $endMonth := int ($end.Format "1") }}
+    {{ if and (eq $endYear $year) (eq $endMonth $monthNum) }}
+      {{/* Same month: use the actual end day */}}
+      {{ $endDay = $end.Day }}
+    {{ else if or (gt $endYear $year) (and (eq $endYear $year) (gt $endMonth $monthNum)) }}
+      {{/* Ends in a later month: fill through end of this month */}}
+      {{ $endDay = $daysInMonth }}
+    {{ end }}
+  {{ end }}
+
+  {{/* Register event on each day of its span */}}
+  {{ range $d := seq $startDay $endDay }}
+    {{ $key := printf "d%d" $d }}
+    {{ $existing := $s.Get $key }}
+    {{ if $existing }}
+      {{ $s.Set $key ($existing | append $event) }}
+    {{ else }}
+      {{ $s.Set $key (slice $event) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<div class="calendar-day-headers" aria-hidden="true">
+  <span>Lun</span><span>Mar</span><span>Mer</span>
+  <span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+</div>
+
+<div class="calendar-grid">
+  {{/* Leading empty cells */}}
+  {{ if $offset }}
+    {{ range seq $offset }}
+      <div class="calendar-cell empty" aria-hidden="true"></div>
+    {{ end }}
+  {{ end }}
+
+  {{/* Day cells */}}
+  {{ range $day := seq $daysInMonth }}
+    {{ $key := printf "d%d" $day }}
+    {{ $dayEvents := $s.Get $key }}
+    <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
+      <span class="day-number">{{ $day }}</span>
+      {{ with $dayEvents }}
+        <ul class="day-events">
+          {{ range . }}
+            <li class="event-item{{ if .Params.endDate }} event-multiday{{ end }}">
+              {{ with .Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{ with .Params.links }}
+                <ul class="event-links">
+                  {{ range . }}
+                    <li><a href="{{ .url }}" rel="noopener noreferrer">{{ if .label }}{{ .label }}{{ else }}S'inscrire{{ end }}</a></li>
+                  {{ end }}
+                </ul>
+              {{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{/* Trailing empty cells to complete the last row */}}
+  {{ $remainder := mod (add $offset $daysInMonth) 7 }}
+  {{ if $remainder }}
+    {{ range seq (sub 7 $remainder) }}
+      <div class="calendar-cell empty" aria-hidden="true"></div>
+    {{ end }}
+  {{ end }}
+</div>

@@ -1,0 +1,1 @@
+{{ $frMonths := slice "Janvier" "Février" "Mars" "Avril" "Mai" "Juin" "Juillet" "Août" "Septembre" "Octobre" "Novembre" "Décembre" }}{{ index $frMonths (sub (int (.Format "1")) 1) }}

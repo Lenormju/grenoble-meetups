@@ -1,0 +1,357 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  color: #111;
+  background: #fff;
+  line-height: 1.5;
+}
+
+a { color: #111; }
+a:hover { color: #555; }
+
+/* ─── Header ─────────────────────────────────── */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.site-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+header nav a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #555;
+}
+header nav a:hover { text-decoration: underline; }
+
+/* ─── Month navigation ───────────────────────── */
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.month-nav h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+.month-nav a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #555;
+  white-space: nowrap;
+}
+.month-nav a:hover { text-decoration: underline; }
+
+/* ─── Calendar day headers ───────────────────── */
+.calendar-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.calendar-day-headers span {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  padding: 0.2rem 0;
+}
+
+/* ─── Calendar grid ──────────────────────────── */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.2rem;
+}
+.calendar-cell {
+  border: 1px solid #e8e8e8;
+  padding: 0.35rem;
+  min-height: 5rem;
+  vertical-align: top;
+}
+.calendar-cell.empty {
+  background: #fafafa;
+  border-color: #f2f2f2;
+}
+.calendar-cell.no-events {
+  background: #fdfdfd;
+}
+
+/* ─── Day number ─────────────────────────────── */
+.day-number {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #999;
+  margin-bottom: 0.3rem;
+}
+
+/* ─── Events in a cell ───────────────────────── */
+.day-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.event-item {
+  margin-bottom: 0.45rem;
+  line-height: 1.3;
+}
+.event-time {
+  display: inline-block;
+  font-size: 0.65rem;
+  color: #888;
+  background: #f0f0f0;
+  padding: 0 0.25rem;
+  border-radius: 2px;
+  margin-bottom: 0.1rem;
+  font-variant-numeric: tabular-nums;
+}
+.event-item a {
+  font-size: 0.78rem;
+  text-decoration: underline;
+  word-break: break-word;
+}
+.event-multiday .event-item a::before {
+  content: "⟷ ";
+  font-size: 0.65rem;
+  color: #aaa;
+}
+.event-links {
+  list-style: none;
+  margin: 0.15rem 0 0 0;
+  padding: 0;
+}
+.event-links li {
+  font-size: 0.7rem;
+}
+.event-links li::before {
+  content: "→ ";
+  color: #bbb;
+}
+.event-links a {
+  color: #555;
+  text-decoration: none;
+}
+.event-links a:hover { text-decoration: underline; }
+
+/* ─── Archive page ───────────────────────────── */
+.archive-month {
+  margin-bottom: 2rem;
+}
+.archive-month h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.archive-month h2 a { text-decoration: none; }
+.archive-month h2 a:hover { text-decoration: underline; }
+.event-count {
+  font-size: 0.8rem;
+  color: #999;
+  font-weight: normal;
+}
+.archive-event-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.archive-event-list li {
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.event-day {
+  font-size: 0.75rem;
+  color: #aaa;
+  font-variant-numeric: tabular-nums;
+  min-width: 1.2rem;
+}
+
+/* ─── Permalink button ───────────────────────── */
+.page-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.page-actions--right {
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+.permalink-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.75rem;
+  color: #aaa;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1;
+}
+.permalink-btn:hover {
+  border-color: #aaa;
+  color: #555;
+}
+
+/* ─── Single event page ──────────────────────── */
+.back-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #666;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+.back-link:hover { text-decoration: underline; }
+.event-detail h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.75rem 0;
+}
+.event-meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.event-links-detail {
+  list-style: none;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+.event-links-detail li {
+  margin-bottom: 0.3rem;
+}
+.event-links-detail a {
+  font-size: 0.95rem;
+}
+.event-links-detail li::before {
+  content: "→ ";
+  color: #bbb;
+}
+.event-notes {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* ─── Empty month TODO banner ───────────────── */
+.todo-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 3rem 1rem;
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff9e6,
+    #fff9e6 16px,
+    #ffee99 16px,
+    #ffee99 32px
+  );
+  border: 4px solid #e6b800;
+  border-radius: 4px;
+  text-align: center;
+}
+.todo-label {
+  font-size: 6rem;
+  font-weight: 900;
+  color: #b38600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #fff3cc, 4px 4px 0 #e6b80044;
+}
+.todo-sub {
+  font-size: 1rem;
+  color: #8a6600;
+  font-style: italic;
+}
+
+/* ─── Past months list (bottom of /meetups/) ─── */
+.past-months {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+.past-months h2 {
+  font-size: 1rem;
+  color: #888;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+}
+.month-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+}
+.month-list li {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.month-list a { text-decoration: none; }
+.month-list a:hover { text-decoration: underline; }
+
+/* ─── Footer ─────────────────────────────────── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* ─── Mobile: single-column list ────────────── */
+@media (max-width: 640px) {
+  .calendar-day-headers { display: none; }
+
+  .calendar-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  /* Hide empty cells (days with no events) on mobile */
+  .calendar-cell.empty,
+  .calendar-cell.no-events { display: none; }
+
+  .calendar-cell {
+    min-height: unset;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0.6rem 0;
+  }
+  .day-number {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 0.2rem;
+  }
+  .event-item a { font-size: 0.9rem; }
+  .event-time { font-size: 0.75rem; }
+  .event-links a, .event-links li { font-size: 0.8rem; }
+}

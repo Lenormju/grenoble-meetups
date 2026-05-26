@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="{{ "style.css" | relURL }}">
+</head>
+<body>
+  <header>
+    <a href="{{ "/" | relURL }}" class="site-title">{{ .Site.Title }}</a>
+    <nav>
+      <a href="{{ "/meetups/" | relURL }}">Tous les meetups</a>
+    </nav>
+  </header>
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer>
+    <p>{{ .Site.Params.description }}</p>
+  </footer>
+</body>
+</html>

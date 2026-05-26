@@ -1,0 +1,23 @@
+{{ define "main" }}
+<h1>Tous les meetups</h1>
+
+{{ $groups := .Pages.GroupByDate "2006-01" }}
+{{ range $groups }}
+  {{ $monthDate := time (printf "%s-01T12:00:00Z" .Key) }}
+  <section class="archive-month">
+    <h2>
+      <a href="{{ printf "/meetups/%s/" .Key | relURL }}">{{ partial "fr-month-name.html" $monthDate }} {{ $monthDate.Year }}</a>
+      <span class="event-count">{{ len .Pages }} événement{{ if gt (len .Pages) 1 }}s{{ end }}</span>
+    </h2>
+    <ul class="archive-event-list">
+      {{ range .Pages.ByDate }}
+        <li>
+          {{ with .Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
+          <span class="event-day">{{ .Date.Day }}</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+{{ end }}
+{{ end }}
