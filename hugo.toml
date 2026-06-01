@@ -1,7 +1,4 @@
-# "/" works for local dev. GitHub Actions overrides this with the real deploy URL
-# (your custom domain or the GitHub Pages URL) at build time.
-# Once you have a custom domain, set it here too: baseURL = "https://www.your-domain.com/"
-baseURL = "/"
+baseURL = "https://grenoble-meetups.fr"
 locale = "fr-FR"
 defaultContentLanguage = "fr"
 title = "Grenoble Tech Meetups"
