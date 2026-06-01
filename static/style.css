@@ -290,6 +290,32 @@ header nav a:hover { text-decoration: underline; }
   font-style: italic;
 }
 
+/* ─── LinkedIn share link ───────────────────── */
+.linkedin-share {
+  text-align: center;
+  margin: 0.75rem 0 1.25rem 0;
+}
+.linkedin-share a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  background: #0A66C2;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.linkedin-share a:hover {
+  background: #004182;
+}
+.linkedin-share svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
 /* ─── Past months list (bottom of /meetups/) ─── */
 .past-months {
   margin-top: 2.5rem;

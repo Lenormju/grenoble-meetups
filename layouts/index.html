@@ -1,26 +1,11 @@
-{{ define "main" }}
-{{ $now := now }}
-{{ $currentMonthStr := $now.Format "2006-01" }}
-{{ $year := $now.Year }}
-{{ $monthNum := int ($now.Format "1") }}
-
-{{/* Collect events for current month */}}
-{{ $monthEvents := slice }}
-{{ range where site.RegularPages "Section" "meetups" }}
-  {{ if eq (.Date.Format "2006-01") $currentMonthStr }}
-    {{ $monthEvents = $monthEvents | append . }}
-  {{ end }}
-{{ end }}
-
-{{/* Prev / next month navigation */}}
-{{ $prevMonth := $now.AddDate 0 -1 0 }}
-{{ $nextMonth := $now.AddDate 0 1 0 }}
-
-<nav class="month-nav">
-  <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }} {{ $prevMonth.Year }}</a>
-  <h1>{{ partial "fr-month-name.html" $now }} {{ $now.Year }}</h1>
-  <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }} {{ $nextMonth.Year }} →</a>
-</nav>
-
-{{ partial "month-calendar.html" (dict "events" $monthEvents "month" $now) }}
-{{ end }}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; url={{ "/meetups/" | relURL }}">
+  <title>Redirection...</title>
+</head>
+<body>
+  <script>window.location.replace("{{ "/meetups/" | relURL }}");</script>
+  <a href="{{ "/meetups/" | relURL }}">Aller aux meetups</a>
+</body>
+</html>

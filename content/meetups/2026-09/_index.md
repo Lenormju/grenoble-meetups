@@ -1,4 +1,0 @@
----
-title: "Septembre 2026"
-date: 2026-09-01
----
