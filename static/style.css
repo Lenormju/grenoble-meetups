@@ -101,6 +101,8 @@ header nav a:hover { text-decoration: underline; }
   margin-bottom: 0.3rem;
 }
 
+.day-name-mobile { display: none; }
+
 /* ─── Events in a cell ───────────────────────── */
 .day-events {
   list-style: none;
@@ -377,6 +379,7 @@ footer {
     color: #777;
     margin-bottom: 0.2rem;
   }
+  .day-name-mobile { display: inline; }
   .event-item a { font-size: 0.9rem; }
   .event-time { font-size: 0.75rem; }
   .event-links a, .event-links li { font-size: 0.8rem; }

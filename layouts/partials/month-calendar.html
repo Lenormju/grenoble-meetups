@@ -52,8 +52,8 @@
 {{ end }}
 
 <div class="calendar-day-headers" aria-hidden="true">
-  <span>Lun</span><span>Mar</span><span>Mer</span>
-  <span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+  <span>Lundi</span><span>Mardi</span><span>Mercredi</span>
+  <span>Jeudi</span><span>Vendredi</span><span>Samedi</span><span>Dimanche</span>
 </div>
 
 <div class="calendar-grid">
@@ -65,11 +65,13 @@
   {{ end }}
 
   {{/* Day cells */}}
+  {{ $frDays := slice "Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi" }}
   {{ range $day := seq $daysInMonth }}
     {{ $key := printf "d%d" $day }}
     {{ $dayEvents := $s.Get $key }}
+    {{ $date := time (printf "%d-%02d-%02dT12:00:00Z" $year $monthNum $day) }}
     <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
-      <span class="day-number">{{ $day }}</span>
+      <span class="day-number"><span class="day-name-mobile">{{ index $frDays (int $date.Weekday) }}</span> {{ $day }}</span>
       {{ with $dayEvents }}
         <ul class="day-events">
           {{ range . }}
