@@ -21,6 +21,7 @@ linkedinPost: https://...   # optional — omit if not provided
 ```yaml
 ---
 title: "<Event title with emoji at end>"
+description: ""  # Une phrase décrivant le meetup
 date: YYYY-MM-DD
 time: "19:00"   # HH:MM preferred; or "midi" / "après-midi" / "soir" — optional, omit if unknown
 location:       # optional — omit if unknown
@@ -45,7 +46,7 @@ links:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
    - Create one `.md` file per event.
-3. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it. Example: *"Tu peux aussi me donner : l'heure (format HH:MM comme "19:00", ou midi/après-midi/soir), le lieu (nom, adresse, lien maps), un lien, et/ou une description."*
+3. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it. Example: *"Tu peux aussi me donner : une description (une phrase décrivant le meetup), l'heure (format HH:MM comme "19:00", ou midi/après-midi/soir), le lieu (nom, adresse, lien maps), et/ou un lien."*
 4. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
 5. List every file created so the user can verify before committing.
 
