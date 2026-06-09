@@ -1,3 +1,17 @@
+{{ define "head-extra" }}
+{{ $startDate := .Date.Format "2006-01-02" }}
+{{ if and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}
+  {{ $startDate = printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.time }}
+{{ end }}
+{{ $address := dict "@type" "PostalAddress" "addressLocality" "Grenoble" "addressCountry" "FR" }}
+{{ with .Params.location }}{{ with .address }}{{ $address = merge $address (dict "streetAddress" .) }}{{ end }}{{ end }}
+{{ $placeName := cond (and .Params.location .Params.location.name) .Params.location.name "Grenoble" }}
+{{ $location := dict "@type" "Place" "name" $placeName "address" $address }}
+{{ $desc := cond (ne .Description "") .Description (printf "%s — meetup tech à Grenoble" .Title) }}
+{{ $eventSchema := dict "@context" "https://schema.org" "@type" "Event" "name" .Title "startDate" $startDate "location" $location "url" .Permalink "description" $desc }}
+<script type="application/ld+json">{{ $eventSchema | jsonify | safeJS }}</script>
+{{ end }}
+
 {{ define "main" }}
 {{ $frDays := slice "Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi" }}
 <article class="event-detail">
