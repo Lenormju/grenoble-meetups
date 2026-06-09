@@ -2,7 +2,7 @@
 
 Calendrier des meetups tech de Grenoble, généré avec [Hugo](https://gohugo.io/) et hébergé sur GitHub Pages.
 
-Site : **[grenoble-meetups.fr](https://grenoble-meetups.fr)**
+Site : **[grenoble-meetups.fr](https://grenoble-meetups.fr)** — Flux RSS : **[grenoble-meetups.fr/index.xml](https://grenoble-meetups.fr/index.xml)**
 
 ## Développement local
 

@@ -12,6 +12,7 @@
   <link rel="manifest" href="/site.webmanifest">
   {{ $websiteSchema := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "url" .Site.BaseURL "description" .Site.Params.description "inLanguage" "fr-FR" }}
   <script type="application/ld+json">{{ $websiteSchema | jsonify | safeJS }}</script>
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "/index.xml" | absURL }}">
   {{ block "head-extra" . }}{{ end }}
 </head>
 <body>

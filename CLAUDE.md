@@ -67,6 +67,7 @@ linkedinPost: https://...   # optional
 - `layouts/meetups/single.html` — event detail page
 - `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans
 - `layouts/partials/fr-month-name.html` — French month name helper
+- `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists all individual meetup events sorted by date (newest first, max 50)
 
 ## Deployment
 

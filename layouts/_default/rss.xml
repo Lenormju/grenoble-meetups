@@ -1,0 +1,23 @@
+{{- $pages := where .Site.RegularPages "Section" "meetups" -}}
+{{- $pages = $pages | first 50 -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ .Site.Title }}</title>
+    <link>{{ .Site.BaseURL }}</link>
+    <description>Agenda des meetups tech de Grenoble</description>
+    <language>fr</language>
+    <atom:link href="{{ "/index.xml" | absURL }}" rel="self" type="application/rss+xml"/>
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid>{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 00:00:00 +0000" }}</pubDate>
+      {{- with .Params.description }}
+      <description>{{ . | html }}</description>
+      {{- end }}
+    </item>
+    {{- end }}
+  </channel>
+</rss>
