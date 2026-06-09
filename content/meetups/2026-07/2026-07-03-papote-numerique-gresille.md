@@ -1,5 +1,6 @@
 ---
 title: "Atelier papote numérique : viens rencontrer Grésille ! 💬"
+description: "Soirée décontractée organisée par Grésille autour d'Internet : une présentation rapide de son fonctionnement suivie d'une FAQ ouverte pour poser toutes vos questions, puis un apéro pour rencontrer celles et ceux qui font vivre l'Internet grenoblois."
 date: 2026-07-03
 time: "soir"
 links:

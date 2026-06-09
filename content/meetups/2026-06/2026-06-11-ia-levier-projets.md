@@ -1,5 +1,6 @@
 ---
 title: "si l'IA devenait un vrai levier pour vos projets ? 🤖"
+description: "Atelier organisé par le PMI Rhône-Alpes pour explorer comment l'intelligence artificielle peut concrètement accélérer et améliorer la gestion de projets. Événement payant."
 date: 2026-06-11
 time: "soir"
 links:
