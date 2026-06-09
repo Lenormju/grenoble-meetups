@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A Hugo static site listing Grenoble tech meetups, deployed to GitHub Pages at https://grenoble-meetups.fr. The homepage redirects to `/meetups/`, which shows a calendar view of the current month. Each month is a Hugo section (`content/meetups/YYYY-MM/`), and each event is a Markdown file within it.
+A Hugo static site listing Grenoble tech meetups, deployed to GitHub Pages at https://grenoble-meetups.fr. The homepage at `/` is a real page showing the current month's meetups. Each month is a Hugo section (`content/meetups/YYYY-MM/`), and each event is a Markdown file within it.
 
 ## Commands
 
@@ -40,8 +40,9 @@ location:            # optional
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"
+description: "One-sentence summary for SEO"  # recommended
 ---
-Optional description in Markdown.
+Optional longer description in Markdown.
 ```
 
 ### Month `_index.md` front matter
@@ -61,7 +62,7 @@ linkedinPost: https://...   # optional
 
 ## Layouts
 
-- `layouts/index.html` — redirects `/` → `/meetups/`
+- `layouts/index.html` — real homepage at `/`, shows the current month's meetups
 - `layouts/meetups/list.html` — renders `/meetups/` (current month calendar + past months list) and `/meetups/YYYY-MM/` (single month calendar)
 - `layouts/meetups/single.html` — event detail page
 - `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans
