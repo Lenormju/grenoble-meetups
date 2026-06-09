@@ -9,7 +9,7 @@
   <h1>{{ .Title }}</h1>
 
   <p class="event-meta">
-    <time datetime="{{ .Date.Format "2006-01-02" }}">
+    <time datetime="{{ if and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}{{ printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.time }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}">
       {{ index $frDays (int .Date.Weekday) }} {{ .Date.Day }} {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}
     </time>
     {{ with .Params.time }} — {{ . }}{{ end }}
@@ -18,6 +18,12 @@
       → {{ index $frDays (int $end.Weekday) }} {{ $end.Day }} {{ partial "fr-month-name.html" $end }} {{ $end.Year }}
     {{ end }}
   </p>
+
+  {{ with .Params.location }}
+  <p class="event-location">
+    📍 {{ if .url }}<a href="{{ .url }}" rel="noopener noreferrer">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}{{ with .address }} — {{ . }}{{ end }}
+  </p>
+  {{ end }}
 
   {{ with .Params.links }}
   <ul class="event-links-detail">
