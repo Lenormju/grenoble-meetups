@@ -1,6 +1,7 @@
 ---
 title: "Human Talks 🎤"
 date: 2026-04-14
+groups: ["humantalks"]
 time: "soir"
 links:
   - url: "https://lnkd.in/dB4dxZip"

@@ -24,6 +24,7 @@ title: "<Event title with emoji at end>"
 description: ""  # Une phrase décrivant le meetup
 date: YYYY-MM-DD
 time: "19:00"   # HH:MM preferred; or "midi" / "après-midi" / "soir" — optional, omit if unknown
+groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
 location:       # optional — omit if unknown
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
@@ -42,6 +43,7 @@ links:
 ## Steps
 
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
+1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).

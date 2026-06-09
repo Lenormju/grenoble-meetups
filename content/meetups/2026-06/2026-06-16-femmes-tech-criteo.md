@@ -2,6 +2,7 @@
 title: "Comment recruter plus de femmes dans la tech ? 👩‍💻"
 description: "Le groupe Femmes dans la tech / Isère se retrouve chez Critéo à Échirolles pour échanger sur les stratégies de recrutement féminin dans le secteur tech, autour d'un déjeuner."
 date: 2026-06-16
+groups: ["femmes-tech-isere"]
 time: "midi"
 location:
   name: "Critéo"

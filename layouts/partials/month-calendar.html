@@ -7,6 +7,15 @@
 */}}
 {{ $events := .events }}
 {{ $month := .month }}
+{{/* Collect unique group slugs present in this month's events */}}
+{{ $groupSlugs := slice }}
+{{ range $events }}
+  {{ range .Params.groups }}
+    {{ if not (in $groupSlugs .) }}
+      {{ $groupSlugs = $groupSlugs | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 {{ $year := $month.Year }}
 {{ $monthNum := int ($month.Format "1") }}
 
@@ -51,6 +60,19 @@
   {{ end }}
 {{ end }}
 
+{{ if $groupSlugs }}
+<div class="group-filters">
+  <button class="group-tag active" data-filter="all">Tous</button>
+  {{ range $groupSlugs }}
+    {{ $slug := . }}
+    {{ $title := $slug }}
+    {{ with site.GetPage (printf "/groups/%s" $slug) }}
+      {{ $title = .Title }}
+    {{ end }}
+    <button class="group-tag" data-filter="{{ $slug }}">{{ $title }}</button>
+  {{ end }}
+</div>
+{{ end }}
 <div class="calendar-day-headers" aria-hidden="true">
   <span>Lundi</span><span>Mardi</span><span>Mercredi</span>
   <span>Jeudi</span><span>Vendredi</span><span>Samedi</span><span>Dimanche</span>
@@ -75,7 +97,7 @@
       {{ with $dayEvents }}
         <ul class="day-events">
           {{ range . }}
-            <li class="event-item{{ if .Params.endDate }} event-multiday{{ end }}">
+            <li class="event-item{{ if .Params.endDate }} event-multiday{{ end }}"{{ with .Params.groups }} data-groups="{{ delimit . " " }}"{{ end }}>
               {{ with .Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
               <a href="{{ .RelPermalink }}">{{ .Title }}</a>
               {{ with .Params.links }}
@@ -100,3 +122,25 @@
     {{ end }}
   {{ end }}
 </div>
+{{ if $groupSlugs }}
+<script>
+(function () {
+  var tags = document.querySelectorAll('.group-tag');
+  tags.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = this.dataset.filter;
+      tags.forEach(function (b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelectorAll('.event-item').forEach(function (item) {
+        if (filter === 'all') {
+          item.style.opacity = '';
+        } else {
+          var groups = item.dataset.groups ? item.dataset.groups.split(' ') : [];
+          item.style.opacity = groups.indexOf(filter) !== -1 ? '' : '0.2';
+        }
+      });
+    });
+  });
+})();
+</script>
+{{ end }}

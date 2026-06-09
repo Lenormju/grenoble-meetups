@@ -1,6 +1,7 @@
 ---
 title: "DrupalCamp 🐘"
 date: 2026-04-09
+groups: ["drupalcamp"]
 endDate: "2026-04-11"
 links:
   - url: "https://lnkd.in/diKT8vza"

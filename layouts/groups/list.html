@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ $now := now }}
+{{ $future := where .Pages "Date" ">=" $now }}
+{{ $past := where .Pages "Date" "<" $now }}
+
+<div class="page-actions page-actions--right">
+  <button class="permalink-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copié !';setTimeout(()=>{this.textContent='🔗 Copier le lien'},2000)})">🔗 Copier le lien</button>
+</div>
+
+<h1>{{ .Title }}</h1>
+
+{{ if $future }}
+<section class="group-events">
+  <h2>À venir</h2>
+  <ul class="group-event-list">
+    {{ range $future.ByDate }}
+    <li>
+      <span class="event-day">{{ .Date.Format "02/01/2006" }}</span>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ if $past }}
+<section class="group-events">
+  <h2>Passés</h2>
+  <ul class="group-event-list">
+    {{ range $past.ByDate.Reverse }}
+    <li>
+      <span class="event-day">{{ .Date.Format "02/01/2006" }}</span>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ if and (not $future) (not $past) }}
+<p style="color:#888">Aucun événement pour ce groupe.</p>
+{{ end }}
+
+{{ end }}
