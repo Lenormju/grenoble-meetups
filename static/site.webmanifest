@@ -1,0 +1,11 @@
+{
+  "name": "Grenoble Tech Meetups",
+  "short_name": "Grenoble Meetups",
+  "description": "Les meetups tech de Grenoble",
+  "start_url": "/",
+  "display": "browser",
+  "lang": "fr",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
