@@ -1,3 +1,3 @@
 ---
-title: "Product in Grenoble"
+title: "Product"
 ---

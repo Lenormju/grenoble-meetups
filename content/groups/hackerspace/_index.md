@@ -1,3 +1,3 @@
 ---
-title: "Hackerspace de Grenoble"
+title: "Hackerspace"
 ---

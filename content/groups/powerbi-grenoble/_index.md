@@ -1,3 +1,3 @@
 ---
-title: "Power BI User Group Grenoble"
+title: "Power BI User Group"
 ---

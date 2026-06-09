@@ -1,3 +1,3 @@
 ---
-title: "Grenoble Game Dev"
+title: "Game Dev"
 ---

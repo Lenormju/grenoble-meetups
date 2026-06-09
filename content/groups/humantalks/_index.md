@@ -1,3 +1,3 @@
 ---
-title: "Human Talks Grenoble"
+title: "Human Talks"
 ---

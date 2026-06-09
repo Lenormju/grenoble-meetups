@@ -1,3 +1,3 @@
 ---
-title: "Grenoble Data Science"
+title: "Data Science"
 ---

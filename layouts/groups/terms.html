@@ -1,7 +1,7 @@
 {{ define "main" }}
 <h1>Groupes</h1>
 <ul class="groups-list">
-  {{ range .Site.Taxonomies.groups.ByCount }}
+  {{ range .Site.Taxonomies.groups.Alphabetical }}
   <li>
     <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
     <span class="event-count">{{ .Count }} événement{{ if gt .Count 1 }}s{{ end }}</span>
