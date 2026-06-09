@@ -6,6 +6,10 @@ enableRobotsTXT = true
 enableGitInfo = true
 buildFuture = true
 
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+
 [taxonomies]
 
 [params]
