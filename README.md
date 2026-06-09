@@ -2,8 +2,7 @@
 
 Calendrier des meetups tech de Grenoble.
 
-- Site : https://grenoble-meetups.fr
-- GitHub Pages : https://lenormju.github.io/grenoble-meetups/
+- Site : [grenoble-meetups.fr](https://grenoble-meetups.fr)
 
 ## Développement local
 
