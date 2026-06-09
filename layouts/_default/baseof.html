@@ -6,6 +6,10 @@
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
   {{ partial "seo.html" . }}
   <link rel="stylesheet" href="{{ "style.css" | relURL }}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   {{ $websiteSchema := dict "@context" "https://schema.org" "@type" "WebSite" "name" .Site.Title "url" .Site.BaseURL "description" .Site.Params.description "inLanguage" "fr-FR" }}
   <script type="application/ld+json">{{ $websiteSchema | jsonify | safeJS }}</script>
   {{ block "head-extra" . }}{{ end }}
