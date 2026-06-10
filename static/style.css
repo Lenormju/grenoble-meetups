@@ -94,6 +94,17 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .calendar-cell.no-events {
   background: #fdfdfd;
 }
+.calendar-cell.cell-match {
+  background: #fff;
+  border-color: #aaa;
+}
+.calendar-cell.cell-no-match {
+  background: #f7f7f7;
+  border-color: #eeeeee;
+}
+.calendar-cell.cell-no-match .day-number {
+  color: #ccc;
+}
 
 /* ─── Day number ─────────────────────────────── */
 .day-number {
