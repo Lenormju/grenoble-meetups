@@ -128,9 +128,15 @@
   var tags = document.querySelectorAll('.group-tag');
   tags.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var filter = this.dataset.filter;
+      var filter = this.classList.contains('active') && this.dataset.filter !== 'all'
+        ? 'all'
+        : this.dataset.filter;
       tags.forEach(function (b) { b.classList.remove('active'); });
-      this.classList.add('active');
+      if (filter === 'all') {
+        document.querySelector('.group-tag[data-filter="all"]').classList.add('active');
+      } else {
+        this.classList.add('active');
+      }
       document.querySelectorAll('.event-item').forEach(function (item) {
         if (filter === 'all') {
           item.style.opacity = '';
