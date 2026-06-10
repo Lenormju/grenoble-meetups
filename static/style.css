@@ -34,7 +34,7 @@ header nav a {
 }
 header nav a:hover { text-decoration: underline; }
 header nav { display: flex; align-items: center; gap: 1rem; }
-.rss-link { display: flex; align-items: center; color: #e6620a; }
+.rss-link { display: flex; align-items: center; color: #e6620a; border-left: 1px solid #ddd; padding-left: 1rem; margin-left: 0.25rem; }
 .rss-link:hover { color: #c04f00; }
 
 /* ─── Month navigation ───────────────────────── */
@@ -362,6 +362,8 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .month-list a:hover { text-decoration: underline; }
 
 /* ─── Footer ─────────────────────────────────── */
+.rss-footer-link { display: inline-flex; align-items: center; gap: 0.3rem; color: #e6620a; text-decoration: none; }
+.rss-footer-link:hover { color: #c04f00; text-decoration: underline; }
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
