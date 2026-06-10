@@ -33,6 +33,9 @@ header nav a {
   color: #555;
 }
 header nav a:hover { text-decoration: underline; }
+header nav { display: flex; align-items: center; gap: 1rem; }
+.rss-link { display: flex; align-items: center; color: #e6620a; }
+.rss-link:hover { color: #c04f00; }
 
 /* ─── Month navigation ───────────────────────── */
 .month-nav {
