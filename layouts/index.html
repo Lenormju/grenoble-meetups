@@ -19,7 +19,7 @@
 <nav class="month-nav">
   <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }} {{ $prevMonth.Year }}</a>
   {{ $monthPermalink := printf "/meetups/%s/" ($now.Format "2006-01") | absURL }}
-  <h2>{{ partial "fr-month-name.html" $now }} {{ $now.Year }} <button class="permalink-btn" title="Copier le lien" onclick="navigator.clipboard.writeText('{{ $monthPermalink }}').then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</button></h2>
+  <h2>{{ partial "fr-month-name.html" $now }} {{ $now.Year }} <a href="{{ $monthPermalink }}" class="permalink-btn" title="Copier le lien" onclick="event.preventDefault();navigator.clipboard.writeText(this.href).then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</a></h2>
   <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }} {{ $nextMonth.Year }} →</a>
 </nav>
 

@@ -226,6 +226,8 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   white-space: nowrap;
   vertical-align: middle;
   line-height: 1;
+  text-decoration: none;
+  display: inline-block;
 }
 .permalink-btn:hover {
   border-color: #aaa;
