@@ -16,6 +16,17 @@
     {{ end }}
   {{ end }}
 {{ end }}
+{{/* Build slug+title pairs sorted alphabetically by title */}}
+{{ $groupItems := slice }}
+{{ range $groupSlugs }}
+  {{ $slug := . }}
+  {{ $title := $slug }}
+  {{ with site.GetPage (printf "/groups/%s" $slug) }}
+    {{ $title = .Title }}
+  {{ end }}
+  {{ $groupItems = $groupItems | append (dict "slug" $slug "title" $title) }}
+{{ end }}
+{{ $groupItems = sort $groupItems "title" }}
 {{ $year := $month.Year }}
 {{ $monthNum := int ($month.Format "1") }}
 
@@ -63,13 +74,8 @@
 {{ if $groupSlugs }}
 <div class="group-filters">
   <button class="group-tag active" data-filter="all">Tous</button>
-  {{ range $groupSlugs }}
-    {{ $slug := . }}
-    {{ $title := $slug }}
-    {{ with site.GetPage (printf "/groups/%s" $slug) }}
-      {{ $title = .Title }}
-    {{ end }}
-    <button class="group-tag" data-filter="{{ $slug }}">{{ $title }}</button>
+  {{ range $groupItems }}
+    <button class="group-tag" data-filter="{{ .slug }}">{{ .title }}</button>
   {{ end }}
 </div>
 {{ end }}
@@ -122,6 +128,25 @@
     {{ end }}
   {{ end }}
 </div>
+<script>
+(function () {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+  var offset = {{ $offset }};
+  var currentWeek = -1;
+  document.querySelectorAll('.calendar-grid .calendar-cell:not(.empty):not(.no-events)').forEach(function (cell) {
+    var day = parseInt(cell.id.replace('day-', ''), 10);
+    var week = Math.floor((day - 1 + offset) / 7);
+    if (week !== currentWeek) {
+      currentWeek = week;
+      var label = document.createElement('div');
+      label.className = 'week-label';
+      label.setAttribute('aria-hidden', 'true');
+      label.textContent = 'Semaine du ' + day;
+      cell.parentNode.insertBefore(label, cell);
+    }
+  });
+})();
+</script>
 {{ if $groupSlugs }}
 <script>
 (function () {

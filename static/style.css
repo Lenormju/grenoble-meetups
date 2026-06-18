@@ -382,7 +382,9 @@ footer {
   }
   /* Hide empty cells (days with no events) on mobile */
   .calendar-cell.empty,
-  .calendar-cell.no-events { display: none; }
+  .calendar-cell.no-events,
+  .calendar-cell.cell-no-match { display: none; }
+  .event-links { display: none; }
 
   .calendar-cell {
     min-height: unset;
@@ -398,7 +400,21 @@ footer {
   .day-name-mobile { display: inline; }
   .event-item a { font-size: 0.9rem; }
   .event-time { font-size: 0.75rem; }
-  .event-links a, .event-links li { font-size: 0.8rem; }
+}
+
+.week-label { display: none; }
+@media (max-width: 640px) {
+  .week-label {
+    display: block;
+    padding: 0.5rem 0 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #aaa;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-top: 1px solid #eee;
+    margin-top: 0.25rem;
+  }
 }
 
 /* ─── Group filter tags ───────────────────────── */
