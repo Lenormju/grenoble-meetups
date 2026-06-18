@@ -388,9 +388,10 @@ footer {
 
   .calendar-cell {
     min-height: unset;
-    border: none;
-    border-bottom: 1px solid #f0f0f0;
-    padding: 0.6rem 0;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 0.5rem 0.6rem;
+    margin: 0.25rem 0;
   }
   .day-number {
     font-size: 0.85rem;
@@ -406,14 +407,15 @@ footer {
 @media (max-width: 640px) {
   .week-label {
     display: block;
-    padding: 0.5rem 0 0.2rem;
+    background: #f2f2f2;
+    padding: 0.35rem 0.75rem;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #aaa;
-    letter-spacing: 0.08em;
+    color: #555;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    border-top: 1px solid #eee;
-    margin-top: 0.25rem;
+    border-top: 2px solid #ddd;
+    margin: 0.4rem 0 0;
   }
 }
 
