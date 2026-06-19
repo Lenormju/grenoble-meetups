@@ -58,3 +58,34 @@ links:
 - If no time is given, omit the `time` field.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
+
+## Recurring meetup conventions
+
+### Human Talks Grenoble (`groups: ["humantalks"]`)
+
+Recurring on the 2nd Tuesday of each month (with exceptions). Always 4 talks of 10 minutes each (with exceptions). Use these fixed values:
+
+```yaml
+---
+title: "Human Talks Grenoble 🎤"
+description: "Quatre conférences de 10 minutes chacune sur des sujets variés — technos, méthodes, retours d'expérience, side projects — suivies d'un apéritif."
+date: YYYY-MM-DD
+time: "19:00"
+groups: ["humantalks"]
+location:
+  name: "<venue name>"
+  address: "<address>"
+links:
+  - url: "https://www.meetup.com/humantalks-grenoble/events/..."
+    label: "S'inscrire"
+  - url: "https://humantalks.com/cities/grenoble/"
+    label: "Proposer un talk"
+---
+
+Au programme, 4 talks de 10 minutes :
+
+- *Titre du talk* — Prénom NOM
+```
+
+- Slug: `YYYY-MM-DD-human-talks.md`
+- List known talks in the body as `- *Titre* — Prénom NOM`. Omit unknown talks (don't add placeholders).
