@@ -100,13 +100,23 @@
     {{ $date := time (printf "%d-%02d-%02dT12:00:00Z" $year $monthNum $day) }}
     <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
       <span class="day-number"><span class="day-name-mobile">{{ index $frDays (int $date.Weekday) }}</span> {{ $day }}</span>
-      {{ with $dayEvents }}
+      {{ if $dayEvents }}
+        {{ $labelToTime := dict "midi" "12:00" "après-midi" "14:00" "soir" "19:00" }}
+        {{ $wrapped := slice }}
+        {{ range $dayEvents }}
+          {{ $t := .Params.time | default "" }}
+          {{ $sortKey := $t }}
+          {{ with index $labelToTime $t }}{{ $sortKey = . }}{{ end }}
+          {{ $wrapped = $wrapped | append (dict "sortKey" $sortKey "event" .) }}
+        {{ end }}
+        {{ $wrapped = sort $wrapped "sortKey" }}
         <ul class="day-events">
-          {{ range . }}
-            <li class="event-item{{ if .Params.endDate }} event-multiday{{ end }}"{{ with .Params.groups }} data-groups="{{ delimit . " " }}"{{ end }}>
-              {{ with .Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
-              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              {{ with .Params.links }}
+          {{ range $wrapped }}
+            {{ $e := .event }}
+            <li class="event-item{{ if $e.Params.endDate }} event-multiday{{ end }}"{{ with $e.Params.groups }} data-groups="{{ delimit . " " }}"{{ end }}>
+              {{ with $e.Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
+              <a href="{{ $e.RelPermalink }}">{{ $e.Title }}</a>
+              {{ with $e.Params.links }}
                 <ul class="event-links">
                   {{ range . }}
                     <li><a href="{{ .url }}" rel="noopener noreferrer">{{ if .label }}{{ .label }}{{ else }}S'inscrire{{ end }}</a></li>
