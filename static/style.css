@@ -36,6 +36,8 @@ header nav a:hover { text-decoration: underline; }
 header nav { display: flex; align-items: center; gap: 1rem; }
 .rss-link { display: flex; align-items: center; color: #e6620a; border-left: 1px solid #ddd; padding-left: 1rem; margin-left: 0.25rem; }
 .rss-link:hover { color: #c04f00; }
+.github-link { display: flex; align-items: center; color: #24292f; padding-left: 0.75rem; }
+.github-link:hover { color: #000; }
 
 /* ─── Month navigation ───────────────────────── */
 .month-nav {
