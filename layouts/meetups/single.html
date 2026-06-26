@@ -20,6 +20,7 @@
     <button class="permalink-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copié !';setTimeout(()=>{this.textContent='🔗 Copier le lien'},2000)})">🔗 Copier le lien</button>
   </div>
 
+  {{ if .Params.cancelled }}<p class="event-cancelled">Cet événement a été annulé.</p>{{ end }}
   <h1>{{ .Title }}</h1>
 
   <p class="event-meta">

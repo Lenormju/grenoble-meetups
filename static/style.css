@@ -491,3 +491,14 @@ footer {
   gap: 0.5rem;
   font-size: 0.95rem;
 }
+
+/* ─── Cancelled event banner ─────────────────── */
+.event-cancelled {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1rem;
+  background: #fff0f0;
+  border-left: 4px solid #cc2200;
+  border-radius: 2px;
+  color: #cc2200;
+  font-weight: 600;
+}

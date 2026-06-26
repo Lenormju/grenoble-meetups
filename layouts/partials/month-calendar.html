@@ -5,7 +5,7 @@
   Renders a responsive 7-column calendar grid (desktop) / day list (mobile).
   Supports multi-day events via optional `endDate` front matter field.
 */}}
-{{ $events := .events }}
+{{ $events := where .events "Params.cancelled" "ne" true }}
 {{ $month := .month }}
 {{/* Collect unique group slugs present in this month's events */}}
 {{ $groupSlugs := slice }}

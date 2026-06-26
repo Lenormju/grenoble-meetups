@@ -1,4 +1,5 @@
 ---
+cancelled: true
 title: "Product in Grenoble - Summer 2026 🌸"
 description: "Déjeuner estival networking pour les professionnels du produit, autour d'échanges sur les défis, outils et tendances du moment avant la pause d'été."
 date: 2026-07-02
