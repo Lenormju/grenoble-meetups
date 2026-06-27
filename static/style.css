@@ -64,6 +64,7 @@ header nav a {
 }
 header nav a:hover { text-decoration: underline; }
 header nav { display: flex; align-items: center; gap: 1rem; }
+.header-icons { display: flex; align-items: center; }
 .rss-link { display: flex; align-items: center; color: var(--rss); border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.25rem; }
 .rss-link:hover { color: var(--rss-hover); }
 .github-link { display: flex; align-items: center; color: var(--github); padding-left: 0.75rem; }
