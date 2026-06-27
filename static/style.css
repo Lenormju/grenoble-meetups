@@ -162,7 +162,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .event-time {
   display: inline-block;
   font-size: 0.65rem;
-  color: var(--text-dim);
+  color: var(--text);
   background: var(--bg-muted);
   padding: 0 0.25rem;
   border-radius: 2px;
