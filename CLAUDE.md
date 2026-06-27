@@ -68,6 +68,21 @@ linkedinPost: https://...   # optional
 - `layouts/partials/fr-month-name.html` — French month name helper
 - `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists all individual meetup events sorted by date (newest first, max 50)
 
+## Design
+
+Palette used across the site and favicon:
+
+| Role | Value |
+|---|---|
+| Favicon gradient start | `#93c5fd` (bleu ciel) |
+| Favicon gradient end | `#1d4ed8` (bleu roi) |
+| Favicon accent (`</>`) | `#f59e0b` (amber/or) |
+| Link / UI blue | `#2563eb` |
+| Body text | `#111` |
+| Muted text | `#555` |
+
+The favicon (`static/favicon.svg`) is a calendar icon with a `</>` code tag — gradient background ↘, white card, amber accent.
+
 ## Deployment
 
 Push to `main` triggers GitHub Actions (`hugo.yml`) which builds and deploys to GitHub Pages. The workflow also runs on a monthly cron (`0 2 1 * *`) to refresh the homepage's "current month" view.
