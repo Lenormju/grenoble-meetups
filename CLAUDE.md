@@ -36,7 +36,6 @@ endDate: YYYY-MM-DD  # optional, for multi-day events
 location:            # optional
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
-  url: "https://maps.app.goo.gl/..."          # optional — map or venue site
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"

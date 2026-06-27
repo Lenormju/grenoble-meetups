@@ -36,7 +36,7 @@
 
   {{ with .Params.location }}
   <p class="event-location">
-    📍 {{ if .url }}<a href="{{ .url }}" rel="noopener noreferrer">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}{{ with .address }} — {{ . }}{{ end }}
+    📍 {{ .name }}{{ with .address }} — {{ . }}{{ end }}
   </p>
   {{ end }}
 
