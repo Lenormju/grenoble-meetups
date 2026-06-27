@@ -4,6 +4,8 @@ description: "Discussion autour du modèle open source GLM 5.2 (752B) de Z-ai, p
 date: 2026-07-01
 time: "19:00"
 groups: ["open-ia"]
+links:
+  - url: "https://www.meetup.com/grenoble-open-artificial-intelligence-meetup-group/events/315404060/"
 location:
   name: "Le Minimistan"
   address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
