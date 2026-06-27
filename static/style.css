@@ -1,24 +1,54 @@
 *, *::before, *::after { box-sizing: border-box; }
 
+:root {
+  --text:       #111;
+  --text-muted: #555;
+  --text-dim:   #888;
+  --text-faint: #aaa;
+
+  --bg:        #fff;
+  --bg-subtle: #f8f8f8;
+  --bg-muted:  #f0f0f0;
+
+  --border:     #ddd;
+  --border-sub: #eee;
+
+  --rss:            #e6620a;
+  --rss-hover:      #c04f00;
+  --linkedin:       #0A66C2;
+  --linkedin-hover: #004182;
+  --github:         #24292f;
+
+  --todo-1:      #fff9e6;
+  --todo-2:      #ffee99;
+  --todo-border: #e6b800;
+  --todo-text:   #b38600;
+  --todo-glow:   #fff3cc;
+  --todo-sub:    #8a6600;
+
+  --error-bg: #fff0f0;
+  --error:    #cc2200;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   max-width: 960px;
   margin: 0 auto;
   padding: 1rem;
-  color: #111;
-  background: #fff;
+  color: var(--text);
+  background: var(--bg);
   line-height: 1.5;
 }
 
-a { color: #111; }
-a:hover { color: #555; }
+a { color: var(--text); }
+a:hover { color: var(--text-muted); }
 
 /* ─── Header ─────────────────────────────────── */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
   margin-bottom: 1.5rem;
 }
@@ -30,14 +60,14 @@ header {
 header nav a {
   font-size: 0.9rem;
   text-decoration: none;
-  color: #555;
+  color: var(--text-muted);
 }
 header nav a:hover { text-decoration: underline; }
 header nav { display: flex; align-items: center; gap: 1rem; }
-.rss-link { display: flex; align-items: center; color: #e6620a; border-left: 1px solid #ddd; padding-left: 1rem; margin-left: 0.25rem; }
-.rss-link:hover { color: #c04f00; }
-.github-link { display: flex; align-items: center; color: #24292f; padding-left: 0.75rem; }
-.github-link:hover { color: #000; }
+.rss-link { display: flex; align-items: center; color: var(--rss); border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.25rem; }
+.rss-link:hover { color: var(--rss-hover); }
+.github-link { display: flex; align-items: center; color: var(--github); padding-left: 0.75rem; }
+.github-link:hover { color: var(--text); }
 
 /* ─── Month navigation ───────────────────────── */
 .month-nav {
@@ -56,7 +86,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .month-nav a {
   font-size: 0.9rem;
   text-decoration: none;
-  color: #555;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 .month-nav a:hover { text-decoration: underline; }
@@ -72,7 +102,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   text-align: center;
   font-size: 0.7rem;
   font-weight: 600;
-  color: #888;
+  color: var(--text-dim);
   text-transform: uppercase;
   padding: 0.2rem 0;
 }
@@ -84,28 +114,28 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   gap: 0.2rem;
 }
 .calendar-cell {
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--border);
   padding: 0.35rem;
   min-height: 5rem;
   vertical-align: top;
 }
 .calendar-cell.empty {
-  background: #fafafa;
-  border-color: #f2f2f2;
+  background: var(--bg-subtle);
+  border-color: var(--border-sub);
 }
 .calendar-cell.no-events {
-  background: #fdfdfd;
+  background: var(--bg);
 }
 .calendar-cell.cell-match {
-  background: #fff;
-  border-color: #aaa;
+  background: var(--bg);
+  border-color: var(--text-faint);
 }
 .calendar-cell.cell-no-match {
-  background: #f7f7f7;
-  border-color: #eeeeee;
+  background: var(--bg-subtle);
+  border-color: var(--border-sub);
 }
 .calendar-cell.cell-no-match .day-number {
-  color: #ccc;
+  color: var(--text-faint);
 }
 
 /* ─── Day number ─────────────────────────────── */
@@ -113,7 +143,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   display: block;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #999;
+  color: var(--text-dim);
   margin-bottom: 0.3rem;
 }
 
@@ -132,8 +162,8 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .event-time {
   display: inline-block;
   font-size: 0.65rem;
-  color: #888;
-  background: #f0f0f0;
+  color: var(--text-dim);
+  background: var(--bg-muted);
   padding: 0 0.25rem;
   border-radius: 2px;
   margin-bottom: 0.1rem;
@@ -147,7 +177,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .event-multiday .event-item a::before {
   content: "⟷ ";
   font-size: 0.65rem;
-  color: #aaa;
+  color: var(--text-faint);
 }
 .event-links {
   list-style: none;
@@ -159,10 +189,10 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .event-links li::before {
   content: "→ ";
-  color: #bbb;
+  color: var(--text-faint);
 }
 .event-links a {
-  color: #555;
+  color: var(--text-muted);
   text-decoration: none;
 }
 .event-links a:hover { text-decoration: underline; }
@@ -182,7 +212,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .archive-month h2 a:hover { text-decoration: underline; }
 .event-count {
   font-size: 0.8rem;
-  color: #999;
+  color: var(--text-dim);
   font-weight: normal;
 }
 .archive-event-list {
@@ -193,14 +223,14 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .archive-event-list li {
   padding: 0.25rem 0;
   font-size: 0.9rem;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--border-sub);
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
 }
 .event-day {
   font-size: 0.75rem;
-  color: #aaa;
+  color: var(--text-faint);
   font-variant-numeric: tabular-nums;
   min-width: 1.2rem;
 }
@@ -218,11 +248,11 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .permalink-btn {
   background: none;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.15rem 0.4rem;
   font-size: 0.75rem;
-  color: #aaa;
+  color: var(--text-faint);
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
@@ -232,15 +262,15 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   display: inline-block;
 }
 .permalink-btn:hover {
-  border-color: #aaa;
-  color: #555;
+  border-color: var(--text-faint);
+  color: var(--text-muted);
 }
 
 /* ─── Single event page ──────────────────────── */
 .back-link {
   display: inline-block;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-muted);
   text-decoration: none;
   margin-bottom: 1rem;
 }
@@ -250,7 +280,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   margin: 0 0 0.75rem 0;
 }
 .event-meta {
-  color: #666;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -267,13 +297,13 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .event-links-detail li::before {
   content: "→ ";
-  color: #bbb;
+  color: var(--text-faint);
 }
 .event-notes {
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-sub);
   padding-top: 1rem;
   font-size: 0.9rem;
-  color: #444;
+  color: var(--text-muted);
 }
 
 /* ─── Empty month TODO banner ───────────────── */
@@ -287,26 +317,26 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   padding: 3rem 1rem;
   background: repeating-linear-gradient(
     -45deg,
-    #fff9e6,
-    #fff9e6 16px,
-    #ffee99 16px,
-    #ffee99 32px
+    var(--todo-1),
+    var(--todo-1) 16px,
+    var(--todo-2) 16px,
+    var(--todo-2) 32px
   );
-  border: 4px solid #e6b800;
+  border: 4px solid var(--todo-border);
   border-radius: 4px;
   text-align: center;
 }
 .todo-label {
   font-size: 6rem;
   font-weight: 900;
-  color: #b38600;
+  color: var(--todo-text);
   letter-spacing: 0.2em;
   line-height: 1;
-  text-shadow: 2px 2px 0 #fff3cc, 4px 4px 0 #e6b80044;
+  text-shadow: 2px 2px 0 var(--todo-glow), 4px 4px 0 #e6b80044;
 }
 .todo-sub {
   font-size: 1rem;
-  color: #8a6600;
+  color: var(--todo-sub);
   font-style: italic;
 }
 
@@ -320,7 +350,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 1rem;
-  background: #0A66C2;
+  background: var(--linkedin);
   color: #fff;
   border-radius: 4px;
   font-size: 0.9rem;
@@ -328,7 +358,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   text-decoration: none;
 }
 .linkedin-share a:hover {
-  background: #004182;
+  background: var(--linkedin-hover);
 }
 .linkedin-share svg {
   width: 1em;
@@ -340,11 +370,11 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .past-months {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-sub);
 }
 .past-months h2 {
   font-size: 1rem;
-  color: #888;
+  color: var(--text-dim);
   font-weight: 600;
   margin: 0 0 0.75rem 0;
 }
@@ -366,14 +396,14 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .month-list a:hover { text-decoration: underline; }
 
 /* ─── Footer ─────────────────────────────────── */
-.rss-footer-link { display: inline-flex; align-items: center; gap: 0.3rem; color: #e6620a; text-decoration: none; }
-.rss-footer-link:hover { color: #c04f00; text-decoration: underline; }
+.rss-footer-link { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--rss); text-decoration: none; }
+.rss-footer-link:hover { color: var(--rss-hover); text-decoration: underline; }
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-sub);
   font-size: 0.8rem;
-  color: #aaa;
+  color: var(--text-faint);
 }
 
 /* ─── Mobile: single-column list ────────────── */
@@ -392,14 +422,14 @@ footer {
 
   .calendar-cell {
     min-height: unset;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--border);
     border-radius: 6px;
     padding: 0.5rem 0.6rem;
     margin: 0.25rem 0;
   }
   .day-number {
     font-size: 0.85rem;
-    color: #777;
+    color: var(--text-dim);
     margin-bottom: 0.2rem;
   }
   .day-name-mobile { display: inline; }
@@ -411,14 +441,14 @@ footer {
 @media (max-width: 640px) {
   .week-label {
     display: block;
-    background: #f2f2f2;
+    background: var(--bg-muted);
     padding: 0.35rem 0.75rem;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #555;
+    color: var(--text-muted);
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    border-top: 2px solid #ddd;
+    border-top: 2px solid var(--border);
     margin: 0.4rem 0 0;
   }
 }
@@ -432,24 +462,24 @@ footer {
 }
 .group-tag {
   background: none;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.2rem 0.65rem;
   font-size: 0.78rem;
   cursor: pointer;
-  color: #555;
+  color: var(--text-muted);
   font-family: inherit;
   line-height: 1.5;
   transition: background 0.1s, color 0.1s, border-color 0.1s;
 }
 .group-tag:hover {
-  border-color: #aaa;
-  color: #111;
+  border-color: var(--text-faint);
+  color: var(--text);
 }
 .group-tag.active {
-  background: #111;
+  background: var(--text);
   color: #fff;
-  border-color: #111;
+  border-color: var(--text);
 }
 
 /* ─── Group page event list ───────────────────── */
@@ -459,8 +489,8 @@ footer {
 .group-events h2 {
   font-size: 1rem;
   margin: 0 0 0.5rem 0;
-  color: #555;
-  border-bottom: 1px solid #eee;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-sub);
   padding-bottom: 0.3rem;
 }
 .group-event-list {
@@ -471,7 +501,7 @@ footer {
 .group-event-list li {
   padding: 0.3rem 0;
   font-size: 0.9rem;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--border-sub);
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
@@ -485,7 +515,7 @@ footer {
 }
 .groups-list li {
   padding: 0.4rem 0;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--border-sub);
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
@@ -496,9 +526,14 @@ footer {
 .event-cancelled {
   margin-bottom: 1rem;
   padding: 0.6rem 1rem;
-  background: #fff0f0;
-  border-left: 4px solid #cc2200;
+  background: var(--error-bg);
+  border-left: 4px solid var(--error);
   border-radius: 2px;
-  color: #cc2200;
+  color: var(--error);
   font-weight: 600;
+}
+
+/* ─── Empty state ────────────────────────────── */
+.empty-state {
+  color: var(--text-dim);
 }
