@@ -143,18 +143,36 @@
   if (!window.matchMedia('(max-width: 640px)').matches) return;
   var offset = {{ $offset }};
   var currentWeek = -1;
-  document.querySelectorAll('.calendar-grid .calendar-cell:not(.empty):not(.no-events)').forEach(function (cell) {
+  var weekHasEvents = false;
+  var weekLabelEl = null;
+  document.querySelectorAll('.calendar-grid .calendar-cell:not(.empty)').forEach(function (cell) {
     var day = parseInt(cell.id.replace('day-', ''), 10);
     var week = Math.floor((day - 1 + offset) / 7);
     if (week !== currentWeek) {
+      if (currentWeek !== -1 && !weekHasEvents && weekLabelEl) {
+        var msg = document.createElement('div');
+        msg.className = 'week-no-events';
+        msg.textContent = 'Pas d\'événement annoncé';
+        weekLabelEl.parentNode.insertBefore(msg, weekLabelEl.nextSibling);
+      }
       currentWeek = week;
-      var label = document.createElement('div');
-      label.className = 'week-label';
-      label.setAttribute('aria-hidden', 'true');
-      label.textContent = 'Semaine du ' + day;
-      cell.parentNode.insertBefore(label, cell);
+      weekHasEvents = false;
+      weekLabelEl = document.createElement('div');
+      weekLabelEl.className = 'week-label';
+      weekLabelEl.setAttribute('aria-hidden', 'true');
+      weekLabelEl.textContent = 'Semaine du ' + day;
+      cell.parentNode.insertBefore(weekLabelEl, cell);
+    }
+    if (!cell.classList.contains('no-events')) {
+      weekHasEvents = true;
     }
   });
+  if (currentWeek !== -1 && !weekHasEvents && weekLabelEl) {
+    var msg = document.createElement('div');
+    msg.className = 'week-no-events';
+    msg.textContent = 'Pas d\'événement annoncé';
+    weekLabelEl.parentNode.insertBefore(msg, weekLabelEl.nextSibling);
+  }
 })();
 </script>
 {{ if $groupSlugs }}

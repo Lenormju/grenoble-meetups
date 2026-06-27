@@ -452,6 +452,13 @@ footer {
     border-top: 2px solid var(--border);
     margin: 0.4rem 0 0;
   }
+  .week-no-events {
+    display: block;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--text-dim);
+    padding: 0.3rem 0.75rem 0.5rem;
+  }
 }
 
 /* ─── Group filter tags ───────────────────────── */
