@@ -1,6 +1,6 @@
 ---
 title: "Créer son appli de rêve sans coder ! 🤖"
-description: "Troisième et dernière session du workshop pour créer une petite application en prod avec l'IA, en binôme, sans aucune connaissance préalable en programmation."
+description: "Workshop pour créer une petite application en prod avec l'IA, en binôme, sans aucune connaissance préalable en programmation."
 date: 2026-07-16
 time: "18:00"
 groups: ["aixperience"]
