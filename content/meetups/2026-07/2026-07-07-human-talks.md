@@ -17,3 +17,4 @@ links:
 Au programme, 4 talks de 10 minutes :
 
 - *Testing Visuel avec Percy* — Rachel DA SILVA SANTOS
+- *Stratégie de migration cloud avec Terraform* — Dominique DUMONT
