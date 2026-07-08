@@ -4,7 +4,7 @@ description: "Trois jours de jeux sérieux pour explorer l'agilité sous tous se
 date: 2026-10-01
 endDate: 2026-10-03
 time: "19:00"
-groups: ["cara-beer"]
+groups: ["cara"]
 location:
   name: "Maison des Isles"
   address: "rue de l'Espace Rhône, La Bruyère, Brégnier-Cordon"
