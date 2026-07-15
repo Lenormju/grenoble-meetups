@@ -44,6 +44,7 @@ links:
 
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
 1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
+1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`url` rather than asking the user or inventing a new address. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
@@ -58,6 +59,7 @@ links:
 - If no time is given, omit the `time` field.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
+- If a venue name is given but no address/url, check for a known location first (see step 1c) before asking the user or omitting `location`.
 
 ## Recurring meetup conventions
 
