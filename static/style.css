@@ -280,6 +280,16 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   font-size: 1.5rem;
   margin: 0 0 0.75rem 0;
 }
+.event-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.event-groups .group-tag {
+  text-decoration: none;
+  display: inline-block;
+}
 .event-meta {
   color: var(--text-muted);
   font-size: 0.9rem;

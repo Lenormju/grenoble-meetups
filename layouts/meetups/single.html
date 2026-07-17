@@ -23,6 +23,16 @@
   {{ if .Params.cancelled }}<p class="event-cancelled">Cet événement a été annulé.</p>{{ end }}
   <h1>{{ .Title }}</h1>
 
+  {{ with .Params.groups }}
+  <p class="event-groups">
+    {{ range $slug := . }}
+      {{ with site.GetPage (printf "/groups/%s" $slug) }}
+        <a href="{{ .RelPermalink }}" class="group-tag">{{ .Title }}</a>
+      {{ end }}
+    {{ end }}
+  </p>
+  {{ end }}
+
   <p class="event-meta">
     <time datetime="{{ if and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}{{ printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.time }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}">
       {{ index $frDays (int .Date.Weekday) }} {{ .Date.Day }} {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}
