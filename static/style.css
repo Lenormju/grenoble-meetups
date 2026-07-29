@@ -28,6 +28,9 @@
 
   --error-bg: #fff0f0;
   --error:    #cc2200;
+
+  --highlight:    #2563eb;
+  --highlight-bg: #eaf2ff;
 }
 
 body {
@@ -128,15 +131,12 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   background: var(--bg);
 }
 .calendar-cell.cell-match {
-  background: var(--bg);
-  border-color: var(--text-faint);
+  background: var(--highlight-bg);
+  border-color: var(--highlight);
 }
 .calendar-cell.cell-no-match {
-  background: var(--bg-subtle);
-  border-color: var(--border-sub);
-}
-.calendar-cell.cell-no-match .day-number {
-  color: var(--text-faint);
+  background: var(--bg);
+  border-color: var(--border);
 }
 
 /* ─── Day number ─────────────────────────────── */
@@ -159,6 +159,15 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .event-item {
   margin-bottom: 0.45rem;
   line-height: 1.3;
+}
+.event-item.event-match {
+  background: var(--highlight-bg);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+  margin: -0.1rem -0.3rem 0.35rem;
+}
+.event-item.event-match a {
+  font-weight: 600;
 }
 .event-time {
   display: inline-block;

@@ -192,10 +192,10 @@
       }
       document.querySelectorAll('.event-item').forEach(function (item) {
         if (filter === 'all') {
-          item.style.opacity = '';
+          item.classList.remove('event-match');
         } else {
           var groups = item.dataset.groups ? item.dataset.groups.split(' ') : [];
-          item.style.opacity = groups.indexOf(filter) !== -1 ? '' : '0.2';
+          item.classList.toggle('event-match', groups.indexOf(filter) !== -1);
         }
       });
       document.querySelectorAll('.calendar-cell:not(.empty):not(.no-events)').forEach(function (cell) {
