@@ -13,5 +13,19 @@ buildFuture = true
 [taxonomies]
   group = "groups"
 
+[mediaTypes]
+  [mediaTypes.'text/calendar']
+    suffixes = ['ics']
+
+[outputFormats]
+  [outputFormats.CALENDAR]
+    mediaType = 'text/calendar'
+    baseName = 'meetups'
+    isPlainText = true
+    noUgly = true
+
+[outputs]
+  home = ['HTML', 'RSS', 'CALENDAR']
+
 [params]
   description = "Retrouvez tous les meetups tech de Grenoble : développement, agilité, data, design, jeux vidéo, et plus encore. Agenda collaboratif de la communauté tech grenobloise."

@@ -15,6 +15,8 @@
 
   --rss:            #e6620a;
   --rss-hover:      #c04f00;
+  --ical:           #2563eb;
+  --ical-hover:     #1d4ed8;
   --linkedin:       #0A66C2;
   --linkedin-hover: #004182;
   --github:         #24292f;
@@ -70,6 +72,8 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .header-icons { display: flex; align-items: center; }
 .rss-link { display: flex; align-items: center; color: var(--rss); border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.25rem; }
 .rss-link:hover { color: var(--rss-hover); }
+.ical-link { display: flex; align-items: center; color: var(--ical); padding-left: 0.75rem; }
+.ical-link:hover { color: var(--ical-hover); }
 .github-link { display: flex; align-items: center; color: var(--github); padding-left: 0.75rem; }
 .github-link:hover { color: var(--text); }
 
@@ -418,6 +422,8 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 /* ─── Footer ─────────────────────────────────── */
 .rss-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--rss); text-decoration: none; }
 .rss-footer-link:hover { color: var(--rss-hover); text-decoration: underline; }
+.ical-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--ical); text-decoration: none; }
+.ical-footer-link:hover { color: var(--ical-hover); text-decoration: underline; }
 footer {
   margin-top: 3rem;
   padding-top: 1rem;

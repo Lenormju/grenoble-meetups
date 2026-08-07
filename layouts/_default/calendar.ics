@@ -1,0 +1,37 @@
+{{- define "ics-escape" -}}
+{{- $s := . -}}
+{{- $s = replace $s "\\" "\\\\" -}}
+{{- $s = replace $s "," "\\," -}}
+{{- $s = replace $s ";" "\\;" -}}
+{{- $s = replace $s "\r\n" "\\n" -}}
+{{- $s = replace $s "\n" "\\n" -}}
+{{- $s -}}
+{{- end -}}
+{{- $pages := where .Site.RegularPages "Section" "meetups" -}}
+{{- $pages = sort $pages "Date" -}}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//grenoble-meetups.fr//Agenda meetups//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:{{ .Site.Title }}
+X-WR-TIMEZONE:Europe/Paris
+{{- range $pages }}
+BEGIN:VEVENT
+UID:{{ .File.ContentBaseName }}@grenoble-meetups.fr
+DTSTAMP:{{ (now.UTC).Format "20060102T150405Z" }}
+DTSTART;VALUE=DATE:{{ .Date.Format "20060102" }}
+{{- with .Params.endDate }}
+DTEND;VALUE=DATE:{{ ((time .).AddDate 0 0 1).Format "20060102" }}
+{{- end }}
+SUMMARY:{{ template "ics-escape" .Title }}
+{{- with .Params.location }}
+LOCATION:{{ if .address }}{{ template "ics-escape" (printf "%s, %s" .name .address) }}{{ else }}{{ template "ics-escape" .name }}{{ end }}
+{{- end }}
+{{- with .Params.description }}
+DESCRIPTION:{{ template "ics-escape" . }}
+{{- end }}
+URL:{{ .Permalink }}
+END:VEVENT
+{{- end }}
+END:VCALENDAR
