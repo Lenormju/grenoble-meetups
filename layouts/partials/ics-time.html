@@ -1,0 +1,26 @@
+{{- $raw := . -}}
+{{- $hm := "" -}}
+{{- if eq $raw "soir" -}}
+  {{- $hm = "19:00" -}}
+{{- else if eq $raw "midi" -}}
+  {{- $hm = "12:00" -}}
+{{- else if eq $raw "après-midi" -}}
+  {{- $hm = "14:00" -}}
+{{- else if in $raw ":" -}}
+  {{- $parts := split $raw ":" -}}
+  {{- $h := index $parts 0 -}}
+  {{- $m := index $parts 1 -}}
+  {{- if lt (len $h) 2 -}}{{- $h = printf "0%s" $h -}}{{- end -}}
+  {{- $hm = printf "%s:%s" $h $m -}}
+{{- else if in $raw "h" -}}
+  {{- $parts := split $raw "h" -}}
+  {{- $h := index $parts 0 -}}
+  {{- $m := "00" -}}
+  {{- if and (gt (len $parts) 1) (ne (index $parts 1) "") -}}
+    {{- $m = index $parts 1 -}}
+  {{- end -}}
+  {{- if lt (len $h) 2 -}}{{- $h = printf "0%s" $h -}}{{- end -}}
+  {{- if lt (len $m) 2 -}}{{- $m = printf "0%s" $m -}}{{- end -}}
+  {{- $hm = printf "%s:%s" $h $m -}}
+{{- end -}}
+{{- $hm -}}

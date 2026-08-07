@@ -20,9 +20,17 @@ X-WR-TIMEZONE:Europe/Paris
 BEGIN:VEVENT
 UID:{{ .File.ContentBaseName }}@grenoble-meetups.fr
 DTSTAMP:{{ (now.UTC).Format "20060102T150405Z" }}
+{{- $hhmm := "" }}
+{{- if and (not .Params.endDate) .Params.time }}{{ $hhmm = partial "ics-time.html" .Params.time }}{{ end }}
+{{- if $hhmm }}
+{{- $start := time.AsTime (printf "%sT%s:00" (.Date.Format "2006-01-02") $hhmm) "Europe/Paris" }}
+DTSTART:{{ ($start.UTC).Format "20060102T150405Z" }}
+DURATION:PT2H
+{{- else }}
 DTSTART;VALUE=DATE:{{ .Date.Format "20060102" }}
 {{- with .Params.endDate }}
 DTEND;VALUE=DATE:{{ ((time .).AddDate 0 0 1).Format "20060102" }}
+{{- end }}
 {{- end }}
 SUMMARY:{{ template "ics-escape" .Title }}
 {{- with .Params.location }}
