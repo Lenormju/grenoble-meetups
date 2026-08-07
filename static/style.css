@@ -416,7 +416,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .month-list a:hover { text-decoration: underline; }
 
 /* ─── Footer ─────────────────────────────────── */
-.rss-footer-link { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--rss); text-decoration: none; }
+.rss-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--rss); text-decoration: none; }
 .rss-footer-link:hover { color: var(--rss-hover); text-decoration: underline; }
 footer {
   margin-top: 3rem;
