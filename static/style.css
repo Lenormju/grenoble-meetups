@@ -70,6 +70,9 @@ header nav a {
 header nav a:hover { text-decoration: underline; }
 header nav { display: flex; align-items: center; gap: 1rem; }
 .header-icons { display: flex; align-items: center; }
+@media (max-width: 640px) {
+  .header-icons svg { width: 20px; height: 20px; }
+}
 .rss-link { display: flex; align-items: center; color: var(--rss); border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.25rem; }
 .rss-link:hover { color: var(--rss-hover); }
 .ical-link { display: flex; align-items: center; color: var(--ical); padding-left: 0.75rem; }
