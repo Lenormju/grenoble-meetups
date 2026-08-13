@@ -9,6 +9,10 @@
 
 <h1>{{ .Title }}</h1>
 
+{{ with .Params.link }}
+<p class="group-link"><a href="{{ . }}" target="_blank" rel="noopener">Site du groupe</a></p>
+{{ end }}
+
 {{ if $future }}
 <section class="group-events">
   <h2>À venir</h2>
