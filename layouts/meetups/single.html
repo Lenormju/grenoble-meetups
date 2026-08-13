@@ -17,11 +17,10 @@
 <article class="event-detail">
   <div class="page-actions">
     <a href="{{ .Parent.RelPermalink }}" class="back-link">← {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}</a>
-    <button class="permalink-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copié !';setTimeout(()=>{this.textContent='🔗 Copier le lien'},2000)})">🔗 Copier le lien</button>
+    <h1>{{ .Title }} <button class="permalink-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copié !';setTimeout(()=>{this.textContent='🔗 Copier le lien'},2000)})">🔗 Copier le lien</button></h1>
   </div>
 
   {{ if .Params.cancelled }}<p class="event-cancelled">Cet événement a été annulé.</p>{{ end }}
-  <h1>{{ .Title }}</h1>
 
   {{ with .Params.groups }}
   <p class="event-groups">
