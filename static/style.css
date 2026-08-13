@@ -599,7 +599,7 @@ footer {
   .subscribe-zones { grid-template-columns: 1fr; }
 }
 
-/* All 4 zones share identical chrome — same level, no favoritism */
+/* All 6 zones share identical chrome — same level, no favoritism */
 .subscribe-zone {
   display: flex;
   flex-direction: column;

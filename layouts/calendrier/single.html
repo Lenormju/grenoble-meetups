@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $icsURL := "/meetups.ics" | absURL }}
+{{ $rssURL := "/index.xml" | absURL }}
 {{ $webcalURL := replaceRE `^https?://` "webcal://" $icsURL }}
 {{ $googleCalURL := printf "https://calendar.google.com/calendar/r?cid=%s" $webcalURL }}
 <article class="subscribe-page">
@@ -40,11 +41,24 @@
         <code class="subscribe-url-box">{{ $icsURL }}</code>
         <button class="subscribe-copy-btn" onclick="navigator.clipboard.writeText('{{ $icsURL }}').then(()=>{this.innerHTML='✓ Copié !';setTimeout(()=>{this.innerHTML='📋 Copier le lien iCalendar'},2000)})">📋 Copier le lien iCalendar</button>
       </div>
-      <p class="subscribe-zone-subtitle">À ajouter toi-même dans Outlook ou une autre application de calendrier.</p>
+      <p class="subscribe-zone-subtitle">À coller toi-même dans Outlook ou une autre application de calendrier.</p>
     </div>
 
     <div class="subscribe-zone">
-      <a href="{{ "/meetups.ics" | relURL }}" download class="subscribe-download-btn">⬇️ Télécharger fichier meetups.ics</a>
+      <a href="{{ "/meetups.ics" | relURL }}" download class="subscribe-download-btn">⬇️ Télécharger fichier .ics</a>
+      <p class="subscribe-zone-subtitle">⚠️ Contrairement aux autres méthodes, ce fichier téléchargé ne se mettra pas à jour automatiquement.</p>
+    </div>
+
+    <div class="subscribe-zone">
+      <div class="subscribe-url-row">
+        <code class="subscribe-url-box">{{ $rssURL }}</code>
+        <button class="subscribe-copy-btn" onclick="navigator.clipboard.writeText('{{ $rssURL }}').then(()=>{this.innerHTML='✓ Copié !';setTimeout(()=>{this.innerHTML='📋 Copier le lien RSS'},2000)})">📋 Copier le lien RSS</button>
+      </div>
+      <p class="subscribe-zone-subtitle">À coller toi-même dans ton lecteur de flux (Feedly, NetNewsWire...).</p>
+    </div>
+
+    <div class="subscribe-zone">
+      <a href="{{ "/index.xml" | relURL }}" download class="subscribe-download-btn">⬇️ Télécharger fichier RSS</a>
       <p class="subscribe-zone-subtitle">⚠️ Contrairement aux autres méthodes, ce fichier téléchargé ne se mettra pas à jour automatiquement.</p>
     </div>
   </div>
