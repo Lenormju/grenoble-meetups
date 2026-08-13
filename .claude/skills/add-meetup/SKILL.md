@@ -85,6 +85,8 @@ location:
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/..."
     label: "S'inscrire"
+  - url: "https://humantalks.com/cities/grenoble/events/..."
+    label: "Voir les talks"
   - url: "https://humantalks.com/cities/grenoble/"
     label: "Proposer un talk"
 ---
@@ -96,3 +98,4 @@ Au programme, 4 talks de 10 minutes :
 
 - Slug: `YYYY-MM-DD-human-talks.md`
 - List known talks in the body as `- *Titre* — Prénom NOM`. Omit unknown talks (don't add placeholders).
+- The `humantalks.com/cities/grenoble/events/<id>` link is the specific event page (e.g. `https://humantalks.com/cities/grenoble/events/1228`) — it's where the talk lineup and slides get published, and is distinct from the generic `/cities/grenoble/` city page. Ask for it if not given; omit that link line if the user doesn't have it.
