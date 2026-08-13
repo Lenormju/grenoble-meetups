@@ -423,10 +423,15 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 .month-list a:hover { text-decoration: underline; }
 
 /* ─── Footer ─────────────────────────────────── */
-.rss-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--rss); text-decoration: none; }
-.rss-footer-link:hover { color: var(--rss-hover); text-decoration: underline; }
-.ical-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--ical); text-decoration: none; }
-.ical-footer-link:hover { color: var(--ical-hover); text-decoration: underline; }
+.rss-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--rss); text-decoration: underline; }
+.rss-footer-link:hover { color: var(--rss-hover); }
+.ical-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--ical); text-decoration: underline; }
+.ical-footer-link:hover { color: var(--ical-hover); }
+.linkedin-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--text); text-decoration: underline; }
+.linkedin-footer-link:hover { color: var(--linkedin); }
+.linkedin-footer-link svg { color: var(--linkedin); }
+.github-footer-link { display: inline-flex; align-items: center; vertical-align: middle; gap: 0.3rem; color: var(--github); text-decoration: underline; }
+.github-footer-link:hover { color: var(--text); }
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
