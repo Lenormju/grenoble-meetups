@@ -6,6 +6,14 @@ groups: ["humantalks"]
 time: "soir"
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/314277811/"
+    label: "S'inscrire"
+  - url: "https://humantalks.com/cities/grenoble/events/1227"
+    label: "Voir les talks"
 ---
 
-Comme tous les mois, ils sont à la recherche de personnes voulant donner un talk de 10 minutes.
+Au programme, 4 talks de 10 minutes :
+
+- *Tester, oui mais comment ?* — Julien Lenormand
+- *Anarchitecture* — Bastien David
+- *Maitriser, customiser et patcher ses tools* — Lucas Parsy
+- *Mobx or Blockchain* — Thomas Laforge

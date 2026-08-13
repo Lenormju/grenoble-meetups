@@ -6,4 +6,14 @@ groups: ["humantalks"]
 time: "soir"
 links:
   - url: "https://lnkd.in/dw77Sbkg"
+    label: "S'inscrire"
+  - url: "https://humantalks.com/cities/grenoble/events/1226"
+    label: "Voir les talks"
 ---
+
+Au programme, 4 talks de 10 minutes :
+
+- *Utiliser Gemma 4 via une API locale — LLM souverain, zéro fuite de données* — Thomas Laforge
+- *Les outils modernes pour garder l'IA (et les devs) sur le droit chemin* — François Best
+- *Contrôle de la température de sites de calcul grâce à l'injection de tâches utiles et non invasives* — Kouds Halitim
+- *Un format de rétrospective sérieux mais un peu plus léger que d'habitude (et qui n'a pas encore de nom)* — Sylvan Cabot

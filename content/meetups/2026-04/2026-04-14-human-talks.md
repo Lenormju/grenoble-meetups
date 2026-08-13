@@ -5,6 +5,14 @@ groups: ["humantalks"]
 time: "soir"
 links:
   - url: "https://lnkd.in/dB4dxZip"
+    label: "S'inscrire"
+  - url: "https://humantalks.com/cities/grenoble/events/1224"
+    label: "Voir les talks"
 ---
 
-Encore à la recherche de personnes qui ont envie de donner un court talk.
+Au programme, 4 talks de 10 minutes :
+
+- *Programmation Réactive, késako?* — David Nadjar
+- *IA Agentique : et si on arrêtait de relire le code?* — Rémi Alvado
+- *Sécurité électrique : les doigts dans le nez (et pas dans la prise)* — Lucas Parsy
+- *Programmation réactive : compilation vers Web-Assembly* — Alexandre Aksenov
