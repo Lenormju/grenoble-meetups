@@ -1,7 +1,7 @@
 ---
 title: "Nouvelle session IA agentique 🤖"
 description: "Session pratique pour connecter Claude à ses outils du quotidien (Gmail, Google Calendar) : brouillons de réponses automatiques, to-do du jour générée à partir des emails et de l'agenda."
-date: 2026-08-27
+date: 2026-09-17
 time: "18:00"
 groups: ["aixperience"]
 location:
