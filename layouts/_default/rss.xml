@@ -10,7 +10,7 @@
     <atom:link href="{{ "/index.xml" | absURL }}" rel="self" type="application/rss+xml"/>
     {{- range $pages }}
     <item>
-      <title>{{ .Title }}</title>
+      <title>{{ .Title }} — {{ .Date.Format "2" }} {{ partial "fr-month-name.html" .Date | lower }} {{ .Date.Format "2006" }}</title>
       <link>{{ .Permalink }}</link>
       <guid>{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 00:00:00 +0000" }}</pubDate>
