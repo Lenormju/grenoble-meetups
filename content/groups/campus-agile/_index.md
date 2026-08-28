@@ -1,4 +1,4 @@
 ---
 title: "Campus Agile"
-link: "https://www.campus-agile.org/Speakers"
+link: "https://www.campus-agile.org/"
 ---
