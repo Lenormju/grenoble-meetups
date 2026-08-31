@@ -12,8 +12,10 @@
     {{ end }}
   {{ end }}
 
-  {{ $prevMonth := $now.AddDate 0 -1 0 }}
-  {{ $nextMonth := $now.AddDate 0 1 0 }}
+  {{/* Anchor on the 1st: AddDate overflows month-shifts made from day 29–31 */}}
+  {{ $firstOfMonth := $now.AddDate 0 0 (sub 1 $now.Day) }}
+  {{ $prevMonth := $firstOfMonth.AddDate 0 -1 0 }}
+  {{ $nextMonth := $firstOfMonth.AddDate 0 1 0 }}
 
   <nav class="month-nav">
     <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }} {{ $prevMonth.Year }}</a>
