@@ -36,13 +36,17 @@ endDate: YYYY-MM-DD  # optional, for multi-day events
 location:            # optional
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
+  city: "Échirolles"   # optional — omit for Grenoble (the default); drives addressLocality in the JSON-LD
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"
 description: "One-sentence summary for SEO"  # recommended
+price: "payant"      # optional — omit if free (the default), a number for a known price in EUR
 ---
 Optional longer description in Markdown.
 ```
+
+`price` only feeds the `Event` JSON-LD `offers` (it is not displayed on the page). Omitted means free (`price: 0`, EUR), which is right for nearly every meetup; use `"payant"` for ticketed conferences whose price we don't track, or a number for a known price.
 
 ### Month `_index.md` front matter
 

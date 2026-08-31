@@ -7,6 +7,7 @@ groups: ["alpes-craft-coding-dojos"]
 location:
   name: "ENSIMAG"
   address: "681 Rue de la Passerelle, Saint-Martin-d'Hères"
+  city: "Saint-Martin-d'Hères"
 links:
   - url: "https://www.meetup.com/alpescraft-coding-dojos/events/315294547/"
 ---

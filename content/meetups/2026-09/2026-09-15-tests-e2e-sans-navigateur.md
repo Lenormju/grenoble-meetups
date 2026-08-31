@@ -7,6 +7,7 @@ groups: ["qualisphere"]
 location:
   name: "Moody's à Montbonnot"
   address: "20 Rue Lavoisier, Montbonnot-Saint-Martin"
+  city: "Montbonnot-Saint-Martin"
 links:
   - url: "https://www.linkedin.com/events/7491520171518439425/"
     label: "S'inscrire"

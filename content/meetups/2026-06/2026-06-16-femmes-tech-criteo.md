@@ -7,6 +7,7 @@ time: "12h"
 location:
   name: "Critéo"
   address: "4 Rue des Méridiens, 38130 Échirolles"
+  city: "Échirolles"
 links:
   - url: "https://forms.gle/Tj94JmGxx2TkZWsE9"
     label: "S'inscrire"

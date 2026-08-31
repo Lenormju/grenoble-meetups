@@ -1,14 +1,47 @@
 {{ define "head-extra" }}
+{{ $hasTime := and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}
 {{ $startDate := .Date.Format "2006-01-02" }}
-{{ if and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}
-  {{ $startDate = printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.time }}
+{{ $endDate := .Date.Format "2006-01-02" }}
+{{ if $hasTime }}
+  {{ $hm := split .Params.time ":" }}
+  {{ $startTime := .Date.Add (time.ParseDuration (printf "%sh%sm" (index $hm 0) (index $hm 1))) }}
+  {{ $startDate = $startTime.Format "2006-01-02T15:04:05" }}
+  {{/* Pas d'heure de fin dans les données : on retient la durée usuelle d'un meetup. */}}
+  {{ $endDate = ($startTime.Add (time.ParseDuration "2h")).Format "2006-01-02T15:04:05" }}
 {{ end }}
-{{ $address := dict "@type" "PostalAddress" "addressLocality" "Grenoble" "addressCountry" "FR" }}
+{{ with .Params.endDate }}{{ $endDate = (time .).Format "2006-01-02" }}{{ end }}
+{{/* Grenoble par défaut ; `location.city` pour les lieux hors Grenoble. */}}
+{{ $city := "Grenoble" }}
+{{ with .Params.location }}{{ with .city }}{{ $city = . }}{{ end }}{{ end }}
+{{ $address := dict "@type" "PostalAddress" "addressLocality" $city "addressCountry" "FR" }}
 {{ with .Params.location }}{{ with .address }}{{ $address = merge $address (dict "streetAddress" .) }}{{ end }}{{ end }}
 {{ $placeName := cond (and .Params.location .Params.location.name) .Params.location.name "Grenoble" }}
 {{ $location := dict "@type" "Place" "name" $placeName "address" $address }}
 {{ $desc := cond (ne .Description "") .Description (printf "%s — meetup tech à Grenoble" .Title) }}
-{{ $eventSchema := dict "@context" "https://schema.org" "@type" "Event" "name" .Title "startDate" $startDate "location" $location "url" .Permalink "description" $desc }}
+{{ $status := "https://schema.org/EventScheduled" }}
+{{ if .Params.cancelled }}{{ $status = "https://schema.org/EventCancelled" }}{{ end }}
+{{ $eventSchema := dict "@context" "https://schema.org" "@type" "Event" "name" .Title "startDate" $startDate "endDate" $endDate "eventStatus" $status "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode" "location" $location "url" .Permalink "description" $desc }}
+{{ $organizers := slice }}
+{{ range $slug := .Params.groups }}
+  {{ with site.GetPage (printf "/groups/%s" $slug) }}
+    {{ $organizer := dict "@type" "Organization" "name" .Title }}
+    {{ with .Params.link }}{{ $organizer = merge $organizer (dict "url" .) }}{{ end }}
+    {{ $organizers = $organizers | append $organizer }}
+  {{ end }}
+{{ end }}
+{{ with $organizers }}
+  {{ $eventSchema = merge $eventSchema (dict "organizer" (cond (eq (len .) 1) (index . 0) .)) }}
+{{ end }}
+{{/* Les meetups sont gratuits sauf mention contraire ; `price: "payant"` = payant, tarif inconnu. */}}
+{{ $offer := dict "@type" "Offer" "availability" "https://schema.org/InStock" }}
+{{ with .Params.links }}{{ $offer = merge $offer (dict "url" (index . 0).url) }}{{ end }}
+{{ $price := 0 }}
+{{ $priceKnown := true }}
+{{ with .Params.price }}
+  {{ if eq (printf "%v" .) "payant" }}{{ $priceKnown = false }}{{ else }}{{ $price = . }}{{ end }}
+{{ end }}
+{{ if $priceKnown }}{{ $offer = merge $offer (dict "price" $price "priceCurrency" "EUR") }}{{ end }}
+{{ $eventSchema = merge $eventSchema (dict "offers" $offer) }}
 <script type="application/ld+json">{{ $eventSchema | jsonify | safeJS }}</script>
 {{ end }}
 

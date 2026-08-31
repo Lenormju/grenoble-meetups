@@ -7,6 +7,7 @@ groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"
   address: "17 rue du Pré Ruffier, Saint-Martin-d'Hères"
+  city: "Saint-Martin-d'Hères"
 links:
   - url: "https://gancio.ghspace.fr/event/premanences-du-hackerspace-4"
 ---

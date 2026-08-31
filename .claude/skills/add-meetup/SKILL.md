@@ -28,11 +28,17 @@ groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or
 location:       # optional — omit if unknown
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
+  city: "Échirolles"  # optional — REQUIRED when the venue is outside Grenoble (Échirolles, Saint-Martin-d'Hères, Montbonnot-Saint-Martin…); omit for Grenoble
   url: "https://maps.app.goo.gl/..."          # optional — map or venue site
 links:
   - url: "https://..."   # optional — omit if no URL provided
+price: "payant"  # optional — omit if free (the default); "payant" for a ticketed event whose tarif we don't track, or a number for a known price in EUR
 ---
 ```
+
+`price` is invisible on the page — it only feeds the `offers` of the `Event` JSON-LD. Omitting it
+asserts the event is free, which is correct for nearly every meetup. Set `"payant"` for ticketed
+conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than guessing an amount.
 
 ## Naming conventions
 
@@ -44,7 +50,7 @@ links:
 
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
 1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
-1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`url` rather than asking the user or inventing a new address. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
+1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`city`/`url` rather than asking the user or inventing a new address. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
