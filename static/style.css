@@ -33,6 +33,11 @@
 
   --highlight:    #2563eb;
   --highlight-bg: #eaf2ff;
+
+  --banner-bg:     #fffbeb;
+  --banner-bg-alt: #fef3c7;
+  --banner-accent: #f59e0b;
+  --banner-text:   #7a4d00;
 }
 
 body {
@@ -47,6 +52,45 @@ body {
 
 a { color: var(--text); }
 a:hover { color: var(--text-muted); }
+
+/* ─── Support banner (AFUP open letter) ──────── */
+.support-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--banner-bg);
+  border: 1px solid var(--banner-accent);
+  border-left-width: 4px;
+  border-radius: 4px;
+  color: var(--banner-text);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.support-banner:hover {
+  background: var(--banner-bg-alt);
+  color: var(--banner-text);
+}
+.support-banner-icon { flex-shrink: 0; }
+.support-banner-text { flex: 1; }
+.support-banner-cta {
+  flex-shrink: 0;
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .support-banner {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  .support-banner-text { flex: 1 1 calc(100% - 2rem); }
+  .support-banner-cta { flex-basis: 100%; }
+}
 
 /* ─── Header ─────────────────────────────────── */
 header {

@@ -17,6 +17,7 @@
   {{ block "head-extra" . }}{{ end }}
 </head>
 <body>
+  {{ partial "banner-afup.html" . }}
   <header>
     <a href="{{ "/" | relURL }}" class="site-title">{{ .Site.Title }}</a>
     <nav>
