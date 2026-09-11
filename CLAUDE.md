@@ -48,6 +48,8 @@ Optional longer description in Markdown.
 
 `price` only feeds the `Event` JSON-LD `offers` (it is not displayed on the page). Omitted means free (`price: 0`, EUR), which is right for nearly every meetup; use `"payant"` for ticketed conferences whose price we don't track, or a number for a known price.
 
+The offer's `validFrom` needs no front matter: it comes from the file's Git commit date (`enableGitInfo`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
+
 ### Month `_index.md` front matter
 
 ```yaml

@@ -41,6 +41,10 @@
   {{ if eq (printf "%v" .) "payant" }}{{ $priceKnown = false }}{{ else }}{{ $price = . }}{{ end }}
 {{ end }}
 {{ if $priceKnown }}{{ $offer = merge $offer (dict "price" $price "priceCurrency" "EUR") }}{{ end }}
+{{/* `validFrom` : mise en ligne de l'événement (date du commit), bornée pour ne jamais dépasser la date de l'événement. */}}
+{{ $validFrom := .Date }}
+{{ with .GitInfo }}{{ if .AuthorDate.Before $.Date }}{{ $validFrom = .AuthorDate }}{{ end }}{{ end }}
+{{ $offer = merge $offer (dict "validFrom" ($validFrom.Format "2006-01-02T15:04:05")) }}
 {{ $eventSchema = merge $eventSchema (dict "offers" $offer) }}
 <script type="application/ld+json">{{ $eventSchema | jsonify | safeJS }}</script>
 {{ end }}
