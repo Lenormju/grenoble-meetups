@@ -92,9 +92,7 @@ links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/..."
     label: "S'inscrire"
   - url: "https://humantalks.com/cities/grenoble/events/..."
-    label: "Voir les talks"
-  - url: "https://humantalks.com/cities/grenoble/"
-    label: "Proposer un talk"
+    label: "Voir ou proposer un talk"
 ---
 
 Au programme, 4 talks de 10 minutes :
@@ -104,4 +102,5 @@ Au programme, 4 talks de 10 minutes :
 
 - Slug: `YYYY-MM-DD-human-talks.md`
 - List known talks in the body as `- *Titre* — Prénom NOM`. Omit unknown talks (don't add placeholders).
-- The `humantalks.com/cities/grenoble/events/<id>` link is the specific event page (e.g. `https://humantalks.com/cities/grenoble/events/1228`) — it's where the talk lineup and slides get published, and is distinct from the generic `/cities/grenoble/` city page. Ask for it if not given; omit that link line if the user doesn't have it.
+- The `humantalks.com/cities/grenoble/events/<id>` link is the specific event page (e.g. `https://humantalks.com/cities/grenoble/events/1228`). It serves both purposes on its own — it's where the talk lineup and slides get published, *and* it carries the "Proposer un talk" button — hence the single "Voir ou proposer un talk" link. Don't also add the generic `/cities/grenoble/` city page; it's redundant. Ask for the event URL if not given; omit that link line if the user doesn't have it.
+- Some older event files still carry the previous two-link form (`"Voir les talks"` + a separate `"Proposer un talk"`). That's intentional — leave them as they are.
