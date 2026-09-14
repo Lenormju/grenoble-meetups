@@ -570,9 +570,9 @@ footer {
   color: var(--text);
 }
 .group-tag.active {
-  background: var(--text);
+  background: var(--highlight);
   color: #fff;
-  border-color: var(--text);
+  border-color: var(--highlight);
 }
 
 /* ─── Group page event list ───────────────────── */
