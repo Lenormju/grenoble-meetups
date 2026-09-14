@@ -68,7 +68,18 @@ conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than
 - If a month `_index.md` already exists, do not overwrite it.
 - If a venue name is given but no address/url, check for a known location first (see step 1c) before asking the user or omitting `location`.
 
+## Titles
+
+**Never invent a title.** The title is the one field that can't be guessed from context — it's the event's real name on Meetup/LinkedIn, and a plausible-sounding invention is worse than no file at all.
+
+- Use the title exactly as the user gave it, or exactly as it appears on the event page.
+- If the source text pasted by the user is only a *description* with no title line, **stop and ask** for the title before writing the file. Don't derive one from the body text, however obvious it seems.
+- If the event URL fails to load (Meetup returns 503 to `WebFetch` fairly often), that's not a licence to infer — ask.
+- Appending an emoji at the end of a title the user gave is fine (it's the site convention), but nothing else about the wording changes.
+
 ## Descriptions
+
+Same rule as titles: if no description is given, **ask** rather than composing one. A `description` is optional front matter — omitting it is always better than inventing a summary that misrepresents the event.
 
 Keep the event's `description` field and any longer body text as close to the source wording as possible — do not rephrase or restyle text that's already usable. Only edit when needed (e.g. trimming to one sentence, fixing a typo, adding punctuation, light grammar fixes), and prefer the smallest change that works. If you do change or write wording (including writing a `description` from scratch when none was given), tell the user what you added or changed so they can review it.
 
