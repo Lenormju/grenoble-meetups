@@ -1,6 +1,6 @@
 ---
-title: "CTF d'intégration 🚩"
-description: "Challenge Capture the Flag ouvert aux débutants : découvrez la sécurité informatique par la pratique. Réservé aux étudiants."
+title: "CTF d'intégration — réservé aux étudiants 🚩"
+description: "Réservé aux étudiants : challenge Capture the Flag ouvert aux débutants, pour découvrir la sécurité informatique par la pratique."
 date: 2026-10-08
 time: "14:00"
 groups: ["securimag"]
@@ -13,4 +13,6 @@ links:
     label: "Prochaines conférences"
 ---
 
-Challenge Capture the Flag ouvert aux débutants, découvrez la sécurité informatique par la pratique ! (réservé aux étudiants)
+**⚠️ Cet évènement est réservé aux étudiants.**
+
+Challenge Capture the Flag ouvert aux débutants, découvrez la sécurité informatique par la pratique !
