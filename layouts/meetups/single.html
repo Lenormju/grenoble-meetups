@@ -33,8 +33,10 @@
   {{ $eventSchema = merge $eventSchema (dict "organizer" (cond (eq (len .) 1) (index . 0) .)) }}
 {{ end }}
 {{/* Les meetups sont gratuits sauf mention contraire ; `price: "payant"` = payant, tarif inconnu. */}}
-{{ $offer := dict "@type" "Offer" "availability" "https://schema.org/InStock" }}
-{{ with .Params.links }}{{ $offer = merge $offer (dict "url" (index . 0).url) }}{{ end }}
+{{/* `url` de l'offre : le lien d'inscription, à défaut la page de l'événement (champ requis par Google). */}}
+{{ $offerURL := .Permalink }}
+{{ with .Params.links }}{{ $offerURL = (index . 0).url }}{{ end }}
+{{ $offer := dict "@type" "Offer" "availability" "https://schema.org/InStock" "url" $offerURL }}
 {{ $price := 0 }}
 {{ $priceKnown := true }}
 {{ with .Params.price }}
