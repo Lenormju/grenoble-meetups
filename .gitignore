@@ -3,3 +3,9 @@ resources/
 .hugo_build.lock
 .idea/
 .superpowers/
+
+# Cards, calendars and PDFs produced by calendar_generators/ — regenerate them
+# with the scripts rather than committing them.
+calendar_generators/*.png
+calendar_generators/*.pdf
+__pycache__/
