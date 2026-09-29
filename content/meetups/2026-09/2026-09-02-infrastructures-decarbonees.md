@@ -9,6 +9,7 @@ location:
   address: "5 Esplanade Andry Farcy, Grenoble"
 links:
   - url: "https://mobilizon.fr/events/484000d6-01b3-4989-9482-8ce7f06407d6"
+    label: "S'inscrire"
 ---
 
 A Data for Good, nous continuons de nous interroger sur la place que nous voulons donner à l'IA en mettant en balance ses impacts positifs et négatifs.
