@@ -10,6 +10,7 @@ location:
   city: "Saint-Martin-d'Hères"
 links:
   - url: "https://gancio.ghspace.fr/event/atelier-ascii-art"
+    label: "S'inscrire"
 ---
 
 Le mardi 20 octobre, découvrons les différentes manières de faire de l'ASCII Art, expérimentons et laissons place à notre créativité !

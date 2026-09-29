@@ -9,6 +9,9 @@ location:
   address: "53 avenue Alsace Lorraine, Grenoble"
 links:
   - url: "https://framaforms.org/inscription-install-party-linux-demmaus-connect-1789736298"
+    label: "S'inscrire"
+  - url: "https://gancio.ghspace.fr/event/install-party-linux"
+    label: "Voir l'événement"
 ---
 
 Obsolescence de Windows, logiciels propriétaires, vieux ordis : venez faire installer Linux Mint sur votre ordinateur, avec un accompagnement technique pendant toute l'installation.

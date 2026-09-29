@@ -9,6 +9,7 @@ location:
   address: "5 Esplanade Andry Farcy, Grenoble"
 links:
   - url: "https://www.meetup.com/groupe-dutilisateurs-python-grenoble/events/316538062/"
+    label: "S'inscrire"
 ---
 
 Python a été mon premier amour (en termes de langage de programmation).

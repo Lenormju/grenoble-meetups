@@ -10,6 +10,7 @@ location:
   city: "Montbonnot-Saint-Martin"
 links:
   - url: "https://www.meetup.com/tupperlibre/events/316762329/"
+    label: "S'inscrire"
 ---
 
 Rencontre autour de Rust et ses applications
