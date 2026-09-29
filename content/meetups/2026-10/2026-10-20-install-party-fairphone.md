@@ -7,6 +7,9 @@ groups: ["guilde-du-libre"]
 location:
   name: "La Turbine.Coop"
   address: "5 Esplanade Andry Farcy, Grenoble"
+links:
+  - url: "https://www.guilde.asso.fr/rencontres/#prochaine"
+    label: "Informations"
 ---
 
 La Guilde du libre vous propose deux ateliers en une soirée : une install party et une rencontre Fairphone.
