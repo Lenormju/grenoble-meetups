@@ -32,6 +32,7 @@ location:       # optional — omit if unknown
   url: "https://maps.app.goo.gl/..."          # optional — map or venue site
 links:
   - url: "https://..."   # optional — omit if no URL provided
+    label: "S'inscrire"  # always set one — see "Link labels" below
 price: "payant"  # optional — omit if free (the default); "payant" for a ticketed event whose tarif we don't track, or a number for a known price in EUR
 ---
 ```
@@ -51,6 +52,8 @@ conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
 1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
 1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`city`/`url` rather than asking the user or inventing a new address. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
+   - **Grenoble has two valid postcodes, 38000 and 38100, but each address has only one canonical form.** When the same street address appears with both, it's a mistake, not a variant — ask which is right instead of copying the most recent. Known: `31 Rue Gustave Eiffel` is 38000.
+   - **One street address can host several venues.** `31 Rue Gustave Eiffel` is both SII and Wizbii. Match on the venue *name* first; a shared address is not evidence that two events were at the same place, and the name the user gives wins over the one already on file.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
@@ -58,6 +61,19 @@ conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than
 3. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), une description (une phrase décrivant le meetup), le lieu (nom, adresse, lien maps), et/ou un lien."*
 4. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
 5. List every file created so the user can verify before committing.
+
+## Link labels
+
+**Always set a `label` on every link.** It is technically optional — `meetups/single.html` falls back
+to `"S'inscrire"` — but leaning on that default silently ships the wrong wording whenever the link
+isn't a registration page.
+
+- `"S'inscrire"` — registration or event pages: Meetup, Gancio, Framaforms, a billetterie.
+- Anything else gets a specific label. Those already in use: `"Voir sur Meetup"`,
+  `"Voir ou proposer un talk"`, `"Rejoindre le Discord"`, `"Voir l'événement"`,
+  `"Channel Discord meetups"`, `"Post LinkedIn"`, `"Billetterie (événement payant)"`,
+  `"Prochaines conférences"`. Reuse one of these before inventing a new wording.
+- When an event has several links, only the one that actually registers people gets `"S'inscrire"`.
 
 ## What to infer
 
