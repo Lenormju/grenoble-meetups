@@ -8,6 +8,8 @@ location:
   name: "La Turbine.Coop"
   address: "5 Esplanade Andry Farcy, Grenoble"
 links:
+  - url: "https://turbine.coop/evenement/install-party-et-rencontre-fairphone-oct/"
+    label: "Plus d'infos"
   - url: "https://www.guilde.asso.fr/rencontres/#prochaine"
     label: "Informations"
 ---

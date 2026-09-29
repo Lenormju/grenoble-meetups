@@ -10,6 +10,8 @@ location:
 links:
   - url: "https://www.meetup.com/groupe-dutilisateurs-python-grenoble/events/316538062/"
     label: "S'inscrire"
+  - url: "https://turbine.coop/evenement/meetup-python-oct26/"
+    label: "Plus d'infos"
 ---
 
 Python a été mon premier amour (en termes de langage de programmation).
