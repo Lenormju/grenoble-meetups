@@ -29,3 +29,7 @@ buildFuture = true
 
 [params]
   description = "Retrouvez tous les meetups tech de Grenoble : développement, IA, jeux vidéo, sécurité, python, data, product, et plus encore."
+  # Accroche des cards sociales (voir layouts/partials/og-image.html). Distincte
+  # de `description` : une seule ligne doit tenir sur l'image, là où la méta
+  # description peut être longue.
+  ogTagline = "Développement, IA, data, sécurité, jeux vidéo, product…"

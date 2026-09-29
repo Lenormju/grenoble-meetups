@@ -1,0 +1,123 @@
+{{- /*
+  Retourne l'URL absolue de la card sociale (1200×630) de la page reçue.
+  Consommée par seo.html (og:image, twitter:image) et par le JSON-LD Event de
+  meetups/single.html — d'où l'appel via partialCached côté appelants.
+
+  L'image est composée au build : assets/og/card-bg.png (dégradé, accent ambre
+  et domaine, identiques partout) + le texte variable via images.Text. Hugo
+  nomme le fichier d'après un hash de son contenu, donc modifier un événement
+  produit une nouvelle URL, ce qui contourne les caches LinkedIn et Google.
+
+  Trois gabarits partagent les mêmes emplacements : une ligne de contexte, un
+  titre, une ligne de complément.
+*/ -}}
+
+{{- $bg := resources.Get "og/card-bg.png" -}}
+{{- $fontBold := resources.Get "fonts/Inter-Bold.ttf" -}}
+{{- $fontRegular := resources.Get "fonts/Inter-Regular.ttf" -}}
+{{- if not (and $bg $fontBold $fontRegular) -}}
+  {{- errorf "og-image.html : fond ou police introuvable dans assets/" -}}
+{{- end -}}
+
+{{- $marginX := 80 -}}
+{{- $textWidth := 1040 -}}
+{{- /* Largeur d'avance moyenne d'Inter, en fraction de la taille de police.
+       C'est l'approximation qui remplace les métriques de police absentes des
+       templates : seul réglage à ajuster si un titre déborde. */ -}}
+{{- $advance := 0.55 -}}
+{{- $titleZone := 230 -}}
+{{- $subMax := int (div $textWidth (mul 30 $advance)) -}}
+
+{{- $meta := "" -}}
+{{- $title := .Site.Title -}}
+{{- $sub := .Site.Params.ogTagline | default .Site.Params.description -}}
+
+{{- if eq .Section "meetups" -}}
+  {{- if .IsPage -}}
+    {{- $frDays := slice "Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi" -}}
+    {{- $end := "" -}}
+    {{- with .Params.endDate -}}{{- $end = time . -}}{{- end -}}
+    {{- if $end -}}
+      {{- /* Événement sur plusieurs jours : la seule date de début serait trompeuse. */ -}}
+      {{- if eq ($end.Format "2006-01") (.Date.Format "2006-01") -}}
+        {{- $meta = printf "%d → %d %s %d" .Date.Day $end.Day (partial "fr-month-name.html" .Date) .Date.Year -}}
+      {{- else -}}
+        {{- $meta = printf "%d %s → %d %s %d" .Date.Day (partial "fr-month-name.html" .Date) $end.Day (partial "fr-month-name.html" $end) $end.Year -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $meta = printf "%s %d %s %d" (index $frDays (int .Date.Weekday)) .Date.Day (partial "fr-month-name.html" .Date) .Date.Year -}}
+      {{- with .Params.time -}}
+        {{- $meta = printf "%s · %s" $meta . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $meta = upper $meta -}}
+
+    {{- /* Le rendu de texte de Go ne gère pas les emoji couleur : on les retire
+           du titre, sinon ils rendent en tofu. */ -}}
+    {{- $title = replaceRE `[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{2B00}-\x{2BFF}\x{FE0F}\x{200D}\x{20E3}]` "" .Title -}}
+    {{- $title = trim (replaceRE `\s+` " " $title) " " -}}
+
+    {{- $names := slice -}}
+    {{- range $slug := .Params.groups -}}
+      {{- with site.GetPage (printf "/groups/%s" $slug) -}}
+        {{- $names = $names | append .Title -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $sub = delimit $names " · " -}}
+    {{- /* Certains événements portent le nom de leur groupe : ne pas le répéter. */ -}}
+    {{- if eq $sub $title -}}{{- $sub = "" -}}{{- end -}}
+
+  {{- else if .IsSection -}}
+    {{- if not .Parent.IsHome -}}
+      {{- $count := len .RegularPages -}}
+      {{- $meta = "MEETUPS TECH À GRENOBLE" -}}
+      {{- $title = .Title -}}
+      {{- $sub = cond (eq $count 0) "Aucun événement" (printf "%d événement%s" $count (cond (gt $count 1) "s" "")) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Taille de titre adaptative : on retient la plus grande qui tient dans la
+       zone. maxLines décroît moins vite que la capacité par ligne n'augmente,
+       donc la boucle converge toujours. */ -}}
+{{- $size := 0 -}}
+{{- $titleText := "" -}}
+{{- range $candidate := slice 72 60 50 42 -}}
+  {{- if eq $size 0 -}}
+    {{- $linespacing := int (mul $candidate 0.28) -}}
+    {{- $maxLines := int (div $titleZone (add $candidate $linespacing)) -}}
+    {{- $maxChars := int (div $textWidth (mul $candidate $advance)) -}}
+    {{- $wrapped := partial "text-wrap.html" (dict "text" $title "max" $maxChars) -}}
+    {{- if le (len (split $wrapped "\n")) $maxLines -}}
+      {{- $size = $candidate -}}
+      {{- $titleText = $wrapped -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $size 0 -}}
+  {{- $size = 42 -}}
+  {{- $titleText = partial "text-wrap.html" (dict "text" $title "max" (int (div $textWidth (mul 42 $advance)))) -}}
+{{- end -}}
+
+{{- $subText := partial "text-wrap.html" (dict "text" $sub "max" $subMax) -}}
+{{- $subLines := split $subText "\n" -}}
+{{- if gt (len $subLines) 2 -}}
+  {{- $subText = printf "%s…" (delimit (first 2 $subLines) "\n") -}}
+{{- end -}}
+
+{{- $filters := slice -}}
+{{- with $meta -}}
+  {{- $filters = $filters | append (images.Text . (dict
+    "font" $fontRegular "size" 30 "linespacing" 8 "color" "#dbeafe"
+    "alignx" "left" "x" $marginX "aligny" "top" "y" 130)) -}}
+{{- end -}}
+{{- $filters = $filters | append (images.Text $titleText (dict
+  "font" $fontBold "size" $size "linespacing" (int (mul $size 0.28)) "color" "#ffffff"
+  "alignx" "left" "x" $marginX "aligny" "center" "y" 300)) -}}
+{{- with $subText -}}
+  {{- $filters = $filters | append (images.Text . (dict
+    "font" $fontRegular "size" 30 "linespacing" 10 "color" "#bfdbfe"
+    "alignx" "left" "x" $marginX "aligny" "top" "y" 448)) -}}
+{{- end -}}
+
+{{- return ($bg | images.Filter $filters).Permalink -}}

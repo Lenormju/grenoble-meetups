@@ -20,7 +20,7 @@
 {{ $desc := cond (ne .Description "") .Description (printf "%s — meetup tech à Grenoble" .Title) }}
 {{ $status := "https://schema.org/EventScheduled" }}
 {{ if .Params.cancelled }}{{ $status = "https://schema.org/EventCancelled" }}{{ end }}
-{{ $eventSchema := dict "@context" "https://schema.org" "@type" "Event" "name" .Title "startDate" $startDate "endDate" $endDate "eventStatus" $status "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode" "location" $location "url" .Permalink "description" $desc }}
+{{ $eventSchema := dict "@context" "https://schema.org" "@type" "Event" "name" .Title "startDate" $startDate "endDate" $endDate "eventStatus" $status "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode" "location" $location "url" .Permalink "description" $desc "image" (partialCached "og-image.html" . .RelPermalink) }}
 {{ $organizers := slice }}
 {{ range $slug := .Params.groups }}
   {{ with site.GetPage (printf "/groups/%s" $slug) }}

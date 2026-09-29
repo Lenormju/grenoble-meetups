@@ -1,0 +1,33 @@
+{{- /*
+  Découpe un texte en lignes d'au plus `max` caractères, pour images.Text qui
+  n'a pas de retour à la ligne automatique.
+
+  Le comptage est approximatif : sans métriques de police côté template, on
+  compte des caractères, pas des pixels. L'appelant convertit une largeur en
+  pixels en nombre de caractères (voir og-image.html).
+
+    {{ partial "text-wrap.html" (dict "text" "…" "max" 40) }} → "…\n…"
+*/ -}}
+{{- $max := .max -}}
+{{- $lines := slice -}}
+{{- $cur := "" -}}
+{{- range $word := split .text " " -}}
+  {{- if ne $word "" -}}
+    {{- if eq $cur "" -}}
+      {{- $cur = $word -}}
+    {{- else -}}
+      {{- $try := printf "%s %s" $cur $word -}}
+      {{- /* RuneCount et non len : len compte les octets, les accents fausseraient la mesure. */ -}}
+      {{- if le (strings.RuneCount $try) $max -}}
+        {{- $cur = $try -}}
+      {{- else -}}
+        {{- $lines = $lines | append $cur -}}
+        {{- $cur = $word -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if ne $cur "" -}}
+  {{- $lines = $lines | append $cur -}}
+{{- end -}}
+{{- return (delimit $lines "\n") -}}
