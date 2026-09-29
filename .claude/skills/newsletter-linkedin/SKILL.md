@@ -1,6 +1,6 @@
 # Newsletter LinkedIn
 
-Préparer la newsletter LinkedIn mensuelle pour les meetups de Grenoble : sanity check du contenu, texte du post, image calendrier.
+Préparer la newsletter LinkedIn mensuelle pour les meetups de Grenoble : sanity check du contenu, texte du post, image calendrier, texte Slack.
 
 ---
 
@@ -104,3 +104,50 @@ uv run --with pilmoji python3 gen_calendar_MOIS.py
 - `pilmoji` doit envelopper **tout** le rendu texte dans `with Pilmoji(img) as pilmoji:` ; les formes (rectangles) restent avec `draw`
 - La mesure du texte pour le word-wrap utilise toujours `draw.textbbox()` (pas `pilmoji`) — c'est correct car les dimensions de texte sans emoji suffisent pour l'estimation
 - L'erreur Pyright sur `Image.new('RGB', ..., "#ffffff")` est un faux positif — ignorer
+
+---
+
+## 5. Texte Slack
+
+À générer **après** la publication du post LinkedIn : le texte cite son URL, qui doit d'abord être renseignée dans `linkedinPost` du `_index.md` du mois. Si `linkedinPost` est absent, le signaler et laisser la ligne en placeholder.
+
+### Template
+
+```
+Meetups de Grenoble du mois de [Mois] :
+
+site https://grenoble-meetups.fr/
+post LinkedIn : [URL de linkedinPost]
+sinon voici la liste complète (à date) :
+[jour] [DD] [à HH:MM | midi | soir] : [Titre sans emoji] [:code_slack:]
+[jour] [DD] ...
+```
+
+Règles :
+- Mois **capitalisé et sans l'année** (`Juillet`, `Septembre`)
+- `site` sans deux-points ; `post LinkedIn :` avec deux-points entourés d'espaces
+- Une ligne par événement, **aucune ligne vide entre les événements** (bloc compact)
+- **Ordre chronologique, y compris à l'intérieur d'une même journée** (`jeudi 09 à 12h` avant `jeudi 09 à 19h`)
+- Mêmes règles de date/heure que le post LinkedIn : `à 19h`, `à 18h30`, pas de `à` avant `midi` / `soir`
+- Titre **complet** (pas la version courte du calendrier), sans son emoji, suivi du **code court Slack** de cet emoji
+- Ni URL par événement, ni ligne de contexte, ni hashtag — contrairement au post LinkedIn
+
+### Conversion des emojis en codes Slack
+
+| Emoji | Code Slack |
+|---|---|
+| 🤖 | `:robot_face:` |
+| 🎤 | `:microphone:` |
+| 🎮 | `:video_game:` |
+| 🛡️ | `:shield:` |
+| 💬 | `:speech_balloon:` |
+| 📖 | `:book:` |
+| 🐟 | `:fish:` |
+| 🌍 | `:earth_africa:` |
+| 🔧 | `:wrench:` |
+| 📱 | `:iphone:` |
+| 🧪 | `:test_tube:` |
+| 🍽️ | `:knife_fork_plate:` |
+| 🧍 | `:standing_person:` |
+
+Attention aux pièges : `:robot_face:` (pas `:robot:`), `:iphone:` pour 📱, `:knife_fork_plate:` pour 🍽️. Pour un emoji absent de cette table, vérifier son nom Slack sur emojipedia plutôt que de le deviner — un code invalide s'affiche en texte brut dans Slack.
