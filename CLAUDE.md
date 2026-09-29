@@ -124,4 +124,4 @@ Push to `main` triggers GitHub Actions (`hugo.yml`) which builds and deploys to 
 
 Use `/add-meetup` when adding new meetup events from a text list — it handles file creation, naming, front matter, and conventions automatically.
 
-Use `/newsletter-linkedin` when preparing the monthly LinkedIn post — it covers sanity check, post text, and calendar image generation.
+Use `/newsletter-linkedin` when preparing the monthly LinkedIn post — it covers sanity check, post text, carousel generation, and the Slack relay text.

@@ -1,6 +1,6 @@
 # Newsletter LinkedIn
 
-Préparer la newsletter LinkedIn mensuelle pour les meetups de Grenoble : sanity check du contenu, texte du post, image calendrier, texte Slack.
+Préparer la newsletter LinkedIn mensuelle pour les meetups de Grenoble : sanity check du contenu, texte du post, carousel, texte Slack.
 
 ---
 
@@ -50,7 +50,10 @@ Règles :
 - `à` entre le numéro de jour et une heure numérique (`mercredi 01 à 19h`)
 - Pas de `à` avant `midi` / `soir` (`jeudi 02 midi`)
 - Si un workshop se répète plusieurs fois dans le mois, lister chaque occurrence séparément (sans mentionner "2ème session" ou numérotation)
-- URL = premier lien non-LinkedIn du front matter
+- URL = premier lien **non-LinkedIn** du front matter. Si le seul lien disponible est un post
+  LinkedIn, le prendre quand même — en dernier recours c'est mieux que rien. Si l'événement n'a
+  aucun lien, **omettre la ligne d'URL** : ne jamais se replier sur la page de l'événement sur
+  grenoble-meetups.fr, la ligne de clôture du post y renvoie déjà
 - Pas de `hashtag#`, juste `#grenoble_meetups`
 
 ### Structure du post
@@ -77,32 +80,47 @@ Retrouvez tous les détails sur https://grenoble-meetups.fr
 
 ---
 
-## 4. Image calendrier
+## 4. Carousel
 
-### Script existant
-
-Les scripts sont dans `calendar_generators/gen_calendar_MOIS.py`. Si le script du mois n'existe pas, le créer en copiant le script du mois précédent et en adaptant :
-
-- `MONTH` — numéro du mois
-- `events` — dict `{jour: ["Libellé court"]}` (événements actifs uniquement, emojis inclus)
-- `HOLIDAYS` — jours fériés du mois (ex: `{14}` pour le 14 juillet)
-- `DENSE_DAYS` — jours avec 2+ événements (police réduite)
-- titre, footer, nom du fichier de sortie
-
-Le fichier PNG est sauvegardé dans le **répertoire courant** (pas de chemin absolu).
+Le visuel du post est un **carousel PDF** uploadé sur LinkedIn : une slide de vue d'ensemble du mois, puis une slide par jour ayant des événements.
 
 ### Lancement
 
+Il n'y a **rien à éditer** — tout est lu depuis `content/meetups/YYYY-MM/`. Le mois est un argument :
+
 ```bash
 cd calendar_generators
-uv run --with pilmoji python3 gen_calendar_MOIS.py
+uv run --with playwright --with pyyaml --with img2pdf python3 gen_carousel.py --month 2026-10
 ```
 
-### Notes techniques
+Premier lancement sur une machine neuve, une seule fois (~115 Mo) :
+
+```bash
+uv run --with playwright python3 -m playwright install chromium
+```
+
+### Sorties
+
+Dans `calendar_generators/`, toutes gitignorées (ce sont des artefacts, régénérables en quelques secondes) :
+
+- `carousel_<mois>_<année>_NN.png` — les slides
+- `carousel_<mois>_<année>.pdf` — **c'est ce fichier qu'on uploade sur LinkedIn**
+
+### Ce qu'il faut savoir
+
+- **Relancer le script après toute modification du contenu du mois.** Le carousel est un instantané ; un événement ajouté après coup n'y sera pas.
+- Un événement **multi-jours** (`endDate`) s'étale sur toutes ses journées dans la grille de la slide 1, mais n'a **qu'une seule carte**, avec sa plage (`1 → 3 octobre`) dans la ligne meta — pas N slides quasi identiques.
+- Un événement **sans `location`** affiche « Lieu annoncé prochainement » (constante `LOCATION_TBA`). Sans danger, puisqu'on ne génère un carousel que pour un mois à venir.
+- Le rendu passe par Chromium (Playwright), donc les emojis sont en couleur et le CSS est du vrai CSS — contrairement à l'image calendrier, qui passe par Pillow.
+
+### Image calendrier (optionnelle)
+
+`gen_calendar.py --month YYYY-MM` produit encore le PNG carré mono-image, même source de données. Il ne fait plus partie de la newsletter, mais reste utile pour un usage ponctuel. Notes techniques si tu y touches :
 
 - Pillow seul ne rend pas les emojis → `pilmoji` obligatoire (via `uv run --with pilmoji`)
-- `pilmoji` doit envelopper **tout** le rendu texte dans `with Pilmoji(img) as pilmoji:` ; les formes (rectangles) restent avec `draw`
+- `pilmoji` doit envelopper **tout** le rendu texte dans `with Pilmoji(img) as p:` ; les formes (rectangles) restent avec `draw`
 - La mesure du texte pour le word-wrap utilise toujours `draw.textbbox()` (pas `pilmoji`) — c'est correct car les dimensions de texte sans emoji suffisent pour l'estimation
+- `SHORT_LABELS` permet de raccourcir à la main un titre qui déborde de sa cellule
 - L'erreur Pyright sur `Image.new('RGB', ..., "#ffffff")` est un faux positif — ignorer
 
 ---
