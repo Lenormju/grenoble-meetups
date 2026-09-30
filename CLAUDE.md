@@ -29,6 +29,7 @@ content/meetups/
 
 ```yaml
 ---
+cancelled: true      # optional — goes *above* title; see "Cancelled events" below
 title: "Event name with emoji at end 🎤"
 description: "One-sentence summary for SEO"  # required — see the add-meetup skill for how to obtain one
 date: YYYY-MM-DD
@@ -51,6 +52,16 @@ Optional longer description in Markdown.
 The offer's `url` is the first entry of `links`, falling back to the event's own page when the event has no link (Google requires the field).
 
 The offer's `validFrom` needs no front matter: it comes from the file's Git commit date (`enableGitInfo`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
+
+### Cancelled events
+
+`cancelled: true` marks an event as called off rather than deleting its file, so the page keeps working for anyone holding the link. Three things follow from it:
+
+- `month-calendar.html` drops the event from the calendar grid (`where .events "Params.cancelled" "ne" true`), so it disappears from the homepage and month views.
+- `meetups/single.html` renders `Cet événement a été annulé.` on the detail page and sets the `Event` JSON-LD `eventStatus` to `EventCancelled`.
+- **The RSS feed does not filter it.** `_default/rss.xml` selects on `Section` alone, so a cancelled event still appears in `/index.xml` if it falls within the newest 50 — two of the three currently do. Worth knowing before assuming `cancelled` hides an event everywhere.
+
+Convention: the three existing files all put `cancelled: true` on the line *above* `title:`. `description` stays directly after `title:` regardless, so it lands on line 4 in those files rather than line 3.
 
 ### Month `_index.md` front matter
 
