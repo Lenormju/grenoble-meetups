@@ -1,5 +1,6 @@
 ---
 title: "la sécu des applis Android, par Securimag"
+description: "Séance Securimag consacrée à la sécurité des applications Android."
 date: 2026-04-27
 groups: ["securimag"]
 time: "soir"

@@ -1,5 +1,6 @@
 ---
 title: "Le Retex de Phown, par Securimag"
+description: "Séance Securimag : retour d'expérience sur Phown, autour de la sécurité informatique."
 date: 2026-04-15
 groups: ["securimag"]
 time: "soir"
