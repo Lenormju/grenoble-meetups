@@ -1,6 +1,6 @@
 ---
 title: "Coding Workshop — Exercices SICP 📖"
-description: "Groupe d'étude hebdomadaire autour du livre SICP : chacun avance à son rythme sur les exercices et on discute ensemble des questions et concepts."
+description: "Le Coding Workshop poursuit sa lecture du SICP au bureau Manabiya, en travaillant les exercices ensemble et en discutant les concepts."
 date: 2026-07-09
 time: "12:00"
 groups: ["coding-workshop"]

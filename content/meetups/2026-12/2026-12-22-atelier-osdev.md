@@ -1,6 +1,6 @@
 ---
 title: "Atelier OSDEV ⚙️"
-description: "Créez un système d'exploitation à partir de zéro et découvrez la programmation la plus bas niveau possible."
+description: "Au Grenoble Hackerspace, Ako démonte le fonctionnement d'un système d'exploitation et guide sa construction pas à pas."
 date: 2026-12-22
 time: "18:30"
 groups: ["hackerspace"]

@@ -1,6 +1,6 @@
 ---
 title: "Human Talks Grenoble 🎤"
-description: "Quatre conférences de 10 minutes chacune sur des sujets variés — technos, méthodes, retours d'expérience, side projects — suivies d'un apéritif."
+description: "Quatre talks de 10 minutes chez Samse : testing visuel avec Percy, migration cloud avec Terraform, code assisté par IA et design patterns."
 date: 2026-07-07
 time: "19:00"
 groups: ["humantalks"]

@@ -1,6 +1,6 @@
 ---
 title: "Install party Linux d'Emmaüs Connect 🐧"
-description: "Venez faire installer Linux Mint sur votre ordinateur pour lutter contre l'obsolescence et prolonger sa durée de vie."
+description: "Chez Emmaüs Connect, faites installer Linux Mint sur votre machine pour prolonger sa durée de vie — prévoyez un port USB et vos données sauvegardées."
 date: 2026-12-11
 time: "14:00"
 groups: ["erica"]

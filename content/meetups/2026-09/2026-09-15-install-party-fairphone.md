@@ -1,6 +1,6 @@
 ---
 title: "Install Party et rencontre Fairphone 📱"
-description: "Deux ateliers en une soirée : une install party pour repartir avec un système d'exploitation libre installé sur votre machine, et une rencontre entre utilisateurs de Fairphone."
+description: "Install party de la Guilde du libre : repartez avec un OS libre installé sur votre machine, avec un Fairphone 3 et un Fairphone 4 sous /e/OS en démonstration."
 date: 2026-09-15
 time: "19:00"
 groups: ["guilde-du-libre"]

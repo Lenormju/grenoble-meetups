@@ -1,6 +1,6 @@
 ---
 title: "Install party Linux d'Emmaüs Connect 🐧"
-description: "Venez faire installer Linux Mint sur votre ordinateur pour lutter contre l'obsolescence et prolonger sa durée de vie."
+description: "Atelier d'installation de Linux Mint chez Emmaüs Connect Grenoble, avec accompagnement technique, pour lutter contre l'obsolescence."
 date: 2026-11-20
 time: "14:00"
 groups: ["erica"]

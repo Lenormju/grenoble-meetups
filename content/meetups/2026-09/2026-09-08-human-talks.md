@@ -1,6 +1,6 @@
 ---
 title: "Human Talks Grenoble 🎤"
-description: "Quatre conférences de 10 minutes chacune sur des sujets variés — technos, méthodes, retours d'expérience, side projects — suivies d'un apéritif."
+description: "Quatre talks de 10 minutes chez SII : optimisations et gains réels, ce qui fait une bonne PR, visualiser le travail des agents et les sum types."
 date: 2026-09-08
 time: "19:00"
 groups: ["humantalks"]
