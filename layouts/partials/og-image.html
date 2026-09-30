@@ -247,4 +247,16 @@
     "alignx" "left" "x" $contentX "aligny" "top" "y" $subY)) -}}
 {{- end -}}
 
+{{- /* Événement annulé : une croix par-dessus tout le reste. Hugo ne sait
+       faire varier que du texte, mais `images.Overlay` permet de composer un
+       calque statique sous condition — la croix est la même sur toutes les
+       cards annulées. Ajoutée en dernier pour passer au-dessus du texte. */ -}}
+{{- if .Params.cancelled -}}
+  {{- $cross := resources.Get "og/card-cancelled.png" -}}
+  {{- if not $cross -}}
+    {{- errorf "og-image.html : assets/og/card-cancelled.png introuvable" -}}
+  {{- end -}}
+  {{- $filters = $filters | append (images.Overlay $cross 0 0) -}}
+{{- end -}}
+
 {{- return ($bg | images.Filter $filters).Permalink -}}

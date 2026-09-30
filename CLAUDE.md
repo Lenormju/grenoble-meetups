@@ -111,6 +111,10 @@ The layout is an agenda-style badge on the left, title and a secondary line on t
 
 When a multi-day event spans two months the badge footer becomes `SEPT. → OCT.`.
 
+Events with `cancelled: true` get a large red cross over the whole card, plus a
+veil that mutes the content underneath. It stays legible at a 200 px thumbnail,
+where a mere word would vanish.
+
 Things to know before touching it:
 
 - **Everything informative is large on purpose.** The card is usually seen as a thumbnail (chat preview, LinkedIn feed) where 30 px renders at ~8 px and becomes unreadable. Nothing informative goes below 38 px; only the domain is smaller, and it lives in the background, not in the template.
@@ -121,6 +125,7 @@ Things to know before touching it:
 - **Emoji are stripped from titles.** Go's text rendering has no colour-font support, so they would render as tofu.
 - **Margins are deliberately tight** (64 px left, 60 right, 72 top), because the channels this site posts to — LinkedIn and chat unfurls — render the full 1.91:1 without cropping. The "centred 80 %" safe area that image guides recommend only matters for Facebook mobile and Twitter `summary` cards, which crop to a square.
 - **The badge frame is static, only its text varies.** Hugo can only vary text, so any new shape must be identical on every card and belongs in `gen_og_background.py`. The geometry constants in that script and the anchor coordinates in `og-image.html` must be kept in sync by hand.
+- **`images.Overlay` is the escape hatch for a conditional shape.** The cancelled cross (`assets/og/card-cancelled.png`) is one static layer applied only when `cancelled: true`, appended last so it sits above the text. Use the same trick for any future shape that varies by *condition* rather than by *value* — Hugo still cannot draw one that varies per page.
 - Hugo names each card after a hash of its content, so editing an event yields a *new* URL — LinkedIn and Google caches are bypassed by construction.
 - `tools/gen_og_background.py` regenerates the background (`uv run --with pillow tools/gen_og_background.py`). Run it only when the background design changes; the PNG is committed.
 - Fonts must be **static** TTFs. Go cannot parse variable fonts — the system's `Ubuntu-B.ttf` and friends are symlinks to a single variable file and are unusable here.

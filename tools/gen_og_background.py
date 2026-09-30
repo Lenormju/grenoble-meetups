@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
-"""Génère assets/og/card-bg.png, le fond commun à toutes les cards sociales.
+"""Génère les deux images statiques des cards sociales.
 
-Seuls les éléments identiques sur toutes les cards sont dessinés ici (dégradé,
+- assets/og/card-bg.png       le fond commun à toutes les cards
+- assets/og/card-cancelled.png la croix apposée sur les événements annulés
+
+Seuls les éléments identiques d'une card à l'autre sont dessinés ici (dégradé,
 liseré ambre, cadre de la pastille date, domaine) ; le texte variable est
 ajouté au build par Hugo via `images.Text` dans layouts/partials/og-image.html.
 
+La croix est un calque à part parce que Hugo ne sait faire varier que du
+texte : elle est identique sur toutes les cards annulées et posée par
+`images.Overlay`, conditionné sur le champ `cancelled`.
+
     uv run --with pillow tools/gen_og_background.py
 
-À relancer uniquement si le visuel du fond change. Le PNG produit est commité.
+À relancer uniquement si le visuel change. Les PNG produits sont commités.
 """
 
 from pathlib import Path
@@ -16,6 +23,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "og" / "card-bg.png"
+OUT_CANCELLED = ROOT / "assets" / "og" / "card-cancelled.png"
 FONT_BOLD = ROOT / "assets" / "fonts" / "Inter-Bold.ttf"
 
 WIDTH, HEIGHT = 1200, 630
@@ -89,3 +97,28 @@ draw.text((MARGIN + tag_w, DOMAIN_Y), DOMAIN, font=f_domain, fill="#ffffff")
 OUT.parent.mkdir(parents=True, exist_ok=True)
 img.save(OUT, "PNG", optimize=True)
 print(f"{OUT.relative_to(ROOT)} — {img.size[0]}×{img.size[1]}")
+
+
+# ── Calque « annulé » ──────────────────────────────────────────────────────
+# Une grosse croix d'angle à angle, plus un voile qui éteint la card : la
+# mention doit rester lisible en vignette de 200 px, là où un simple mot
+# disparaîtrait. Le rouge est posé en semi-transparent pour que le titre et la
+# date restent déchiffrables dessous — la card informe encore, elle annonce
+# juste que ça n'aura pas lieu.
+VEIL = (8, 16, 40, 70)
+CROSS = (220, 38, 38, 235)      # #dc2626
+CROSS_EDGE = (127, 29, 29, 235) # #7f1d1d — liseré, pour détacher du bleu
+CROSS_W = 44
+
+layer = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+ld = ImageDraw.Draw(layer, "RGBA")
+ld.rectangle((0, 0, WIDTH, HEIGHT), fill=VEIL)
+
+# Liseré sombre puis rouge par-dessus : sans le liseré, le rouge se noie dans
+# le coin le plus foncé du dégradé.
+for w, colour in ((CROSS_W + 8, CROSS_EDGE), (CROSS_W, CROSS)):
+    ld.line((0, 0, WIDTH, HEIGHT), fill=colour, width=w)
+    ld.line((WIDTH, 0, 0, HEIGHT), fill=colour, width=w)
+
+layer.save(OUT_CANCELLED, "PNG", optimize=True)
+print(f"{OUT_CANCELLED.relative_to(ROOT)} — {layer.size[0]}×{layer.size[1]}")
