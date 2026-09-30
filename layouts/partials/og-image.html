@@ -3,13 +3,26 @@
   Consommée par seo.html (og:image, twitter:image) et par le JSON-LD Event de
   meetups/single.html — d'où l'appel via partialCached côté appelants.
 
-  L'image est composée au build : assets/og/card-bg.png (dégradé, accent ambre
-  et domaine, identiques partout) + le texte variable via images.Text. Hugo
-  nomme le fichier d'après un hash de son contenu, donc modifier un événement
-  produit une nouvelle URL, ce qui contourne les caches LinkedIn et Google.
+  L'image est composée au build : assets/og/card-bg.png (dégradé, liseré ambre,
+  cadre de la pastille et domaine, identiques partout) + le texte variable via
+  images.Text. Hugo nomme le fichier d'après un hash de son contenu, donc
+  modifier un événement produit une nouvelle URL, ce qui contourne les caches
+  LinkedIn et Google.
 
-  Trois gabarits partagent les mêmes emplacements : une ligne de contexte, un
-  titre, une ligne de complément.
+  Mise en page : une pastille type page d'agenda à gauche, le titre et une
+  ligne secondaire à droite. La pastille porte trois textes — un en-tête ambre,
+  un grand nombre, un pied — dont le sens change selon le type de page :
+
+      Événement         JEU / 8 / OCTOBRE
+      Plusieurs jours   JEU / 13 / « → 14 » en ambre / NOVEMBRE
+      Page de mois      AGENDA / 13 / ÉVÉNEMENTS
+      Accueil, /meetups CE MOIS / 13 / ÉVÉNEMENTS
+
+  Tout est dimensionné « en gros » : la card est le plus souvent vue en
+  vignette (aperçu de conversation, fil LinkedIn), où 30 px tombent à ~8 px.
+  Rien d'informatif ne descend sous 38 px ; seul le domaine, qui est une
+  mention de marque et non une information, est plus petit — et il vit dans le
+  fond, pas ici.
 */ -}}
 
 {{- $bg := resources.Get "og/card-bg.png" -}}
@@ -19,74 +32,131 @@
   {{- errorf "og-image.html : fond ou police introuvable dans assets/" -}}
 {{- end -}}
 
-{{- $marginX := 80 -}}
-{{- $textWidth := 1040 -}}
-{{- /* Largeur d'avance moyenne d'Inter, en fraction de la taille de police.
-       C'est l'approximation qui remplace les métriques de police absentes des
-       templates : seul réglage à ajuster si un titre déborde. */ -}}
-{{- $advance := 0.55 -}}
-{{- $titleZone := 230 -}}
-{{- $subMax := int (div $textWidth (mul 30 $advance)) -}}
+{{- /* Repères géométriques — doivent suivre tools/gen_og_background.py.
 
-{{- $meta := "" -}}
+       Les marges sont volontairement serrées (64 px à gauche, 56 à droite,
+       72 en haut) : les canaux visés ici — LinkedIn et les déplis de
+       conversation — affichent le 1,91:1 en entier, sans recadrage. La marge
+       de sécurité « 80 % centrés » que recommandent les guides ne vaut que
+       pour Facebook mobile et les cartes Twitter `summary`, qui recadrent en
+       carré et où ce site ne publie pas. */ -}}
+{{- $badgeCX := 200 -}}
+{{- $badgeTextW := 248 -}}
+{{- $contentX := 388 -}}
+{{- $contentW := 740 -}}
+{{- $zoneTop := 72 -}}
+{{- $zoneH := 414 -}}
+{{- $subSize := 44 -}}
+
+{{- /* Largeur d'avance d'Inter, en fraction de la taille de police : c'est
+       l'approximation qui remplace les métriques de police absentes des
+       templates.
+
+       Mesurée sur les 663 mots des titres du site, l'avance réelle a une
+       médiane de 0,543 mais un p90 de 0,646. Un budget de largeur se cale sur
+       un haut percentile, pas sur la médiane — sinon une ligne sur deux est
+       plus large que prévu et les titres à capitales (« Grenoble Game »)
+       touchent le bord. D'où 0,60, entre les deux. Les capitales de la
+       pastille sont encore plus larges, d'où un second facteur. */ -}}
+{{- $advance := 0.60 -}}
+{{- $advanceCaps := 0.72 -}}
+
+{{- $frDaysAbbr := slice "DIM" "LUN" "MAR" "MER" "JEU" "VEN" "SAM" -}}
+{{- $frMonthsAbbr := slice "JANV." "FÉVR." "MARS" "AVR." "MAI" "JUIN" "JUIL." "AOÛT" "SEPT." "OCT." "NOV." "DÉC." -}}
+
+{{- $head := "" -}}
+{{- $big := "" -}}
+{{- $amber := "" -}}
+{{- $foot := "" -}}
 {{- $title := .Site.Title -}}
 {{- $sub := .Site.Params.ogTagline | default .Site.Params.description -}}
 
-{{- if eq .Section "meetups" -}}
-  {{- if .IsPage -}}
-    {{- $frDays := slice "Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi" -}}
-    {{- $end := "" -}}
-    {{- with .Params.endDate -}}{{- $end = time . -}}{{- end -}}
-    {{- if $end -}}
-      {{- /* Événement sur plusieurs jours : la seule date de début serait trompeuse. */ -}}
-      {{- if eq ($end.Format "2006-01") (.Date.Format "2006-01") -}}
-        {{- $meta = printf "%d → %d %s %d" .Date.Day $end.Day (partial "fr-month-name.html" .Date) .Date.Year -}}
-      {{- else -}}
-        {{- $meta = printf "%d %s → %d %s %d" .Date.Day (partial "fr-month-name.html" .Date) $end.Day (partial "fr-month-name.html" $end) $end.Year -}}
-      {{- end -}}
-    {{- else -}}
-      {{- $meta = printf "%s %d %s %d" (index $frDays (int .Date.Weekday)) .Date.Day (partial "fr-month-name.html" .Date) .Date.Year -}}
-      {{- with .Params.time -}}
-        {{- $meta = printf "%s · %s" $meta . -}}
-      {{- end -}}
-    {{- end -}}
-    {{- $meta = upper $meta -}}
+{{- if and (eq .Section "meetups") .IsPage -}}
+  {{- $head = index $frDaysAbbr (int .Date.Weekday) -}}
+  {{- $big = string .Date.Day -}}
+  {{- $foot = upper (partial "fr-month-name.html" .Date) -}}
 
-    {{- /* Le rendu de texte de Go ne gère pas les emoji couleur : on les retire
-           du titre, sinon ils rendent en tofu. */ -}}
-    {{- $title = replaceRE `[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{2B00}-\x{2BFF}\x{FE0F}\x{200D}\x{20E3}]` "" .Title -}}
-    {{- $title = trim (replaceRE `\s+` " " $title) " " -}}
-
-    {{- $names := slice -}}
-    {{- range $slug := .Params.groups -}}
-      {{- with site.GetPage (printf "/groups/%s" $slug) -}}
-        {{- $names = $names | append .Title -}}
-      {{- end -}}
-    {{- end -}}
-    {{- $sub = delimit $names " · " -}}
-    {{- /* Certains événements portent le nom de leur groupe : ne pas le répéter. */ -}}
-    {{- if eq $sub $title -}}{{- $sub = "" -}}{{- end -}}
-
-  {{- else if .IsSection -}}
-    {{- if not .Parent.IsHome -}}
-      {{- $count := len .RegularPages -}}
-      {{- $meta = "MEETUPS TECH À GRENOBLE" -}}
-      {{- $title = .Title -}}
-      {{- $sub = cond (eq $count 0) "Aucun événement" (printf "%d événement%s" $count (cond (gt $count 1) "s" "")) -}}
+  {{- /* Événement sur plusieurs jours : le seul jour de début serait trompeur.
+         Le jour de fin passe en ambre sous le grand nombre, qui garde sa
+         taille — sinon ces événements paraîtraient moins importants que les
+         autres, ce qui est l'inverse de la réalité. */ -}}
+  {{- $end := "" -}}
+  {{- with .Params.endDate -}}{{- $end = time . -}}{{- end -}}
+  {{- if $end -}}
+    {{- $amber = printf "→ %d" $end.Day -}}
+    {{- if ne ($end.Format "2006-01") (.Date.Format "2006-01") -}}
+      {{- $startAbbr := index $frMonthsAbbr (sub (int (.Date.Format "1")) 1) -}}
+      {{- $endAbbr := index $frMonthsAbbr (sub (int ($end.Format "1")) 1) -}}
+      {{- $foot = printf "%s → %s" $startAbbr $endAbbr -}}
     {{- end -}}
   {{- end -}}
+
+  {{- /* Le rendu de texte de Go ne gère pas les emoji couleur : on les retire
+         du titre, sinon ils rendent en tofu. */ -}}
+  {{- $title = replaceRE `[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{2B00}-\x{2BFF}\x{FE0F}\x{200D}\x{20E3}]` "" .Title -}}
+  {{- $title = trim (replaceRE `\s+` " " $title) " " -}}
+
+  {{- $names := slice -}}
+  {{- range $slug := .Params.groups -}}
+    {{- with site.GetPage (printf "/groups/%s" $slug) -}}
+      {{- $names = $names | append .Title -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $groups := delimit $names " · " -}}
+  {{- /* Certains événements portent le nom de leur groupe : ne pas le répéter. */ -}}
+  {{- if eq $groups $title -}}{{- $groups = "" -}}{{- end -}}
+  {{- $parts := slice -}}
+  {{- with .Params.time -}}{{- $parts = $parts | append . -}}{{- end -}}
+  {{- with $groups -}}{{- $parts = $parts | append . -}}{{- end -}}
+  {{- $sub = delimit $parts " · " -}}
+  {{- /* Une conférence portant le nom de son groupe et sans horaire — cas des
+         événements sur plusieurs jours, où `time` n'a pas de sens — laisserait
+         la ligne vide et le titre flotter seul. La description, déjà saisie
+         pour le SEO, la remplit. */ -}}
+  {{- if not $sub -}}
+    {{- $sub = .Description -}}
+  {{- end -}}
+
+{{- else if and (eq .Section "meetups") .IsSection (not .Parent.IsHome) -}}
+  {{- $head = "AGENDA" -}}
+  {{- $big = string (len .RegularPages) -}}
+  {{- $foot = "ÉVÉNEMENTS" -}}
+  {{- $title = .Title -}}
+  {{- /* Le nombre est déjà dans la pastille : le répéter ici serait creux. */ -}}
+  {{- $sub = "Tous les meetups tech du mois" -}}
+
+{{- else -}}
+  {{- /* Accueil et /meetups/ : pas de date, la pastille compte le mois en cours. */ -}}
+  {{- $count := 0 -}}
+  {{- $currentMonth := now.Format "2006-01" -}}
+  {{- with site.GetPage "/meetups" -}}
+    {{- range .RegularPagesRecursive -}}
+      {{- if eq (.Date.Format "2006-01") $currentMonth -}}
+        {{- $count = add $count 1 -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $head = "CE MOIS" -}}
+  {{- $big = string $count -}}
+  {{- $foot = "ÉVÉNEMENTS" -}}
 {{- end -}}
 
 {{- /* Taille de titre adaptative : on retient la plus grande qui tient dans la
        zone. maxLines décroît moins vite que la capacité par ligne n'augmente,
        donc la boucle converge toujours. */ -}}
+{{- /* La hauteur réservée à la ligne secondaire sort du calcul du titre :
+       sans elle, un titre de cinq lignes remplissait la zone à lui seul et le
+       pavé complet débordait par le haut. */ -}}
+{{- $subReserve := 0 -}}
+{{- if $sub -}}{{- $subReserve = add 22 (int (mul $subSize 1.25)) -}}{{- end -}}
+
 {{- $size := 0 -}}
 {{- $titleText := "" -}}
-{{- range $candidate := slice 72 60 50 42 -}}
+{{- range $candidate := slice 104 92 80 70 60 52 -}}
   {{- if eq $size 0 -}}
-    {{- $linespacing := int (mul $candidate 0.28) -}}
-    {{- $maxLines := int (div $titleZone (add $candidate $linespacing)) -}}
-    {{- $maxChars := int (div $textWidth (mul $candidate $advance)) -}}
+    {{- $linespacing := int (mul $candidate 0.16) -}}
+    {{- $maxLines := int (div (sub $zoneH $subReserve) (add $candidate $linespacing)) -}}
+    {{- $maxChars := int (div $contentW (mul $candidate $advance)) -}}
     {{- $wrapped := partial "text-wrap.html" (dict "text" $title "max" $maxChars) -}}
     {{- if le (len (split $wrapped "\n")) $maxLines -}}
       {{- $size = $candidate -}}
@@ -95,29 +165,86 @@
   {{- end -}}
 {{- end -}}
 {{- if eq $size 0 -}}
-  {{- $size = 42 -}}
-  {{- $titleText = partial "text-wrap.html" (dict "text" $title "max" (int (div $textWidth (mul 42 $advance)))) -}}
+  {{- $size = 52 -}}
+  {{- $titleText = partial "text-wrap.html" (dict "text" $title "max" (int (div $contentW (mul 52 $advance)))) -}}
 {{- end -}}
 
-{{- $subText := partial "text-wrap.html" (dict "text" $sub "max" $subMax) -}}
-{{- $subLines := split $subText "\n" -}}
-{{- if gt (len $subLines) 2 -}}
-  {{- $subText = printf "%s…" (delimit (first 2 $subLines) "\n") -}}
+{{- $lead := add $size (int (mul $size 0.16)) -}}
+{{- $titleLines := len (split $titleText "\n") -}}
+{{- $subLead := int (mul $subSize 1.25) -}}
+
+{{- /* La ligne secondaire prend la place que le titre lui laisse, entre une et
+       trois lignes. Un plafond fixe à deux coupait les descriptions en plein
+       milieu alors que les titres d'un mot — ceux qui ont justement besoin de
+       la description — laissent la place pour une troisième. */ -}}
+{{- $maxSubLines := int (div (sub (sub $zoneH (mul $titleLines $lead)) 22) $subLead) -}}
+{{- if gt $maxSubLines 4 -}}{{- $maxSubLines = 4 -}}{{- end -}}
+{{- if lt $maxSubLines 1 -}}{{- $maxSubLines = 1 -}}{{- end -}}
+
+{{- $subText := "" -}}
+{{- with $sub -}}
+  {{- $subText = partial "text-wrap.html" (dict "text" . "max" (int (div $contentW (mul $subSize $advance)))) -}}
+  {{- $subLines := split $subText "\n" -}}
+  {{- if gt (len $subLines) $maxSubLines -}}
+    {{- $subText = printf "%s…" (delimit (first $maxSubLines $subLines) "\n") -}}
+  {{- end -}}
 {{- end -}}
+
+{{- /* Le pavé titre + ligne secondaire est centré d'un bloc, et la ligne
+       secondaire suit le titre au lieu d'être à une ordonnée fixe : c'est ce
+       qui évite le trou sous les titres courts. */ -}}
+{{- $blockH := mul $titleLines $lead -}}
+{{- if $subText -}}
+  {{- $blockH = add $blockH (add 22 (mul (len (split $subText "\n")) $subLead)) -}}
+{{- end -}}
+{{- $titleY := add $zoneTop (int (div (sub $zoneH $blockH) 2)) -}}
+{{- $subY := add $titleY (add (mul $titleLines $lead) 22) -}}
+
+{{- /* Pastille : les ordonnées changent selon qu'il y a ou non la ligne ambre
+       du jour de fin, qui remonte le grand nombre pour lui faire place. */ -}}
+{{- $bigSize := cond (ne $amber "") 152 180 -}}
+{{- if gt (strings.RuneCount $big) 2 -}}{{- $bigSize = 132 -}}{{- end -}}
+{{- $bigY := cond (ne $amber "") 258 283 -}}
+{{- $footY := cond (ne $amber "") 412 408 -}}
+
+{{- /* Le pied va d'« OCTOBRE » (7) à « SEPT. → OCT. » (12) en passant par
+       « ÉVÉNEMENTS » (10) : on le rétrécit par paliers plutôt que de
+       l'abréger. Même principe que le titre — la plus grande taille qui
+       tient. */ -}}
+{{- $footChars := strings.RuneCount $foot -}}
+{{- $footSize := 0 -}}
+{{- range $candidate := slice 40 36 32 28 -}}
+  {{- if eq $footSize 0 -}}
+    {{- if le $footChars (int (div $badgeTextW (mul $candidate $advanceCaps))) -}}
+      {{- $footSize = $candidate -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $footSize 0 -}}{{- $footSize = 28 -}}{{- end -}}
 
 {{- $filters := slice -}}
-{{- with $meta -}}
+{{- $filters = $filters | append (images.Text $head (dict
+  "font" $fontBold "size" 38 "color" "#7c2d12"
+  "alignx" "center" "x" $badgeCX "aligny" "center" "y" 119)) -}}
+{{- $filters = $filters | append (images.Text $big (dict
+  "font" $fontBold "size" $bigSize "color" "#ffffff"
+  "alignx" "center" "x" $badgeCX "aligny" "center" "y" $bigY)) -}}
+{{- with $amber -}}
   {{- $filters = $filters | append (images.Text . (dict
-    "font" $fontRegular "size" 30 "linespacing" 8 "color" "#dbeafe"
-    "alignx" "left" "x" $marginX "aligny" "top" "y" 130)) -}}
+    "font" $fontBold "size" 62 "color" "#fbbf24"
+    "alignx" "center" "x" $badgeCX "aligny" "center" "y" 352)) -}}
 {{- end -}}
+{{- $filters = $filters | append (images.Text $foot (dict
+  "font" $fontBold "size" $footSize "color" "#dbeafe"
+  "alignx" "center" "x" $badgeCX "aligny" "center" "y" $footY)) -}}
+
 {{- $filters = $filters | append (images.Text $titleText (dict
-  "font" $fontBold "size" $size "linespacing" (int (mul $size 0.28)) "color" "#ffffff"
-  "alignx" "left" "x" $marginX "aligny" "center" "y" 300)) -}}
+  "font" $fontBold "size" $size "linespacing" (int (mul $size 0.16)) "color" "#ffffff"
+  "alignx" "left" "x" $contentX "aligny" "top" "y" $titleY)) -}}
 {{- with $subText -}}
   {{- $filters = $filters | append (images.Text . (dict
-    "font" $fontRegular "size" 30 "linespacing" 10 "color" "#bfdbfe"
-    "alignx" "left" "x" $marginX "aligny" "top" "y" 448)) -}}
+    "font" $fontRegular "size" $subSize "linespacing" (sub $subLead $subSize) "color" "#dbeafe"
+    "alignx" "left" "x" $contentX "aligny" "top" "y" $subY)) -}}
 {{- end -}}
 
 {{- return ($bg | images.Filter $filters).Permalink -}}

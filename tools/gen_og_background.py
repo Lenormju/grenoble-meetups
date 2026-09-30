@@ -2,8 +2,8 @@
 """Génère assets/og/card-bg.png, le fond commun à toutes les cards sociales.
 
 Seuls les éléments identiques sur toutes les cards sont dessinés ici (dégradé,
-barre d'accent, domaine) ; le texte variable est ajouté au build par Hugo via
-`images.Text` dans layouts/partials/og-image.html.
+liseré ambre, cadre de la pastille date, domaine) ; le texte variable est
+ajouté au build par Hugo via `images.Text` dans layouts/partials/og-image.html.
 
     uv run --with pillow tools/gen_og_background.py
 
@@ -19,23 +19,32 @@ OUT = ROOT / "assets" / "og" / "card-bg.png"
 FONT_BOLD = ROOT / "assets" / "fonts" / "Inter-Bold.ttf"
 
 WIDTH, HEIGHT = 1200, 630
-MARGIN = 80
+MARGIN = 64
 
-# Palette du site (voir CLAUDE.md) — bleu ciel → bleu roi, accent ambre.
-GRAD_FROM = (147, 197, 253)  # #93c5fd
-GRAD_TO = (29, 78, 216)      # #1d4ed8
+# Bleu profond plutôt que le bleu ciel du favicon : la card est vue sur le fil
+# blanc de LinkedIn, où un fond sombre ressort, et le texte blanc y gagne le
+# contraste qui manquait en haut à gauche de l'ancien dégradé.
+GRAD_FROM = (37, 99, 235)   # #2563eb
+GRAD_TO = (12, 30, 74)      # #0c1e4a
 AMBER = "#f59e0b"
 
-# Barre d'accent, en haut à gauche.
-BAR = (MARGIN, 84, MARGIN + 88, 92)
+# Liseré vertical, bord gauche : repère de marque qui survit à la vignette.
+RULE_W = 12
+
+# Cadre de la pastille date. Les textes (jour, mois, nombre) sont posés par
+# Hugo ; seul le cadre est ici. Voir les repères dans og-image.html.
+BADGE_X, BADGE_Y, BADGE_W, BADGE_H = MARGIN, 78, 272, 372
+BADGE_HEAD_H = 82
+BADGE_RADIUS = 22
 
 DOMAIN = "grenoble-meetups.fr"
-DOMAIN_Y = 552
+DOMAIN_Y = 556
+DOMAIN_SIZE = 26
 
 
 def diagonal_gradient(size, start, end):
     """Dégradé diagonal ↘, calculé en petit puis agrandi (lisse et rapide)."""
-    w, h = 80, 42
+    w, h = 96, 50
     pixels = []
     for y in range(h):
         for x in range(w):
@@ -46,13 +55,32 @@ def diagonal_gradient(size, start, end):
     return small.resize(size, Image.Resampling.LANCZOS)
 
 
+# L'image reste en RGB : c'est ce qui fait que le mode « RGBA » du Draw
+# compose les fills semi-transparents au lieu d'écraser le canal alpha.
 img = diagonal_gradient((WIDTH, HEIGHT), GRAD_FROM, GRAD_TO)
-draw = ImageDraw.Draw(img)
+draw = ImageDraw.Draw(img, "RGBA")
 
-draw.rounded_rectangle(BAR, radius=4, fill=AMBER)
+draw.rectangle((0, 0, RULE_W, HEIGHT), fill=AMBER)
 
-# Pied de card : « </> » en ambre puis le domaine en blanc.
-f_domain = ImageFont.truetype(str(FONT_BOLD), 28)
+# Corps de la pastille : blanc très transparent, pour rester lisible quel que
+# soit l'endroit du dégradé sur lequel il tombe.
+draw.rounded_rectangle(
+    (BADGE_X, BADGE_Y, BADGE_X + BADGE_W, BADGE_Y + BADGE_H),
+    radius=BADGE_RADIUS, fill=(255, 255, 255, 30),
+)
+# Bandeau ambre : arrondi en haut, carré en bas pour se raccorder au corps.
+draw.rounded_rectangle(
+    (BADGE_X, BADGE_Y, BADGE_X + BADGE_W, BADGE_Y + BADGE_HEAD_H),
+    radius=BADGE_RADIUS, fill=AMBER,
+)
+draw.rectangle(
+    (BADGE_X, BADGE_Y + BADGE_RADIUS, BADGE_X + BADGE_W, BADGE_Y + BADGE_HEAD_H),
+    fill=AMBER,
+)
+
+# Pied de card : « </> » en ambre puis le domaine en blanc. Volontairement le
+# seul texte sous 38 px — c'est la mention de marque, pas l'information.
+f_domain = ImageFont.truetype(str(FONT_BOLD), DOMAIN_SIZE)
 tag = "</> "
 draw.text((MARGIN, DOMAIN_Y), tag, font=f_domain, fill=AMBER)
 tag_w = draw.textlength(tag, font=f_domain)
