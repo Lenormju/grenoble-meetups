@@ -24,8 +24,8 @@
 {{ $organizers := slice }}
 {{ range $slug := .Params.groups }}
   {{ with site.GetPage (printf "/groups/%s" $slug) }}
-    {{ $organizer := dict "@type" "Organization" "name" .Title }}
-    {{ with .Params.link }}{{ $organizer = merge $organizer (dict "url" .) }}{{ end }}
+    {{/* `url` de l'organisateur : son site, à défaut sa page groupe (champ requis par Google). */}}
+    {{ $organizer := dict "@type" "Organization" "name" .Title "url" (default .Permalink .Params.link) }}
     {{ $organizers = $organizers | append $organizer }}
   {{ end }}
 {{ end }}
