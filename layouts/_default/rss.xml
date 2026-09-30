@@ -1,4 +1,5 @@
 {{- $pages := where .Site.RegularPages "Section" "meetups" -}}
+{{- $pages = where $pages "Params.cancelled" "ne" true -}}
 {{- $pages = sort $pages "File.Path" "desc" | first 50 -}}
 {{- `<?xml version="1.0" encoding="UTF-8"?>` | safeHTML }}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

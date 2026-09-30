@@ -59,7 +59,8 @@ The offer's `validFrom` needs no front matter: it comes from the file's Git comm
 
 - `month-calendar.html` drops the event from the calendar grid (`where .events "Params.cancelled" "ne" true`), so it disappears from the homepage and month views.
 - `meetups/single.html` renders `Cet événement a été annulé.` on the detail page and sets the `Event` JSON-LD `eventStatus` to `EventCancelled`.
-- **The RSS feed does not filter it.** `_default/rss.xml` selects on `Section` alone, so a cancelled event still appears in `/index.xml` if it falls within the newest 50 — two of the three currently do. Worth knowing before assuming `cancelled` hides an event everywhere.
+- `_default/rss.xml` filters it out of `/index.xml`, using the same `"ne" true` idiom as the calendar. A cancelled event is not news, and the feed is capped at 50 items, so dropping it lets a real event take the slot.
+- `_default/calendar.ics` **keeps** the `VEVENT` and marks it `STATUS:CANCELLED` (plus `SEQUENCE:1`). This is deliberately the opposite of the RSS treatment: subscribers already hold the event, and a `VEVENT` that simply vanishes from a published feed is not a cancellation signal — most clients keep showing the stale entry. `STATUS:CANCELLED` tells them to strike it, and the bumped `SEQUENCE` (everything else is implicitly 0) marks it as a revision so clients accept it over the copy they cached.
 
 Convention: the three existing files all put `cancelled: true` on the line *above* `title:`. `description` stays directly after `title:` regardless, so it lands on line 4 in those files rather than line 3.
 
@@ -89,7 +90,9 @@ linkedinPost: https://...   # optional
 - `layouts/partials/og-image.html` — builds the social card, returns its absolute URL
 - `layouts/partials/text-wrap.html` — line-breaking helper for `images.Text`
 - `layouts/partials/banner-afup.html` — site-wide banner for the AFUP open letter (temporary campaign; remove the partial, its call in `baseof.html` and the `.support-banner` CSS when it ends)
-- `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists all individual meetup events sorted by date (newest first, max 50)
+- `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists individual meetup events sorted by date (newest first, max 50), excluding cancelled ones
+- `layouts/_default/calendar.ics` — iCal feed at `/meetups.ics`; every event including cancelled ones, which carry `STATUS:CANCELLED` (see "Cancelled events"). Defines an `ics-escape` template for RFC 5545 escaping and assumes a 2-hour duration
+- `layouts/partials/ics-time.html` — normalises a `time` value (`soir`, `19:00`…) to `HH:MM` for the iCal feed
 
 ## Social cards (`og:image`)
 

@@ -39,6 +39,10 @@ LOCATION:{{ if .address }}{{ template "ics-escape" (printf "%s, %s" .name .addre
 {{- with .Params.description }}
 DESCRIPTION:{{ template "ics-escape" . }}
 {{- end }}
+{{- if .Params.cancelled }}
+STATUS:CANCELLED
+SEQUENCE:1
+{{- end }}
 URL:{{ .Permalink }}
 END:VEVENT
 {{- end }}
