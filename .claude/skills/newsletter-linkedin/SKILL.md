@@ -18,7 +18,8 @@ Lire tous les fichiers du mois. Vérifier pour chaque événement **actif** (non
 
 | Champ | Règle |
 |---|---|
-| `description` | Présente et non vide |
+| `description` | Présente et non vide (jamais de placeholder générique partagé) |
+| `description` | **Distincte** de celle des autres événements — voir ci-dessous |
 | `links` | Au moins un lien — ou note explicite que c'est intentionnel |
 | Chaque lien | A un `label` (sinon le site l'affiche mal) |
 | `time` | Renseigné (`HH:MM`, `midi`, `après-midi`, ou `soir`) |
@@ -30,6 +31,13 @@ Signaler également :
 - Les événements multi-jours sans `endDate`
 - Les doublons potentiels (même titre, même date)
 - Le `_index.md` du mois (doit exister avec `title` et `date`)
+- **Les `description` dupliquées**, y compris avec les mois passés — une même phrase sur plusieurs
+  pages est un signal de contenu dupliqué, et c'est le champ qui devrait justement les distinguer
+  dans les résultats de recherche. Les séries récurrentes (Human Talks, Game Dev, SICP…) sont les
+  premières concernées : chaque occurrence mérite sa propre description (cf. skill `add-meetup`).
+  ```bash
+  grep -rh '^description:' content/meetups --include='*.md' | sort | uniq -c | awk '$1>1'
+  ```
 
 Présenter les résultats sous forme de tableau : OK / ⚠️ à vérifier / ❌ bloquant.
 

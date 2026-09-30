@@ -30,6 +30,7 @@ content/meetups/
 ```yaml
 ---
 title: "Event name with emoji at end 🎤"
+description: "One-sentence summary for SEO"  # required — see the add-meetup skill for how to obtain one
 date: YYYY-MM-DD
 time: "soir"       # midi | après-midi | soir | HH:MM (e.g. "19:00") — omit if unknown
 endDate: YYYY-MM-DD  # optional, for multi-day events
@@ -40,7 +41,6 @@ location:            # optional
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"
-description: "One-sentence summary for SEO"  # recommended
 price: "payant"      # optional — omit if free (the default), a number for a known price in EUR
 ---
 Optional longer description in Markdown.

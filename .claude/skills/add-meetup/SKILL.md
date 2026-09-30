@@ -21,7 +21,7 @@ linkedinPost: https://...   # optional — omit if not provided
 ```yaml
 ---
 title: "<Event title with emoji at end>"
-description: ""  # Une phrase décrivant le meetup
+description: "..."  # required — one sentence; see "Descriptions" for how to obtain it
 date: YYYY-MM-DD
 time: "19:00"   # HH:MM strongly preferred (drives the iCal feed's event start); "midi" / "après-midi" / "soir" accepted as a fallback — omit only if truly unknown
 groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
@@ -58,9 +58,11 @@ conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
    - Create one `.md` file per event.
-3. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), une description (une phrase décrivant le meetup), le lieu (nom, adresse, lien maps), et/ou un lien."*
-4. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
-5. List every file created so the user can verify before committing.
+3. **Fill the description** by working down the "Descriptions" list — resolve the event's link before
+   settling for a derived one. Report which ones you sourced and which you derived.
+4. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), le lieu (nom, adresse, lien maps), et/ou un lien."*
+5. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
+6. List every file created so the user can verify before committing.
 
 ## Link labels
 
@@ -95,11 +97,92 @@ isn't a registration page.
 
 ## Descriptions
 
-Same rule as titles: if no description is given, **ask** rather than composing one. A `description` is optional front matter — omitting it is always better than inventing a summary that misrepresents the event.
+**A description must always be present**, and unlike a title it may be *derived* rather than only
+sourced or asked for. The difference is what each field asserts: an invented title claims the event's
+identity, so a missing one blocks the file entirely (see "Titles"); a description derived from the
+title and group asserts nothing the title doesn't already say, so it's safe to write.
 
-Keep the event's `description` field and any longer body text as close to the source wording as possible — do not rephrase or restyle text that's already usable. Only edit when needed (e.g. trimming to one sentence, fixing a typo, adding punctuation, light grammar fixes), and prefer the smallest change that works. If you do change or write wording (including writing a `description` from scratch when none was given), tell the user what you added or changed so they can review it.
+It feeds the meta description, the Open Graph card and the `Event` JSON-LD; without it `seo.html`
+falls back to `"<Title> — meetup tech à Grenoble"`, the same generic shape on every page. Treating
+it as optional is how 20 events once shipped with no description at all.
+
+Work down this list, and only move to the next step when the one above genuinely fails:
+
+1. **Use the description the user gave**, as close to the source wording as possible.
+2. **Summarise the event's own body.** If the file has Markdown below the front matter, the content is
+   already there and needs no fetch — condense it to one sentence. Human Talks files list their four
+   talks in the body, which is all a good description needs: *"Quatre talks de 10 minutes :
+   programmation réactive, IA agentique et relecture de code, sécurité électrique et compilation vers
+   WebAssembly."* Take the wording from the body verbatim; a talk titled *Sécurité électrique* must
+   not become *sûreté*.
+3. **Recover it from the event's own link.** Resolve the URL (see "Resolving event links" below) and
+   take the description from the event page. This is not inventing — it's the organiser's own words.
+4. **Ask the user whenever the link can't be fetched.** Auth-walled sources — Discord, LinkedIn — are
+   not a dead end for *them*: they are usually a member of that Discord or can open that post, so
+   they can paste the text. Say which URL you couldn't reach and why, and ask. Don't skip silently to
+   step 5; a pasted blurb beats a derived sentence every time.
+5. **Derive one from the title and the organising group**, once asking has come up empty.
+   `Découverte du STM32` at the Hackerspace genuinely is *"Atelier de découverte du microcontrôleur
+   STM32, proposé par le Hackerspace de Grenoble."* Stay strictly inside what the title and the group
+   already assert — no speakers, no topics, no venue detail that isn't on file. Derived ones come out
+   shorter (65–95 chars) than sourced ones (125–155); that's honest, not a defect.
+
+Steps 1–4 are the organiser's words and can be trusted as fact. Step 5 is your own sentence, so it
+gets the tightest leash. When a batch has several unfetchable links, ask about them **together** in
+one message rather than one question per event.
+
+**Never write a shared placeholder.** Several pages carrying one identical generic sentence is worse
+than the generated fallback — that at least varies with the title — and it destroys
+`grep -rL '^description:' content/meetups --include='*.md'` as the way to find what's still missing.
+
+Keep given wording close to the source: don't rephrase or restyle text that's already usable. Edit
+only as needed (trimming to one sentence, fixing a typo, adding punctuation), preferring the
+smallest change that works. Whenever you write or change wording — including deriving one at step 4
+— tell the user what you added so they can review it.
+
+Place `description` **directly after `title:`** — all 113 event files do. That's line 3 normally, and
+line 4 in the three cancelled events, which carry `cancelled: true` on line 2. Anchor on the `title:`
+line, not on a line number. (The front-matter example in `CLAUDE.md` once showed `description` after
+`links:`; the files are the authority.)
+
+## Resolving event links
+
+Source lists are usually pasted from LinkedIn, so the URLs are rarely the event page itself.
+
+- **`lnkd.in/xxxx` (LinkedIn shortener).** Does *not* send an HTTP redirect — it returns 200 with a
+  JS interstitial, so `curl -I` and `%{redirect_url}` both come back empty. The real target is in
+  the page body:
+  ```bash
+  curl -sS "https://lnkd.in/dXXXXXXX" | grep -oE 'https?://[^"'"'"'<> ]+' \
+    | grep -viE 'lnkd\.in|licdn|w3\.org|schema\.org' | head -3
+  ```
+  These mostly resolve to Meetup event pages, which `WebFetch` reads fine.
+- **`discord.com/channels/...` needs auth and is never fetchable.** Don't spend a fetch on it — **ask
+  the user instead** (step 4 of "Descriptions"); they're usually in that Discord. Note too that
+  several different events often share *one* Discord channel link, so the URL isn't event-specific
+  even in principle, and the user may have to look up the right message.
+- **`linkedin.com/feed/update/...`** is not fetchable either — same move: ask the user to paste the
+  post text. They may confirm it holds no event detail, which is the answer that unlocks step 5.
+- **Hackerspace has a machine-readable calendar.** `content/groups/hackerspace/_index.md` points at
+  a [Gancio](https://gancio.ghspace.fr/) instance with a JSON API:
+  ```bash
+  curl -sS "https://gancio.ghspace.fr/api/events?start=$(date +%s)&end=$(($(date +%s)+5184000))"
+  ```
+  Each entry carries `title`, `start_datetime`, `description` and place — ideal for adding
+  Hackerspace events. **It only serves upcoming events**: a window in the past returns `[]`, so
+  descriptions must be captured while the event is still ahead. Once it's gone, it's gone.
 
 ## Recurring meetup conventions
+
+**Give each occurrence its own description.** A series has one fixed *format*, but the description
+should describe *this* month's edition — the talk titles, the topic, the episode. Copying one
+canonical sentence onto every occurrence is what left ~32 pages sharing 10 strings, and it wastes
+the one field that could distinguish them in search results. The fixed descriptions below are
+fallbacks for when the lineup genuinely isn't known yet, not the default.
+
+Keep occurrences distinct even when the source blurb is identical for all of them (Meetup serves one
+recurring blurb for the whole `robot-simulator-python` series, for instance) — vary the phrasing
+across the same facts rather than pasting one string N times.
 
 ### Human Talks Grenoble (`groups: ["humantalks"]`)
 
@@ -108,7 +191,7 @@ Recurring on the 2nd Tuesday of each month (with exceptions). Always 4 talks of 
 ```yaml
 ---
 title: "Human Talks Grenoble 🎤"
-description: "Quatre conférences de 10 minutes chacune sur des sujets variés — technos, méthodes, retours d'expérience, side projects — suivies d'un apéritif."
+description: "<voir ci-dessous — nommer les talks du mois quand ils sont connus>"
 date: YYYY-MM-DD
 time: "19:00"
 groups: ["humantalks"]
@@ -129,5 +212,9 @@ Au programme, 4 talks de 10 minutes :
 
 - Slug: `YYYY-MM-DD-human-talks.md`
 - List known talks in the body as `- *Titre* — Prénom NOM`. Omit unknown talks (don't add placeholders).
+- **The description names the month's talks** — that's step 2 of "Descriptions", since the body
+  already lists them. Only when the lineup is still unknown, fall back to the generic
+  *"Quatre conférences de 10 minutes chacune sur des sujets variés — technos, méthodes, retours
+  d'expérience, side projects — suivies d'un apéritif."*, and replace it once the talks are announced.
 - The `humantalks.com/cities/grenoble/events/<id>` link is the specific event page (e.g. `https://humantalks.com/cities/grenoble/events/1228`). It serves both purposes on its own — it's where the talk lineup and slides get published, *and* it carries the "Proposer un talk" button — hence the single "Voir ou proposer un talk" link. Don't also add the generic `/cities/grenoble/` city page; it's redundant. Ask for the event URL if not given; omit that link line if the user doesn't have it.
 - Some older event files still carry the previous two-link form (`"Voir les talks"` + a separate `"Proposer un talk"`). That's intentional — leave them as they are.
