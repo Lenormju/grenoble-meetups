@@ -51,7 +51,9 @@ Optional longer description in Markdown.
 
 The offer's `url` is the first entry of `links`, falling back to the event's own page when the event has no link (Google requires the field).
 
-The offer's `validFrom` needs no front matter: it comes from the file's Git commit date (`enableGitInfo`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
+The offer's `validFrom` needs no front matter: it comes from the **first** commit touching the file (`enableGitInfo`, via `.GitInfo.Ancestors.Reverse`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
+
+It must be the *first* commit, not `.GitInfo`'s own (which is the **latest**). The first commit is the real publication date and it is immutable — no later edit can rewrite it. Using the latest meant the value drifted on every subsequent edit: 32 of 114 pages had already silently moved off their publication date that way, and a single repo-wide reformat reset 36 more at once. Deriving published data from git history is only safe if you reach for the end of it that doesn't move.
 
 ### Field naming and ordering
 

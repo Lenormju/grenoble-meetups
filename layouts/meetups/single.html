@@ -43,9 +43,19 @@
   {{ if eq (printf "%v" .) "payant" }}{{ $priceKnown = false }}{{ else }}{{ $price = . }}{{ end }}
 {{ end }}
 {{ if $priceKnown }}{{ $offer = merge $offer (dict "price" $price "priceCurrency" "EUR") }}{{ end }}
-{{/* `validFrom` : mise en ligne de l'événement (date du commit), bornée pour ne jamais dépasser la date de l'événement. */}}
+{{/* `validFrom` : mise en ligne de l'événement, bornée pour ne jamais dépasser la
+     date de l'événement. C'est le *premier* commit du fichier qui compte, pas le
+     dernier : le premier est la vraie date de publication, et il est immuable —
+     aucune modification ultérieure ne peut le réécrire. Avec `.GitInfo` seul
+     (= dernier commit), un simple reformatage de tout le dépôt réinitialisait la
+     valeur sur chaque fichier touché. `.Ancestors` est trié du plus récent au
+     plus ancien, d'où le `.Reverse`; il est vide quand le fichier n'a qu'un commit. */}}
 {{ $validFrom := .Date }}
-{{ with .GitInfo }}{{ if .AuthorDate.Before $.Date }}{{ $validFrom = .AuthorDate }}{{ end }}{{ end }}
+{{ with .GitInfo }}
+  {{ $first := . }}
+  {{ with .Ancestors }}{{ $first = index .Reverse 0 }}{{ end }}
+  {{ if $first.AuthorDate.Before $.Date }}{{ $validFrom = $first.AuthorDate }}{{ end }}
+{{ end }}
 {{ $offer = merge $offer (dict "validFrom" ($validFrom.Format "2006-01-02T15:04:05")) }}
 {{ $eventSchema = merge $eventSchema (dict "offers" $offer) }}
 <script type="application/ld+json">{{ $eventSchema | jsonify | safeJS }}</script>
