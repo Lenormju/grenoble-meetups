@@ -22,12 +22,27 @@ Lire tous les fichiers du mois. Vérifier pour chaque événement **actif** (non
 | `description` | **Distincte** de celle des autres événements — voir ci-dessous |
 | `links` | Au moins un lien — ou note explicite que c'est intentionnel |
 | Chaque lien | A un `label` (sinon le site l'affiche mal) |
-| `time` | Renseigné (`HH:MM`, `midi`, `après-midi`, ou `soir`) |
+| `time` | Renseigné — absent, l'événement sort en « toute la journée » dans l'agenda |
+| `time` | **`HH:MM` attendu.** Une valeur floue (`midi` / `après-midi` / `soir`) est *provisoire*, pas *renseignée* : la signaler comme « heure à confirmer » — voir ci-dessous |
 | `title` | Se termine par un emoji |
 | `location.address` | Présente si `location.name` est renseigné |
 | Fichier | Nom = `YYYY-MM-DD-slug.md`, date cohérente avec le front matter |
 
 Signaler également :
+- **Les heures provisoires à confirmer.** Une valeur floue sur un événement *à venir* est une
+  promesse en attente : quelqu'un a écrit `soir` parce que l'horaire n'était pas publié, avec
+  l'intention de le corriger. Rien dans les données ne distingue cette promesse d'un `soir`
+  définitif sur un événement passé — et ce skill tourne toujours sur un mois à venir, donc **toute
+  valeur floue qu'il rencontre est provisoire par construction**. C'est aussi le moment le moins
+  coûteux pour poser la question : on est déjà en contact avec les organisateurs pour le post.
+
+  ```bash
+  # heures encore provisoires sur le mois cible (adapter YYYY-MM)
+  grep -rlE '^time: "(midi|après-midi|soir)"' content/meetups/YYYY-MM/
+  ```
+
+  À signaler, pas à corriger soi-même : si l'horaire réel n'est toujours pas annoncé, `soir` reste
+  la bonne valeur — l'omettre produirait un événement « toute la journée », ce qui est pire.
 - Les événements multi-jours sans `endDate`
 - Les doublons potentiels (même titre, même date)
 - Le `_index.md` du mois (doit exister avec `title` et `date`)
