@@ -1,8 +1,8 @@
 ---
 title: "TupperRust 🦀"
 description: "Rencontre autour de Rust et ses applications."
-date: "2026-10-12"
-time: "19:00"
+startDate: "2026-10-12"
+startTime: "19:00"
 groups: ["tupper-rust"]
 location:
   name: "Kaizen Solutions"

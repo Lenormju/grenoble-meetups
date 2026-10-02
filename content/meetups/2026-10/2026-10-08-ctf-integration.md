@@ -1,8 +1,8 @@
 ---
 title: "CTF d'intégration — réservé aux étudiants 🚩"
 description: "Réservé aux étudiants : challenge Capture the Flag ouvert aux débutants, pour découvrir la sécurité informatique par la pratique."
-date: "2026-10-08"
-time: "14:00"
+startDate: "2026-10-08"
+startTime: "14:00"
 groups: ["securimag"]
 location:
   name: "Ensimag — bâtiment H"

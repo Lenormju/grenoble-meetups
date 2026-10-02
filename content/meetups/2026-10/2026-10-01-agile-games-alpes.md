@@ -1,9 +1,9 @@
 ---
 title: "Agile Games Alpes 2026 🎲"
 description: "Trois jours de jeux sérieux pour explorer l'agilité sous tous ses angles, améliorer ses compétences d'animation et rencontrer des passionnés."
-date: "2026-10-01"
+startDate: "2026-10-01"
+startTime: "18:30"
 endDate: "2026-10-03"
-time: "18:30"
 endTime: "16:00"
 groups: ["cara"]
 price: "payant"

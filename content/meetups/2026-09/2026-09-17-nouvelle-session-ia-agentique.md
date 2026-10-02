@@ -1,8 +1,8 @@
 ---
 title: "Nouvelle session IA agentique 🤖"
 description: "Session pratique pour connecter Claude à ses outils du quotidien (Gmail, Google Calendar) : brouillons de réponses automatiques, to-do du jour générée à partir des emails et de l'agenda."
-date: "2026-09-17"
-time: "18:00"
+startDate: "2026-09-17"
+startTime: "18:00"
 groups: ["aixperience"]
 location:
   name: "Le Minimistan"

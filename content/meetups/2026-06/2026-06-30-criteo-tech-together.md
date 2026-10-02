@@ -1,8 +1,8 @@
 ---
 title: "Criteo Tech Together : LLM et réseaux de capteurs 🤖"
 description: "Deux conférences techniques chez Criteo : fine-tuning de LLMs en production et impacts environnementaux des réseaux de capteurs en bâtiment, suivies d'un panel et d'un networking."
-date: "2026-06-30"
-time: "18:00"
+startDate: "2026-06-30"
+startTime: "18:00"
 groups: ["criteo-tech-together"]
 location:
   name: "Criteo"

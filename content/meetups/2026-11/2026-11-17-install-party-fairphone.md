@@ -1,8 +1,8 @@
 ---
 title: "Install Party et rencontre Fairphone 📱"
 description: "La Guilde du libre installe un système d'exploitation libre sur votre ordinateur et réunit les utilisateurs de Fairphone autour de leurs retours."
-date: "2026-11-17"
-time: "19:00"
+startDate: "2026-11-17"
+startTime: "19:00"
 groups: ["guilde-du-libre"]
 location:
   name: "La Turbine.Coop"

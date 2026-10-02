@@ -1,8 +1,8 @@
 ---
 title: "Install Party et rencontre Fairphone 📱"
 description: "Venez avec votre machine et repartez avec un OS libre configuré, puis échangez avec les utilisateurs de Fairphone — pensez à sauvegarder vos données."
-date: "2026-12-15"
-time: "19:00"
+startDate: "2026-12-15"
+startTime: "19:00"
 groups: ["guilde-du-libre"]
 location:
   name: "La Turbine.Coop"

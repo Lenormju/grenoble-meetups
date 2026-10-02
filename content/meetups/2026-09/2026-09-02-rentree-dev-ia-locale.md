@@ -1,8 +1,8 @@
 ---
 title: "Rentrée Dev & IA locale 🤖"
 description: "Rencontre informelle pour discuter des news de l'été, du développement avec l'IA (coding, harness, API, nouveaux modèles), et des solutions open-source pour l'IA locale et privée."
-date: "2026-09-02"
-time: "19:00"
+startDate: "2026-09-02"
+startTime: "19:00"
 groups: ["open-ia"]
 location:
   name: "Le Minimistan"

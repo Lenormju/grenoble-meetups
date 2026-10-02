@@ -32,9 +32,9 @@ content/meetups/
 cancelled: true      # optional — goes *above* title; see "Cancelled events" below
 title: "Event name with emoji at end 🎤"
 description: "One-sentence summary for SEO"  # required — see the add-meetup skill for how to obtain one
-date: YYYY-MM-DD
-time: "soir"       # midi | après-midi | soir | HH:MM (e.g. "19:00") — omit if unknown
-endDate: YYYY-MM-DD  # optional, for multi-day events
+startDate: "YYYY-MM-DD"
+startTime: "soir"      # midi | après-midi | soir | HH:MM (e.g. "19:00") — omit if unknown
+endDate: "YYYY-MM-DD"  # optional, for multi-day events
 location:            # optional
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
@@ -53,6 +53,21 @@ The offer's `url` is the first entry of `links`, falling back to the event's own
 
 The offer's `validFrom` needs no front matter: it comes from the file's Git commit date (`enableGitInfo`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
 
+### Field naming and ordering
+
+Event files use `startDate` / `startTime` / `endDate` / `endTime` — two symmetric pairs, in that order, which reads as the interval (`startDate` at `startTime` → `endDate` at `endTime`). The names deliberately match schema.org's `Event.startDate` / `endDate`, which is what these fields feed.
+
+`startDate` is not Hugo's own key, so `hugo.toml` points Hugo at it:
+
+```toml
+[frontmatter]
+  date = ["startDate", "date", "publishDate", "lastmod"]
+```
+
+`.Date` is populated from the first key found, so **every template keeps using `.Date`** — the rename touched no date-reading template. `date` stays in the list because the month `_index.md` files still use it: there, the date is a marker identifying the month, not the start of an interval, so `startDate` would imply a missing `endDate`.
+
+**Quote every value except booleans and numbers**, dates included. This is defensive, not load-bearing — Hugo 0.162 coerces none of it, and a quoted `date` still parses into a real `time.Time` — but it costs nothing and removes a thing to reason about. `cancelled` is the exception that matters: quoting it breaks the site asymmetrically, since `{{ if .Params.cancelled }}` treats any non-empty string as true while `where … "ne" true` does not match the string `"true"`, so `cancelled: "true"` yields an event that says *annulé* on its page while the calendar and RSS keep advertising it.
+
 ### Cancelled events
 
 `cancelled: true` marks an event as called off rather than deleting its file, so the page keeps working for anyone holding the link. Three things follow from it:
@@ -69,8 +84,8 @@ Convention: the three existing files all put `cancelled: true` on the line *abov
 ```yaml
 ---
 title: "Mois YYYY"
-date: YYYY-MM-01
-linkedinPost: https://...   # optional
+date: "YYYY-MM-01"
+linkedinPost: "https://..."   # optional
 ---
 ```
 
@@ -92,7 +107,7 @@ linkedinPost: https://...   # optional
 - `layouts/partials/banner-afup.html` — site-wide banner for the AFUP open letter (temporary campaign; remove the partial, its call in `baseof.html` and the `.support-banner` CSS when it ends)
 - `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists individual meetup events sorted by date (newest first, max 50), excluding cancelled ones
 - `layouts/_default/calendar.ics` — iCal feed at `/meetups.ics`; every event including cancelled ones, which carry `STATUS:CANCELLED` (see "Cancelled events"). Defines an `ics-escape` template for RFC 5545 escaping and assumes a 2-hour duration
-- `layouts/partials/ics-time.html` — normalises a `time` value (`soir`, `19:00`…) to `HH:MM` for the iCal feed
+- `layouts/partials/ics-time.html` — normalises a `startTime` value (`soir`, `19:00`…) to `HH:MM` for the iCal feed
 
 ## Social cards (`og:image`)
 

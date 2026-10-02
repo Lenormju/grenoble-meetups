@@ -1,9 +1,9 @@
 ---
 title: "Craft et IA 🤖"
 description: "Atelier AlpesCraft pour expérimenter et optimiser l'infrastructure des agents IA : fichiers AGENTS.md, compétences, scripts, documents d'architecture et flux de travail."
-date: "2026-06-25"
+startDate: "2026-06-25"
 groups: ["alpes-craft"]
-time: "19:00"
+startTime: "19:00"
 location:
   name: "Zenika"
   address: "8 Avenue Alsace-Lorraine, Grenoble"

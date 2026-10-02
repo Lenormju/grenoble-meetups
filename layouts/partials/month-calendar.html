@@ -104,7 +104,7 @@
         {{ $labelToTime := dict "midi" "12:00" "après-midi" "14:00" "soir" "19:00" }}
         {{ $wrapped := slice }}
         {{ range $dayEvents }}
-          {{ $t := .Params.time | default "" }}
+          {{ $t := .Params.startTime | default "" }}
           {{ $sortKey := $t }}
           {{ with index $labelToTime $t }}{{ $sortKey = . }}{{ end }}
           {{ $wrapped = $wrapped | append (dict "sortKey" $sortKey "event" .) }}
@@ -114,7 +114,7 @@
           {{ range $wrapped }}
             {{ $e := .event }}
             <li class="event-item{{ if $e.Params.endDate }} event-multiday{{ end }}"{{ with $e.Params.groups }} data-groups="{{ delimit . " " }}"{{ end }}>
-              {{ with $e.Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
+              {{ with $e.Params.startTime }}<span class="event-time">{{ . }}</span>{{ end }}
               <a href="{{ $e.RelPermalink }}">{{ $e.Title }}</a>
               {{ with $e.Params.links }}
                 <ul class="event-links">

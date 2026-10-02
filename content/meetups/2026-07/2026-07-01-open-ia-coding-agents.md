@@ -1,8 +1,8 @@
 ---
 title: "Open IA — Coding agents & GLM 5.2 🤖"
 description: "Discussion autour du modèle open source GLM 5.2 (752B) de Z-ai, premier modèle frontier open-weight rivalisant avec les grands modèles sur le coding."
-date: "2026-07-01"
-time: "19:00"
+startDate: "2026-07-01"
+startTime: "19:00"
 groups: ["open-ia"]
 links:
   - url: "https://www.meetup.com/grenoble-open-artificial-intelligence-meetup-group/events/315404060/"

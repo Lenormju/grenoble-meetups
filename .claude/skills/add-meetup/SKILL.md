@@ -12,7 +12,7 @@ Two file types:
 ```yaml
 ---
 title: "<Month name in French> YYYY"
-date: YYYY-MM-01
+date: "YYYY-MM-01"
 linkedinPost: "https://..."   # optional — omit if not provided
 ---
 ```
@@ -22,8 +22,8 @@ linkedinPost: "https://..."   # optional — omit if not provided
 ---
 title: "<Event title with emoji at end>"
 description: "..."  # required — one sentence; see "Descriptions" for how to obtain it
-date: YYYY-MM-DD
-time: "19:00"   # HH:MM strongly preferred (drives the iCal feed's event start); "midi" / "après-midi" / "soir" accepted as a fallback — omit only if truly unknown
+startDate: "YYYY-MM-DD"
+startTime: "19:00"   # HH:MM strongly preferred (drives the iCal feed's event start); "midi" / "après-midi" / "soir" accepted as a fallback — omit only if truly unknown
 endDate: "YYYY-MM-DD"  # optional — only for multi-day events (conferences, festivals)
 groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
 location:       # optional — omit if unknown
@@ -47,9 +47,9 @@ conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than
 **Quote everything except booleans and numbers.** No exceptions for dates.
 
 ```yaml
-date: "2026-11-05"         # quoted — yes, including date
+startDate: "2026-11-05"    # quoted — yes, including dates
+startTime: "soir"          # quoted
 endDate: "2026-11-07"      # quoted
-time: "soir"               # quoted
 title: "Meetup CARA 🏢"    # quoted
 linkedinPost: "https://…"  # quoted
 price: "payant"            # quoted when a word…
@@ -60,15 +60,15 @@ cancelled: true            # bare — a boolean; quoting it breaks the site, see
 This is defensive, not load-bearing: Hugo 0.162 does not coerce these values —
 a bare `19:00` stays the string `19:00` (no YAML 1.1 sexagesimal), a bare
 `2026-11-07` in a custom param arrives as a string rather than a `time.Time`,
-and a quoted `date` still parses into a real `time.Time` for `.Date`. Every form
+and a quoted date still parses into a real `time.Time` for `.Date`. Every form
 builds byte-identical output. Quote anyway, because it costs nothing and removes
 a thing to reason about.
 
-`date` was bare in all 127 files until it was normalised in one pass; the built
-site came back byte-identical, which is the check to repeat if this ever needs
-doing again. There is **no semantic distinction** between `date` and `endDate`
-here — if you find yourself explaining why one is quoted and the other isn't,
-the answer is that they both should be.
+Dates were bare in all 127 files until they were normalised in one pass; the
+built site came back byte-identical, which is the check to repeat if this ever
+needs doing again. There is **no semantic distinction** between `startDate` and
+`endDate` here — if you find yourself explaining why one is quoted and the other
+isn't, the answer is that they both should be.
 
 Watch the two exceptions in that list, because `cancelled` is the one field
 where quoting actively breaks the site — and it breaks it *inconsistently*,
@@ -124,7 +124,7 @@ isn't a registration page.
 ## What to infer
 
 - If no URL is given for an event, omit the `links` block entirely.
-- **The start time matters — ask for it before omitting it.** The iCal feed (`/meetups.ics`) uses `time` to set the event's real start; without it, the event falls back to an all-day entry that shows as starting at midnight. Only omit the `time` field if the user genuinely doesn't know it after being asked.
+- **The start time matters — ask for it before omitting it.** The iCal feed (`/meetups.ics`) uses `startTime` to set the event's real start; without it, the event falls back to an all-day entry that shows as starting at midnight. Only omit the `startTime` field if the user genuinely doesn't know it after being asked.
 - The iCal feed has no way to know an event's actual end time or duration — it always assumes **2 hours** from the start time. No front-matter field controls this; it's not worth asking the user for an end time.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
@@ -236,8 +236,8 @@ Recurring on the 2nd Tuesday of each month (with exceptions). Always 4 talks of 
 ---
 title: "Human Talks Grenoble 🎤"
 description: "<voir ci-dessous — nommer les talks du mois quand ils sont connus>"
-date: YYYY-MM-DD
-time: "19:00"
+startDate: "YYYY-MM-DD"
+startTime: "19:00"
 groups: ["humantalks"]
 location:
   name: "<venue name>"

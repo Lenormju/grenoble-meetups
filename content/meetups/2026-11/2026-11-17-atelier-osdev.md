@@ -1,8 +1,8 @@
 ---
 title: "Atelier OSDEV ⚙️"
 description: "Atelier OSDEV animé par Ako au Grenoble Hackerspace : découvrir comment fonctionne un système d'exploitation en le construisant depuis zéro."
-date: "2026-11-17"
-time: "18:30"
+startDate: "2026-11-17"
+startTime: "18:30"
 groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"

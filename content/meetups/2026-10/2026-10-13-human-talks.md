@@ -1,8 +1,8 @@
 ---
 title: "Human Talks Grenoble 🎤"
 description: "Quatre conférences de 10 minutes — technos, méthodes, retours d'expérience, side projects — suivies d'un apéritif."
-date: "2026-10-13"
-time: "19:00"
+startDate: "2026-10-13"
+startTime: "19:00"
 groups: ["humantalks"]
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/315719535/"

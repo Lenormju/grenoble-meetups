@@ -1,8 +1,8 @@
 ---
 title: "Assemblée Générale du Hackerspace 📋"
 description: "Le Hackerspace de Grenoble vous invite à son Assemblée Générale du mois de septembre : bilan de l'année, présentation des nouveaux adhérents et préparation des ateliers."
-date: "2026-09-10"
-time: "18:00"
+startDate: "2026-09-10"
+startTime: "18:00"
 groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"

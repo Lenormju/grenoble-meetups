@@ -1,8 +1,8 @@
 ---
 title: "Atelier sérigraphie 🖨️"
 description: "Vous voulez imprimer des zines, faire des pochoirs ou d'autres projets d'impression DIY ? Cet atelier est fait pour vous."
-date: "2026-11-07"
-time: "14:30"
+startDate: "2026-11-07"
+startTime: "14:30"
 groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"

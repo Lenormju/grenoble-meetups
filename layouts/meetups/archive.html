@@ -12,7 +12,7 @@
     <ul class="archive-event-list">
       {{ range .Pages.ByDate }}
         <li>
-          {{ with .Params.time }}<span class="event-time">{{ . }}</span>{{ end }}
+          {{ with .Params.startTime }}<span class="event-time">{{ . }}</span>{{ end }}
           <span class="event-day">{{ .Date.Day }}</span>
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
         </li>

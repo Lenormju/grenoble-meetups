@@ -1,8 +1,8 @@
 ---
 title: "Atelier ASCII Art 🎨"
 description: "Rendez vos MOTD stylés et faites le plus beau des zines grâce à l'atelier ASCII Art."
-date: "2026-10-20"
-time: "18:00"
+startDate: "2026-10-20"
+startTime: "18:00"
 groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"

@@ -1,8 +1,8 @@
 ---
 title: "Coding Workshop — Exercices SICP 📖"
 description: "Le Coding Workshop poursuit sa lecture du SICP au bureau Manabiya, en travaillant les exercices ensemble et en discutant les concepts."
-date: "2026-07-09"
-time: "12:00"
+startDate: "2026-07-09"
+startTime: "12:00"
 groups: ["coding-workshop"]
 location:
   name: "Bureau Manabiya"

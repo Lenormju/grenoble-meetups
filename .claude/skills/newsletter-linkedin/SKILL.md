@@ -22,8 +22,8 @@ Lire tous les fichiers du mois. Vérifier pour chaque événement **actif** (non
 | `description` | **Distincte** de celle des autres événements — voir ci-dessous |
 | `links` | Au moins un lien — ou note explicite que c'est intentionnel |
 | Chaque lien | A un `label` (sinon le site l'affiche mal) |
-| `time` | Renseigné — absent, l'événement sort en « toute la journée » dans l'agenda |
-| `time` | **`HH:MM` attendu.** Une valeur floue (`midi` / `après-midi` / `soir`) est *provisoire*, pas *renseignée* : la signaler comme « heure à confirmer » — voir ci-dessous |
+| `startTime` | Renseigné — absent, l'événement sort en « toute la journée » dans l'agenda |
+| `startTime` | **`HH:MM` attendu.** Une valeur floue (`midi` / `après-midi` / `soir`) est *provisoire*, pas *renseignée* : la signaler comme « heure à confirmer » — voir ci-dessous |
 | `title` | Se termine par un emoji |
 | `location.address` | Présente si `location.name` est renseigné |
 | Fichier | Nom = `YYYY-MM-DD-slug.md`, date cohérente avec le front matter |
@@ -38,7 +38,7 @@ Signaler également :
 
   ```bash
   # heures encore provisoires sur le mois cible (adapter YYYY-MM)
-  grep -rlE '^time: "(midi|après-midi|soir)"' content/meetups/YYYY-MM/
+  grep -rlE '^startTime: "(midi|après-midi|soir)"' content/meetups/YYYY-MM/
   ```
 
   À signaler, pas à corriger soi-même : si l'horaire réel n'est toujours pas annoncé, `soir` reste

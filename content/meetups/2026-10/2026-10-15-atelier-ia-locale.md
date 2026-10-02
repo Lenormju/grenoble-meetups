@@ -1,8 +1,8 @@
 ---
 title: "Atelier : Découvrir l'IA locale 🤖"
 description: "Cet atelier vous propose de découvrir concrètement ce que permet l'IA locale, ses avantages comme ses limites, et de repartir avec un premier modèle installé et testé sur votre ordinateur."
-date: "2026-10-15"
-time: "19:00"
+startDate: "2026-10-15"
+startTime: "19:00"
 groups: ["data-for-good"]
 location:
   name: "La Turbine.Coop"

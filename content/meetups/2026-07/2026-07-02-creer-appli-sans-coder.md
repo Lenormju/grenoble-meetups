@@ -1,8 +1,8 @@
 ---
 title: "Créer son appli de rêve sans coder ! 🤖"
 description: "Workshop en binôme pour mettre une petite application en production avec l'IA, sans aucune connaissance en programmation."
-date: "2026-07-02"
-time: "18:00"
+startDate: "2026-07-02"
+startTime: "18:00"
 groups: ["aixperience"]
 location:
   name: "Le Minimistan"

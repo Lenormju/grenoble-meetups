@@ -106,7 +106,7 @@
   {{- /* Certains événements portent le nom de leur groupe : ne pas le répéter. */ -}}
   {{- if eq $groups $title -}}{{- $groups = "" -}}{{- end -}}
   {{- $parts := slice -}}
-  {{- with .Params.time -}}{{- $parts = $parts | append . -}}{{- end -}}
+  {{- with .Params.startTime -}}{{- $parts = $parts | append . -}}{{- end -}}
   {{- with $groups -}}{{- $parts = $parts | append . -}}{{- end -}}
   {{- $sub = delimit $parts " · " -}}
   {{- /* Une conférence portant le nom de son groupe et sans horaire — cas des

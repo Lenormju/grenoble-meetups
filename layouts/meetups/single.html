@@ -1,9 +1,9 @@
 {{ define "head-extra" }}
-{{ $hasTime := and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}
+{{ $hasTime := and .Params.startTime (findRE `^\d{1,2}:\d{2}$` .Params.startTime) }}
 {{ $startDate := .Date.Format "2006-01-02" }}
 {{ $endDate := .Date.Format "2006-01-02" }}
 {{ if $hasTime }}
-  {{ $hm := split .Params.time ":" }}
+  {{ $hm := split .Params.startTime ":" }}
   {{ $startTime := .Date.Add (time.ParseDuration (printf "%sh%sm" (index $hm 0) (index $hm 1))) }}
   {{ $startDate = $startTime.Format "2006-01-02T15:04:05" }}
   {{/* Pas d'heure de fin dans les données : on retient la durée usuelle d'un meetup. */}}
@@ -72,10 +72,10 @@
   {{ end }}
 
   <p class="event-meta">
-    <time datetime="{{ if and .Params.time (findRE `^\d{1,2}:\d{2}$` .Params.time) }}{{ printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.time }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}">
+    <time datetime="{{ if and .Params.startTime (findRE `^\d{1,2}:\d{2}$` .Params.startTime) }}{{ printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.startTime }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}">
       {{ index $frDays (int .Date.Weekday) }} {{ .Date.Day }} {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}
     </time>
-    {{ with .Params.time }} — {{ . }}{{ end }}
+    {{ with .Params.startTime }} — {{ . }}{{ end }}
     {{ with .Params.endDate }}
       {{ $end := time . }}
       → {{ index $frDays (int $end.Weekday) }} {{ $end.Day }} {{ partial "fr-month-name.html" $end }} {{ $end.Year }}

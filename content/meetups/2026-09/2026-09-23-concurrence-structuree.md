@@ -1,8 +1,8 @@
 ---
 title: "La concurrence structurée du projet Loom ☕"
 description: "José Paumard présente l'API de Concurrence Structurée du projet Loom : les patterns StructuredTaskScope, leur configuration et les stratégies de l'API Joiner."
-date: "2026-09-23"
-time: "19:00"
+startDate: "2026-09-23"
+startTime: "19:00"
 groups: ["alpesjug"]
 location:
   name: "Salesforce"

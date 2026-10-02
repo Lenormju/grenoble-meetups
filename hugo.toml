@@ -6,6 +6,15 @@ enableRobotsTXT = true
 enableGitInfo = true
 buildFuture = true
 
+# Les fichiers d'événement nomment leur date `startDate`, pour former une paire
+# symétrique avec `endDate` (et correspondre au vocabulaire schema.org que ces
+# champs alimentent). Hugo peuple `.Date` depuis le premier champ trouvé dans
+# cette liste, donc `.Date` continue de fonctionner partout sans changement de
+# template. `date` reste dans la liste : c'est la clé des `_index.md` de mois,
+# où la date est un marqueur de mois et non le début d'un intervalle.
+[frontmatter]
+  date = ["startDate", "date", "publishDate", "lastmod"]
+
 [sitemap]
   changefreq = "weekly"
   priority = 0.5
