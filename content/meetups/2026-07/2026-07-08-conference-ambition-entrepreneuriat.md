@@ -1,7 +1,7 @@
 ---
 title: "Conférence-débat : l'ambition des femmes dans l'entrepreneuriat 🎤"
 description: "Conférence-débat non-mixte (femmes uniquement) sur la place de l'entrepreneuriat et du repreneuriat dans la carrière des femmes de la tech, animée par Séverine Le Loarne-Lemaire, Présidente de Les Premières AURA."
-date: 2026-07-08
+date: "2026-07-08"
 time: "12:00"
 groups: ["femmes-tech-isere"]
 location:

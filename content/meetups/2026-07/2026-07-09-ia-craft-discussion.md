@@ -1,7 +1,7 @@
 ---
 title: "IA & Craft : discussion participative 🐟"
 description: "Discussion au format Fishbowl sur l'impact de l'IA sur le craft, le plaisir du code et la qualité, ouverte à tous niveaux."
-date: 2026-07-09
+date: "2026-07-09"
 time: "19:00"
 groups: ["alpes-craft"]
 location:

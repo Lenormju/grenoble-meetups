@@ -1,7 +1,7 @@
 ---
 title: "Afterwork networking 🤝"
 description: "Afterwork dédiée au réseautage en toute simplicité et en toute mixité, organisé par Femmes dans la Tech Isère."
-date: 2026-07-28
+date: "2026-07-28"
 time: "18:30"
 groups: ["femmes-tech-isere"]
 location:

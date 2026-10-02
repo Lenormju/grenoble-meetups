@@ -1,7 +1,7 @@
 ---
 title: "Ma relation toxique avec Python 🐍💔"
 description: "Venez vous assoir sur le divan avec moi, il faut qu'on parle ..."
-date: 2026-10-09
+date: "2026-10-09"
 time: "19:00"
 groups: ["python-grenoble"]
 location:

@@ -1,7 +1,7 @@
 ---
 title: "Fresque de la sécurité de l'intelligence artificielle 🛡️"
 description: "Atelier participatif pour explorer les capacités de l'IA, ses impacts et les risques actuels et futurs pour les individus, la société et l'environnement."
-date: 2026-07-02
+date: "2026-07-02"
 time: "18:00"
 groups: ["pause-ia", "centre-securite-ia"]
 location:

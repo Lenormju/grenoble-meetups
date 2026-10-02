@@ -2,7 +2,7 @@
 cancelled: true
 title: "Coding Workshop — Exercices SICP 📖"
 description: "Séance hebdomadaire du Coding Workshop autour des exercices du SICP, au bureau Manabiya : chacun avance à son rythme."
-date: 2026-07-02
+date: "2026-07-02"
 time: "12:00"
 groups: ["coding-workshop"]
 location:

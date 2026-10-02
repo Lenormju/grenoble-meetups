@@ -1,7 +1,7 @@
 ---
 title: "TupperRust 🦀"
 description: "Rencontre autour de Rust et ses applications."
-date: 2026-10-12
+date: "2026-10-12"
 time: "19:00"
 groups: ["tupper-rust"]
 location:

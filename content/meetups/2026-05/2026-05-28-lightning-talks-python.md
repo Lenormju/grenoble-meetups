@@ -1,7 +1,7 @@
 ---
 title: "lightning talks Python 🎤🐍"
 description: "Une soirée de courtes conférences de 10 minutes autour de Python : bibliothèques, retours d'expérience, astuces ou projets personnels, tout est bienvenu."
-date: 2026-05-28
+date: "2026-05-28"
 groups: ["python-grenoble"]
 time: "soir"
 links:

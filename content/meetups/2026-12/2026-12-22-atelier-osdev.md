@@ -1,7 +1,7 @@
 ---
 title: "Atelier OSDEV ⚙️"
 description: "Au Grenoble Hackerspace, Ako démonte le fonctionnement d'un système d'exploitation et guide sa construction pas à pas."
-date: 2026-12-22
+date: "2026-12-22"
 time: "18:30"
 groups: ["hackerspace"]
 location:

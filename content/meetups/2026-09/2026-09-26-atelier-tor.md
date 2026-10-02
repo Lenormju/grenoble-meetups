@@ -1,7 +1,7 @@
 ---
 title: "Atelier Tor 🧅"
 description: "Reprenez en main votre vie privée en ligne en apprenant à utiliser et contribuer au réseau décentralisé Tor."
-date: 2026-09-26
+date: "2026-09-26"
 time: "14:30"
 groups: ["hackerspace"]
 location:

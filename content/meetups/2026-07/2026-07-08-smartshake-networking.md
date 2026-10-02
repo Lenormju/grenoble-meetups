@@ -1,7 +1,7 @@
 ---
 title: "Soirée networking SmartShake 🍺"
 description: "Soirée networking informelle pour rencontrer la communauté SmartShake autour d'une bière, sans programme fixe — juste des échanges autour de l'entrepreneuriat et du réseau."
-date: 2026-07-08
+date: "2026-07-08"
 time: "18:30"
 groups: ["smartshake"]
 location:

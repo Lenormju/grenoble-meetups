@@ -1,7 +1,7 @@
 ---
 title: "Parametric Body Mesh Models 🧍"
 description: "Romain Brégier démystifie les modèles paramétriques de maillage du corps humain : transformations rigides, animation squelettique, cinématique, skinning et modélisation de forme."
-date: 2026-09-24
+date: "2026-09-24"
 time: "19:00"
 groups: ["grenoble-data-science"]
 location:

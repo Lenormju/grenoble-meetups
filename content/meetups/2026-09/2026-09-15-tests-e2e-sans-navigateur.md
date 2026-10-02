@@ -1,7 +1,7 @@
 ---
 title: "Quand les tests e2e n'ont pas besoin de navigateur 🧪"
 description: "Emilie et Stéphane présentent une approche des tests e2e sans UI ni navigateur, via une API construite autour de HATEOAS."
-date: 2026-09-15
+date: "2026-09-15"
 time: "18:30"
 groups: ["qualisphere"]
 location:

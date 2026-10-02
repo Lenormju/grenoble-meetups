@@ -1,7 +1,7 @@
 ---
 title: "Après-midi créatif 🎨"
 description: "Un après-midi pour explorer la programmation, le design et la fabrication numérique à travers des projets ludiques et sans prétentions. Un moment convivial pour bidouiller et créer ensemble."
-date: 2026-06-13
+date: "2026-06-13"
 groups: ["hackerspace"]
 time: "après-midi"
 links:

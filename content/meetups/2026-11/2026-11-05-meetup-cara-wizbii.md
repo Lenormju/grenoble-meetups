@@ -1,7 +1,7 @@
 ---
 title: "Meetup CARA chez Wizbii 🏢"
 description: "Meetup du Club Agile Rhône-Alpes (CARA), accueilli par Wizbii à Grenoble."
-date: 2026-11-05
+date: "2026-11-05"
 time: "soir"
 groups: ["cara"]
 location:

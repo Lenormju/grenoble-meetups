@@ -1,7 +1,7 @@
 ---
 title: "Aprèm créatif 🎨"
 description: "Un après-midi dédié à l'art : dessin, couture, peinture, bois, écriture ou impression 3D, amateurices comme débutant·es."
-date: 2026-12-12
+date: "2026-12-12"
 time: "14:30"
 groups: ["hackerspace"]
 location:

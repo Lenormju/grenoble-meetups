@@ -1,7 +1,7 @@
 ---
 title: "Femmes dans la Tech Isère : Lunch mensuel 🍽️"
 description: "Atelier du groupe Femmes dans la Tech Isère sur le pouvoir du marketing pour rendre les femmes de la Tech plus visibles, animé avec Aude Staub."
-date: 2026-09-22
+date: "2026-09-22"
 time: "12:00"
 groups: ["femmes-tech-isere"]
 location:

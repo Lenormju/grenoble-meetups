@@ -1,7 +1,7 @@
 ---
 title: "Human Talks Grenoble 🎤"
 description: "Quatre talks de 10 minutes chez Samse : testing visuel avec Percy, migration cloud avec Terraform, code assisté par IA et design patterns."
-date: 2026-07-07
+date: "2026-07-07"
 time: "19:00"
 groups: ["humantalks"]
 location:

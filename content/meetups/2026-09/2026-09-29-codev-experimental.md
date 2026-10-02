@@ -1,7 +1,7 @@
 ---
 title: "GRENOBLE #14 - CoDev Expérimental 🗣️"
 description: "Une nouvelle séance de CoDéveloppement animée par Annett : partage de pratiques et échanges en intelligence collective, dans une ambiance conviviale."
-date: 2026-09-29
+date: "2026-09-29"
 time: "18:30"
 groups: ["faciliton"]
 location:

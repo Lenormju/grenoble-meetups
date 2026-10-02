@@ -13,7 +13,7 @@ Two file types:
 ---
 title: "<Month name in French> YYYY"
 date: YYYY-MM-01
-linkedinPost: https://...   # optional — omit if not provided
+linkedinPost: "https://..."   # optional — omit if not provided
 ---
 ```
 
@@ -24,6 +24,7 @@ title: "<Event title with emoji at end>"
 description: "..."  # required — one sentence; see "Descriptions" for how to obtain it
 date: YYYY-MM-DD
 time: "19:00"   # HH:MM strongly preferred (drives the iCal feed's event start); "midi" / "après-midi" / "soir" accepted as a fallback — omit only if truly unknown
+endDate: "YYYY-MM-DD"  # optional — only for multi-day events (conferences, festivals)
 groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
 location:       # optional — omit if unknown
   name: "La Casemate"
@@ -40,6 +41,49 @@ price: "payant"  # optional — omit if free (the default); "payant" for a ticke
 `price` is invisible on the page — it only feeds the `offers` of the `Event` JSON-LD. Omitting it
 asserts the event is free, which is correct for nearly every meetup. Set `"payant"` for ticketed
 conferences (DrupalCamp, GreHack, Alpes Craft, Agile Games Alpes…) rather than guessing an amount.
+
+## Quoting
+
+**Quote everything except booleans and numbers.** No exceptions for dates.
+
+```yaml
+date: "2026-11-05"         # quoted — yes, including date
+endDate: "2026-11-07"      # quoted
+time: "soir"               # quoted
+title: "Meetup CARA 🏢"    # quoted
+linkedinPost: "https://…"  # quoted
+price: "payant"            # quoted when a word…
+price: 15                  # …bare when a number
+cancelled: true            # bare — a boolean; quoting it breaks the site, see below
+```
+
+This is defensive, not load-bearing: Hugo 0.162 does not coerce these values —
+a bare `19:00` stays the string `19:00` (no YAML 1.1 sexagesimal), a bare
+`2026-11-07` in a custom param arrives as a string rather than a `time.Time`,
+and a quoted `date` still parses into a real `time.Time` for `.Date`. Every form
+builds byte-identical output. Quote anyway, because it costs nothing and removes
+a thing to reason about.
+
+`date` was bare in all 127 files until it was normalised in one pass; the built
+site came back byte-identical, which is the check to repeat if this ever needs
+doing again. There is **no semantic distinction** between `date` and `endDate`
+here — if you find yourself explaining why one is quoted and the other isn't,
+the answer is that they both should be.
+
+Watch the two exceptions in that list, because `cancelled` is the one field
+where quoting actively breaks the site — and it breaks it *inconsistently*,
+which is why it's easy to miss. Probed on Hugo 0.162:
+
+| Front matter | `{{ if .Params.cancelled }}`<br>(`single.html` banner + `eventStatus`) | `where … "Params.cancelled" "ne" true`<br>(calendar grid, RSS) |
+|---|---|---|
+| `cancelled: true` | cancelled ✓ | filtered out ✓ |
+| `cancelled: "true"` | cancelled | **kept — `eq "true" true` is false** |
+| `cancelled: "false"` | **cancelled** (any non-empty string is truthy) | kept |
+
+So `cancelled: "true"` yields a half-cancelled event: the detail page says
+*Cet événement a été annulé*, while the homepage calendar and the RSS feed go on
+advertising it. Keep it bare. Likewise a numeric `price` must stay bare to
+remain a number.
 
 ## Naming conventions
 

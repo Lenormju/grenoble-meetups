@@ -1,7 +1,7 @@
 ---
 title: "Install party Linux d'Emmaüs Connect 🐧"
 description: "Atelier d'installation de Linux Mint chez Emmaüs Connect Grenoble, avec accompagnement technique, pour lutter contre l'obsolescence."
-date: 2026-11-20
+date: "2026-11-20"
 time: "14:00"
 groups: ["erica"]
 location:

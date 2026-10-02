@@ -1,7 +1,7 @@
 ---
 title: "Prémanences du hackerspace 🔧"
 description: "Prémanence hebdomadaire ouverte à tous pour rencontrer les membres de l'association, découvrir le local, ses activités et ses engagements."
-date: 2026-09-03
+date: "2026-09-03"
 time: "18:00"
 groups: ["hackerspace"]
 location:

@@ -1,7 +1,7 @@
 ---
 title: "Human Talks 🎤"
 description: "Quatre talks de 10 minutes : programmation réactive, IA agentique et relecture de code, sécurité électrique et compilation vers WebAssembly."
-date: 2026-04-14
+date: "2026-04-14"
 groups: ["humantalks"]
 time: "soir"
 links:

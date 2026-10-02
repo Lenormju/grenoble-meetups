@@ -1,7 +1,7 @@
 ---
 title: "Install party Linux d'Emmaüs Connect 🐧"
 description: "Premier atelier ERICA chez Emmaüs Connect : faire installer Linux Mint sur son ordinateur pour prolonger sa durée de vie, avec accompagnement."
-date: 2026-10-16
+date: "2026-10-16"
 time: "14:00"
 groups: ["erica"]
 location:

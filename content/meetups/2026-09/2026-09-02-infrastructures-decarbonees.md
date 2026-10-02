@@ -1,7 +1,7 @@
 ---
 title: "Intelligence artificielle, données, calculs : quelles infrastructures dans un monde décarboné ? 🌍"
 description: "Pauline Denis, experte du Shift Project, présente leurs travaux sur la consommation énergétique de l'IA et la trajectoire souhaitable dans un monde décarboné."
-date: 2026-09-02
+date: "2026-09-02"
 time: "19:00"
 groups: ["data-for-good"]
 location:
