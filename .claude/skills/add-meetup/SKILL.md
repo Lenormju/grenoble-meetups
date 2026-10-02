@@ -25,6 +25,7 @@ description: "..."  # required — one sentence; see "Descriptions" for how to o
 startDate: "YYYY-MM-DD"
 startTime: "19:00"   # HH:MM strongly preferred (drives the iCal feed's event start); "midi" / "après-midi" / "soir" accepted as a fallback — omit only if truly unknown
 endDate: "YYYY-MM-DD"  # optional — only for multi-day events (conferences, festivals)
+endTime: "20:00"  # optional — time on endDate (else startDate); same grammar as startTime, HH:MM/midi/après-midi/soir
 groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
 location:       # optional — omit if unknown
   name: "La Casemate"
@@ -104,7 +105,7 @@ remain a number.
    - Create one `.md` file per event.
 3. **Fill the description** by working down the "Descriptions" list — resolve the event's link before
    settling for a derived one. Report which ones you sourced and which you derived.
-4. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), le lieu (nom, adresse, lien maps), et/ou un lien."*
+4. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). If the event has an `endDate`, chase the end time just as hard — without it the span shows all-day and `startTime` drops out of the feed. Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), l'heure de fin si tu la connais (surtout si l'événement dure plusieurs jours), le lieu (nom, adresse, lien maps), et/ou un lien."*
 5. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
 6. List every file created so the user can verify before committing.
 
@@ -125,7 +126,9 @@ isn't a registration page.
 
 - If no URL is given for an event, omit the `links` block entirely.
 - **The start time matters — ask for it before omitting it.** The iCal feed (`/meetups.ics`) uses `startTime` to set the event's real start; without it, the event falls back to an all-day entry that shows as starting at midnight. Only omit the `startTime` field if the user genuinely doesn't know it after being asked.
-- The iCal feed has no way to know an event's actual end time or duration — it always assumes **2 hours** from the start time. No front-matter field controls this; it's not worth asking the user for an end time.
+- **Record `endTime` whenever the source gives one.** It exists and feeds the iCal feed's real end. Both `startTime` and `endTime` share one grammar — `HH:MM` (preferred) or the fuzzy `midi` / `après-midi` / `soir`; `19h`-style values are not accepted. Without an explicit `endTime`, the feed falls back to a 2-hour default from the start.
+- **Always ask for `endTime` when `endDate` is set.** An `endDate` with no `endTime` is accepted, not an error, but the cost is real: the iCal feed renders the whole span as an all-day event and drops `startTime` from the feed entirely (the event page still shows it). Chase the end time down for multi-day events rather than letting that happen by default.
+- When the exact hour is unknown, prefer a fuzzy value (`midi` / `après-midi` / `soir`) over omitting `startTime` or `endTime` altogether — an omitted time reads as all-day/midnight, which is worse than an approximate one.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
 - If a venue name is given but no address/url, check for a known location first (see step 1c) before asking the user or omitting `location`.

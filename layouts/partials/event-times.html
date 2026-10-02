@@ -1,0 +1,135 @@
+{{- /*
+  Propriétaire unique des instants d'un événement. Prend une Page en contexte
+  et renvoie :
+
+      { start: time.Time, end: time.Time, allDay: bool, endIsDefault: bool }
+
+  Tous les instants sont zonés sur Europe/Paris. `end` est l'instant de fin
+  *réel et inclusif* : le décalage exclusif « +1 jour » de la RFC 5545 est
+  propre à l'iCal et reste dans layouts/_default/calendar.ics. `end` est absent
+  (clé non définie) pour un événement d'une seule journée entière.
+
+  Grammaire acceptée pour `startTime` et `endTime` :
+
+      "midi" | "après-midi" | "soir" | H?H:MM   (HH 00-23, MM 00-59)
+
+  Les trois mots-clés sont un état correct, voulu et permanent — « moment de la
+  journée connu, heure exacte à venir » — ils ne déclenchent ni avertissement
+  ni erreur. Toute autre valeur est une faute de saisie et casse le build.
+*/ -}}
+
+{{- $page := . -}}
+{{- $where := $page.RelPermalink -}}
+{{- with $page.File -}}{{- $where = .Path -}}{{- end -}}
+
+{{- /* Rien n'est déduit d'une date absente. Sans `startDate` — ni aucune des
+       clés de repli déclarées dans hugo.toml — `.Date` vaut la date zéro, et
+       tout ce qui en découle annonce un événement en l'an 0001. Ce test passe
+       avant toute lecture d'instant pour que l'erreur nomme la cause réelle
+       plutôt qu'un symptôme en aval. */ -}}
+{{- if $page.Date.IsZero -}}
+  {{- errorf "%s : startDate est absente. Renseignez-la : sans elle la page retombe sur la date zéro et le flux publie un événement en l'an 0001." $where -}}
+{{- end -}}
+
+{{- /* Pas d'heure de fin dans les données : on retient la durée usuelle d'un meetup. */ -}}
+{{- $defaultDuration := "2h" -}}
+
+{{- $keywords := dict "midi" "12:00" "après-midi" "14:00" "soir" "19:00" -}}
+
+{{- /* Normalisation écrite une seule fois pour les deux champs, dans l'ordre
+       `startTime` puis `endTime`. Une valeur absente donne la chaîne vide. */ -}}
+{{- $hm := slice -}}
+{{- range $field := slice "startTime" "endTime" -}}
+  {{- $hhmm := "" -}}
+  {{- with index $page.Params $field -}}
+    {{- $raw := printf "%v" . -}}
+    {{- with index $keywords $raw -}}
+      {{- $hhmm = . -}}
+    {{- else -}}
+      {{- if findRE `^([01]?[0-9]|2[0-3]):[0-5][0-9]$` $raw -}}
+        {{- $parts := split $raw ":" -}}
+        {{- $h := index $parts 0 -}}
+        {{- if eq (len $h) 1 -}}{{- $h = printf "0%s" $h -}}{{- end -}}
+        {{- $hhmm = printf "%s:%s" $h (index $parts 1) -}}
+      {{- else -}}
+        {{- errorf "%s : %s = %q est invalide. Valeurs acceptées : \"midi\", \"après-midi\", \"soir\", ou une heure HH:MM (00-23 h, 00-59 min)." $where $field $raw -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $hm = $hm | append $hhmm -}}
+{{- end -}}
+{{- $startHM := index $hm 0 -}}
+{{- $endHM := index $hm 1 -}}
+
+{{- $startDay := $page.Date.Format "2006-01-02" -}}
+{{- $endDay := "" -}}
+{{- with $page.Params.endDate -}}{{- $endDay = (time .).Format "2006-01-02" -}}{{- end -}}
+
+{{- $start := "" -}}
+{{- $end := "" -}}
+{{- $hasEnd := false -}}
+{{- $allDay := false -}}
+{{- $endIsDefault := false -}}
+
+{{- if not $startHM -}}
+  {{- /* Une heure de fin sans heure de début ne veut rien dire. */ -}}
+  {{- if $endHM -}}
+    {{- errorf "%s : endTime est renseigné sans startTime, ce qui n'a pas de sens. Ajoutez startTime ou retirez endTime." $where -}}
+  {{- end -}}
+  {{- $allDay = true -}}
+  {{- $start = time.AsTime (printf "%sT00:00:00" $startDay) "Europe/Paris" -}}
+  {{- with $endDay -}}
+    {{- $end = time.AsTime (printf "%sT00:00:00" .) "Europe/Paris" -}}
+    {{- $hasEnd = true -}}
+  {{- end -}}
+{{- else -}}
+  {{- if $endHM -}}
+    {{- /* Intervalle complet : horaire même quand il s'étale sur plusieurs jours. */ -}}
+    {{- $start = time.AsTime (printf "%sT%s:00" $startDay $startHM) "Europe/Paris" -}}
+    {{- $end = time.AsTime (printf "%sT%s:00" (default $startDay $endDay) $endHM) "Europe/Paris" -}}
+    {{- $hasEnd = true -}}
+    {{- /* Aucun calcul de jour n'est déduit ici : `endDate` est la seule donnée
+           qui dit quel jour l'événement se termine. Ce test unique suffit donc,
+           et il rejette au passage startTime == endTime (ex. "soir" / "soir"),
+           qu'une règle de report au lendemain transformerait silencieusement en
+           événement de 24 heures. */ -}}
+    {{- if not ($start.Before $end) -}}
+      {{- errorf "%s : la fin (%s) n'est pas postérieure au début (%s). Corrigez endTime, ou ajoutez endDate si l'événement se termine le lendemain." $where ($end.Format "2006-01-02 15:04") ($start.Format "2006-01-02 15:04") -}}
+    {{- end -}}
+  {{- else if $endDay -}}
+    {{- /* Règle délibérée : `startTime` + `endDate` sans `endTime` = journée
+           entière, et `startTime` est volontairement ignoré ici. C'est un
+           enregistrement légitimement partiel, accepté parce que chaque champ
+           reste indépendamment optionnel ; le coût assumé est que la page
+           affiche une heure de début là où le flux annonce une journée
+           entière. Renseigner `endTime` lève l'ambiguïté. */ -}}
+    {{- $allDay = true -}}
+    {{- $start = time.AsTime (printf "%sT00:00:00" $startDay) "Europe/Paris" -}}
+    {{- $end = time.AsTime (printf "%sT00:00:00" $endDay) "Europe/Paris" -}}
+    {{- $hasEnd = true -}}
+  {{- else -}}
+    {{- $start = time.AsTime (printf "%sT%s:00" $startDay $startHM) "Europe/Paris" -}}
+    {{- $end = $start.Add (time.ParseDuration $defaultDuration) -}}
+    {{- $hasEnd = true -}}
+    {{- $endIsDefault = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Les deux branches « journée entière » convergent ici pour un test unique.
+       Le prédicat est volontairement différent de celui du chemin horaire :
+       là-bas la fin doit être *strictement postérieure* au début, car une fin
+       égale au début décrit un événement de durée nulle ; ici les deux bornes
+       sont des jours entiers, et `endDate` égale à `startDate` ne fait que
+       redire qu'un événement d'une journée tient en une journée — c'est
+       redondant, pas faux. Seule une fin strictement antérieure est rejetée :
+       elle produirait un DTEND avant son DTSTART, un `Event` JSON-LD invalide,
+       et une boucle `seq` qui compte à l'envers dans month-calendar.html. */ -}}
+{{- if and $allDay $hasEnd -}}
+  {{- if $end.Before $start -}}
+    {{- errorf "%s : endDate (%s) est antérieure à startDate (%s). Corrigez l'une des deux dates." $where ($end.Format "2006-01-02") ($start.Format "2006-01-02") -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $times := dict "start" $start "allDay" $allDay "endIsDefault" $endIsDefault -}}
+{{- if $hasEnd -}}{{- $times = merge $times (dict "end" $end) -}}{{- end -}}
+{{- return $times -}}

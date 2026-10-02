@@ -20,17 +20,18 @@ X-WR-TIMEZONE:Europe/Paris
 BEGIN:VEVENT
 UID:{{ .File.ContentBaseName }}@grenoble-meetups.fr
 DTSTAMP:{{ (now.UTC).Format "20060102T150405Z" }}
-{{- $hhmm := "" }}
-{{- if and (not .Params.endDate) .Params.startTime }}{{ $hhmm = partial "ics-time.html" .Params.startTime }}{{ end }}
-{{- if $hhmm }}
-{{- $start := time.AsTime (printf "%sT%s:00" (.Date.Format "2006-01-02") $hhmm) "Europe/Paris" }}
-DTSTART:{{ ($start.UTC).Format "20060102T150405Z" }}
-DURATION:PT2H
-{{- else }}
-DTSTART;VALUE=DATE:{{ .Date.Format "20060102" }}
-{{- with .Params.endDate }}
-DTEND;VALUE=DATE:{{ ((time .).AddDate 0 0 1).Format "20060102" }}
+{{- $t := partial "event-times.html" . }}
+{{- /* `$t.end` est l'instant de fin inclusif ; en journée entière, DTEND est
+       exclusif (RFC 5545), d'où le « +1 jour » — spécifique à l'iCal, il n'a
+       lieu qu'ici. */}}
+{{- if $t.allDay }}
+DTSTART;VALUE=DATE:{{ $t.start.Format "20060102" }}
+{{- with $t.end }}
+DTEND;VALUE=DATE:{{ (.AddDate 0 0 1).Format "20060102" }}
 {{- end }}
+{{- else }}
+DTSTART:{{ ($t.start.UTC).Format "20060102T150405Z" }}
+DTEND:{{ ($t.end.UTC).Format "20060102T150405Z" }}
 {{- end }}
 SUMMARY:{{ template "ics-escape" .Title }}
 {{- with .Params.location }}

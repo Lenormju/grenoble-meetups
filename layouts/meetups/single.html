@@ -1,15 +1,18 @@
 {{ define "head-extra" }}
-{{ $hasTime := and .Params.startTime (findRE `^\d{1,2}:\d{2}$` .Params.startTime) }}
-{{ $startDate := .Date.Format "2006-01-02" }}
-{{ $endDate := .Date.Format "2006-01-02" }}
-{{ if $hasTime }}
-  {{ $hm := split .Params.startTime ":" }}
-  {{ $startTime := .Date.Add (time.ParseDuration (printf "%sh%sm" (index $hm 0) (index $hm 1))) }}
-  {{ $startDate = $startTime.Format "2006-01-02T15:04:05" }}
-  {{/* Pas d'heure de fin dans les données : on retient la durée usuelle d'un meetup. */}}
-  {{ $endDate = ($startTime.Add (time.ParseDuration "2h")).Format "2006-01-02T15:04:05" }}
+{{/* Instants de l'événement : voir layouts/partials/event-times.html, seul
+     propriétaire du calcul. En journée entière on publie une date nue ; sinon
+     un instant avec son décalage horaire réel (ex. 2026-10-01T18:30:00+02:00). */}}
+{{ $t := partial "event-times.html" . }}
+{{ $startDate := "" }}
+{{ $endDate := "" }}
+{{ if $t.allDay }}
+  {{ $startDate = $t.start.Format "2006-01-02" }}
+  {{ $endDate = $startDate }}
+  {{ with $t.end }}{{ $endDate = .Format "2006-01-02" }}{{ end }}
+{{ else }}
+  {{ $startDate = $t.start.Format "2006-01-02T15:04:05-07:00" }}
+  {{ $endDate = $t.end.Format "2006-01-02T15:04:05-07:00" }}
 {{ end }}
-{{ with .Params.endDate }}{{ $endDate = (time .).Format "2006-01-02" }}{{ end }}
 {{/* Grenoble par défaut ; `location.city` pour les lieux hors Grenoble. */}}
 {{ $city := "Grenoble" }}
 {{ with .Params.location }}{{ with .city }}{{ $city = . }}{{ end }}{{ end }}
@@ -63,6 +66,7 @@
 
 {{ define "main" }}
 {{ $frDays := slice "Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi" }}
+{{ $t := partial "event-times.html" . }}
 <article class="event-detail">
   <div class="page-actions">
     <a href="{{ .Parent.RelPermalink }}" class="back-link">← {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}</a>
@@ -82,7 +86,7 @@
   {{ end }}
 
   <p class="event-meta">
-    <time datetime="{{ if and .Params.startTime (findRE `^\d{1,2}:\d{2}$` .Params.startTime) }}{{ printf "%sT%s:00" (.Date.Format "2006-01-02") .Params.startTime }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}">
+    <time datetime="{{ if $t.allDay }}{{ $t.start.Format "2006-01-02" }}{{ else }}{{ $t.start.Format "2006-01-02T15:04:05-07:00" }}{{ end }}">
       {{ index $frDays (int .Date.Weekday) }} {{ .Date.Day }} {{ partial "fr-month-name.html" .Date }} {{ .Date.Year }}
     </time>
     {{ with .Params.startTime }} — {{ . }}{{ end }}

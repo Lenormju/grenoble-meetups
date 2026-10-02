@@ -33,8 +33,9 @@ cancelled: true      # optional — goes *above* title; see "Cancelled events" b
 title: "Event name with emoji at end 🎤"
 description: "One-sentence summary for SEO"  # required — see the add-meetup skill for how to obtain one
 startDate: "YYYY-MM-DD"
-startTime: "soir"      # midi | après-midi | soir | HH:MM (e.g. "19:00") — omit if unknown
+startTime: "soir"      # midi | après-midi | soir | HH:MM (e.g. "19:00") — omit only if even the part of day is unknown
 endDate: "YYYY-MM-DD"  # optional, for multi-day events
+endTime: "20:00"       # optional — time on endDate if set, else on startDate; same grammar as startTime
 location:            # optional
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
@@ -58,6 +59,21 @@ It must be the *first* commit, not `.GitInfo`'s own (which is the **latest**). T
 ### Field naming and ordering
 
 Event files use `startDate` / `startTime` / `endDate` / `endTime` — two symmetric pairs, in that order, which reads as the interval (`startDate` at `startTime` → `endDate` at `endTime`). The names deliberately match schema.org's `Event.startDate` / `endDate`, which is what these fields feed.
+
+Both time fields share one grammar: `midi` | `après-midi` | `soir` | `H?H:MM` (`HH` 00–23, `MM` 00–59; a single-digit hour like `9:00` is normalised to `09:00`). The fuzzy words are a permanent, deliberate state — not a legacy shorthand waiting to be replaced once a real hour is known — for events announced before they're scheduled: `midi` → 12:00, `après-midi` → 14:00, `soir` → 19:00. When the exact hour is unknown, prefer a fuzzy value over omitting the field: an omitted `startTime` makes the event all-day, which reads as starting at midnight — worse than an approximate evening. `19h` / `19h30` is not supported; it was never documented and no file uses it. A malformed value fails the build via `errorf`, naming the file and the value — there is no silent fallback to all-day.
+
+One rule computes the end, with no day arithmetic anywhere: end = (`endDate` if set, else `startDate`) at `endTime`. If the computed end is not after the computed start, the build fails — nothing is ever inferred about which day an event ends, so an event running past midnight must say so with an explicit `endDate`. `startTime: "soir"` + `endTime: "soir"` with no `endDate` fails for the same reason (end == start) rather than silently becoming a 24-hour event. On the all-day path the predicate is deliberately looser — both bounds are whole days, so `endDate` equal to `startDate` only restates a one-day event and is accepted — but an `endDate` *strictly before* its `startDate` fails the build, since it would emit a `DTEND` preceding its `DTSTART` and make `month-calendar.html`'s `seq` day-expansion count downward. `startDate` is itself required: a file without it, and without any of the `hugo.toml` fallback keys, fails the build rather than inheriting the zero date and publishing an event in year 0001.
+
+| `startTime` | `endTime` | `endDate` | Result |
+|---|---|---|---|
+| yes | no | no | start + 2h default |
+| yes | yes | no | timed, same day; end <= start fails the build |
+| yes | yes | yes | timed start on `startDate`, timed end on `endDate` |
+| no | no | yes | all-day span (GreHack, DrupalCamp) |
+| no | yes | any | build error — an end with no start is meaningless |
+| yes | no | yes | all-day span; `startTime` is not used in the feed |
+
+That last row is deliberate, not an oversight: `startTime` with `endDate` but no `endTime` is a legitimately partial record — "starts 19:00 the first evening, runs through the 3rd, final hour unknown" — so it's accepted rather than rejected, every field staying independently optional. The cost is real and worth knowing: the event page shows the start time while the iCal feed shows an all-day span.
 
 `startDate` is not Hugo's own key, so `hugo.toml` points Hugo at it:
 
@@ -101,15 +117,15 @@ linkedinPost: "https://..."   # optional
 - `layouts/index.html` — real homepage at `/`, shows the current month's meetups
 - `layouts/meetups/list.html` — renders `/meetups/` (current month calendar + past months list) and `/meetups/YYYY-MM/` (single month calendar)
 - `layouts/meetups/single.html` — event detail page
-- `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans
+- `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans. The one place that still reads `startTime` directly and prints it raw, rather than going through `event-times.html`
 - `layouts/partials/fr-month-name.html` — French month name helper
 - `layouts/partials/seo.html` — meta description, canonical, Open Graph and Twitter tags; called from `baseof.html` for every page
 - `layouts/partials/og-image.html` — builds the social card, returns its absolute URL
 - `layouts/partials/text-wrap.html` — line-breaking helper for `images.Text`
+- `layouts/partials/event-times.html` — single owner of event timing. Parses `startTime`/`endTime` (including the fuzzy vocabulary), applies the 2-hour default and the end-computation rule, and returns `{ start, end, allDay, endIsDefault }` zoned to `Europe/Paris`. Consumed by `calendar.ics` and `meetups/single.html`
 - `layouts/partials/banner-afup.html` — site-wide banner for the AFUP open letter (temporary campaign; remove the partial, its call in `baseof.html` and the `.support-banner` CSS when it ends)
 - `layouts/_default/rss.xml` — RSS feed at `/index.xml`, lists individual meetup events sorted by date (newest first, max 50), excluding cancelled ones
-- `layouts/_default/calendar.ics` — iCal feed at `/meetups.ics`; every event including cancelled ones, which carry `STATUS:CANCELLED` (see "Cancelled events"). Defines an `ics-escape` template for RFC 5545 escaping and assumes a 2-hour duration
-- `layouts/partials/ics-time.html` — normalises a `startTime` value (`soir`, `19:00`…) to `HH:MM` for the iCal feed
+- `layouts/_default/calendar.ics` — iCal feed at `/meetups.ics`; every event including cancelled ones, which carry `STATUS:CANCELLED` (see "Cancelled events"). Defines an `ics-escape` template for RFC 5545 escaping and emits an explicit `DTEND` in every timed case, computed by `event-times.html`
 
 ## Social cards (`og:image`)
 
