@@ -31,8 +31,7 @@ location:       # optional — omit if unknown
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
   city: "Échirolles"  # optional — REQUIRED when the venue is outside Grenoble (Échirolles, Saint-Martin-d'Hères, Montbonnot-Saint-Martin…); omit for Grenoble
-  url: "https://maps.app.goo.gl/..."          # optional — map or venue site
-links:
+links:                 # a venue or map link goes here, not under `location` — see below
   - url: "https://..."   # optional — omit if no URL provided
     label: "S'inscrire"  # always set one — see "Link labels" below
 price: "payant"  # optional — omit if free (the default); "payant" for a ticketed event whose tarif we don't track, or a number for a known price in EUR
@@ -96,7 +95,7 @@ remain a number.
 
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
 1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
-1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`city`/`url` rather than asking the user or inventing a new address. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
+1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`city` rather than asking the user or inventing a new address. `location` has no `url` field: nothing renders it (`single.html` prints only `name` and `address`, and the JSON-LD `Place` uses only `name`/`address`/`city`), so a venue or map link belongs in `links` — `label: "Plus d'infos"` is what the Turbine event pages use. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
    - **Grenoble has two valid postcodes, 38000 and 38100, but each address has only one canonical form.** When the same street address appears with both, it's a mistake, not a variant — ask which is right instead of copying the most recent. Known: `31 Rue Gustave Eiffel` is 38000.
    - **One street address can host several venues.** `31 Rue Gustave Eiffel` is both SII and Wizbii. Match on the venue *name* first; a shared address is not evidence that two events were at the same place, and the name the user gives wins over the one already on file.
 2. **Group events by month.** For each month:
@@ -131,7 +130,7 @@ isn't a registration page.
 - When the exact hour is unknown, prefer a fuzzy value (`midi` / `après-midi` / `soir`) over omitting `startTime` or `endTime` altogether — an omitted time reads as all-day/midnight, which is worse than an approximate one.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
-- If a venue name is given but no address/url, check for a known location first (see step 1c) before asking the user or omitting `location`.
+- If a venue name is given but no address, check for a known location first (see step 1c) before asking the user or omitting `location`.
 
 ## Titles
 
