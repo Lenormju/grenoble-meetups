@@ -97,6 +97,20 @@ That last row is deliberate, not an oversight: `startTime` with `endDate` but no
 
 Convention: the three existing files all put `cancelled: true` on the line *above* `title:`. `description` stays directly after `title:` regardless, so it lands on line 4 in those files rather than line 3.
 
+### Deadlines (CFP, inscriptions)
+
+A submission deadline is not a meetup, but it is published as one: an event file in the month the deadline falls in. Three files do this — `2026-05-31-tremplin-snowcamp.md`, `2026-06-15-cfp-campus-agile.md`, `2026-10-18-cfp-snowcamp.md`.
+
+The alternative is a link on the conference's own event, which is what GreHack and AlpOSS carry (`label: "Call for papers (avant le 2 novembre)"`). That only works when the conference itself is within the browsing horizon. Snowcamp's CFP closes in October for a conference in January, so a link there would sit in a month nobody is looking at yet — hence the standalone entry. Both forms can coexist for the same event, and do.
+
+Three conventions follow:
+
+- **The title starts lowercase** and reads as a phrase, because the calendar grid prints it right after the day number: `18 — limite pour soumettre au CFP de Snowcamp`. The forms in use are `limite pour soumettre au CFP de …` and `clôture des inscriptions au …`.
+- **No `startTime` or `endTime` — the entry is all-day.** A deadline is an instant, not an interval, so any start time would be fabricated. `endTime` alone fails the build by design (`event-times.html`), and `startTime: "00:00"` + `endTime: "23:59"` is worse than it looks: it publishes a midnight start on the page and in the grid, and turns the `VEVENT` into a 24-hour *timed* block rather than an all-day banner, which most clients render as a solid column over the whole day.
+- **The exact hour goes in the link label**, where it is actionable and costs the time model nothing: `label: "Proposer un talk (jusqu'à 23h59)"`. Don't repeat the day in it — the grid already files the entry under that day, and the detail page already shows the date.
+
+Two things a deadline still needs: the organiser's `groups`, so the JSON-LD gets an `organizer`; and an explicit `label` on every link, since the `S'inscrire` default is wrong for a call for papers.
+
 ### Month `_index.md` front matter
 
 ```yaml
