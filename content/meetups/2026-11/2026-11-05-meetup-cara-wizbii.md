@@ -12,6 +12,8 @@ location:
 links:
   - url: "https://yp.events/c85c07f4-d7c3-42e3-a7b5-68f0d1abc63e/Meetup-Exceptionnel"
     label: "Billetterie (événement payant)"
+  - url: "https://www.meetup.com/cara-grenoble/events/316896295/"
+    label: "Voir sur Meetup"
   - url: "https://www.linkedin.com/feed/update/urn:li:share:7514216371497594880/"
     label: "Post LinkedIn"
 ---
