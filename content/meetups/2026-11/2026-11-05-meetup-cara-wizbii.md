@@ -1,10 +1,10 @@
 ---
-title: "Meetup CARA chez Wizbii 🏢"
+title: "Qui prime : l'IA ou le collectif ? 🤝"
 description: "Meetup exceptionnel du CARA Grenoble, avec deux regards croisés sur ce que l'IA apporte au travail d'équipe, par Claire Van de Voorde et Rémi Alvado."
 startDate: "2026-11-05"
 startTime: "18:30"
-endTime: "20:30"
-groups: ["cara"]
+endTime: "21:30"
+groups: ["cara", "product"]
 price: 6
 location:
   name: "Wizbii"
@@ -14,6 +14,8 @@ links:
     label: "Billetterie (événement payant)"
   - url: "https://www.meetup.com/cara-grenoble/events/316896295/"
     label: "Voir sur Meetup"
+  - url: "https://www.meetup.com/product-in-grenoble/events/316972030/"
+    label: "Voir sur Meetup (Product in Grenoble)"
   - url: "https://www.linkedin.com/feed/update/urn:li:share:7514216371497594880/"
     label: "Post LinkedIn"
 ---
