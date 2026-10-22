@@ -3,7 +3,7 @@ title: "DrupalCamp 🐘"
 description: "Deux jours de conférences Drupal à Grenoble, suivis d'une journée de contribution à l'Open Source."
 startDate: "2026-04-09"
 groups: ["drupalcamp"]
-price: "payant"
+price: 15
 endDate: "2026-04-11"
 links:
   - url: "https://lnkd.in/diKT8vza"

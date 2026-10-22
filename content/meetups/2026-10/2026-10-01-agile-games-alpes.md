@@ -6,7 +6,7 @@ startTime: "18:30"
 endDate: "2026-10-03"
 endTime: "16:00"
 groups: ["cara"]
-price: "payant"
+price: 130
 location:
   name: "Maison des Isles"
   address: "rue de l'Espace Rhône, La Bruyère, Brégnier-Cordon"

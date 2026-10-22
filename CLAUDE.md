@@ -43,12 +43,12 @@ location:            # optional
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"
-price: "payant"      # optional — omit if free (the default), a number for a known price in EUR
+price: 80             # optional — omit if free (the default), else a number in EUR
 ---
 Optional longer description in Markdown.
 ```
 
-`price` only feeds the `Event` JSON-LD `offers` (it is not displayed on the page). Omitted means free (`price: 0`, EUR), which is right for nearly every meetup; use `"payant"` for ticketed conferences whose price we don't track, or a number for a known price.
+`price` only feeds the `Event` JSON-LD `offers` (it is not displayed on the page). Omitted means free (`price: 0`, EUR), which is right for nearly every meetup; a ticketed event must give its price as a number (cheapest standard ticket). A non-numeric value such as `"payant"` fails the build: without `price` and `priceCurrency`, Search Console flags the offer.
 
 The offer's `url` is the first entry of `links`, falling back to the event's own page when the event has no link (Google requires the field).
 

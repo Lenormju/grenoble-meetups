@@ -35,17 +35,18 @@
 {{ with $organizers }}
   {{ $eventSchema = merge $eventSchema (dict "organizer" (cond (eq (len .) 1) (index . 0) .)) }}
 {{ end }}
-{{/* Les meetups sont gratuits sauf mention contraire ; `price: "payant"` = payant, tarif inconnu. */}}
+{{/* Les meetups sont gratuits sauf mention contraire ; `price` est un nombre en EUR. Un tarif inconnu
+     (`"payant"`) fait échouer le build : sans `price` ni `priceCurrency`, Google signale l'offre. */}}
 {{/* `url` de l'offre : le lien d'inscription, à défaut la page de l'événement (champ requis par Google). */}}
 {{ $offerURL := .Permalink }}
 {{ with .Params.links }}{{ $offerURL = (index . 0).url }}{{ end }}
 {{ $offer := dict "@type" "Offer" "availability" "https://schema.org/InStock" "url" $offerURL }}
 {{ $price := 0 }}
-{{ $priceKnown := true }}
 {{ with .Params.price }}
-  {{ if eq (printf "%v" .) "payant" }}{{ $priceKnown = false }}{{ else }}{{ $price = . }}{{ end }}
+  {{ if not (in (slice "int" "int64" "uint64" "float64") (printf "%T" .)) }}{{ errorf "%s: price must be a number in EUR, got %q" $.File.Path (printf "%v" .) }}{{ end }}
+  {{ $price = . }}
 {{ end }}
-{{ if $priceKnown }}{{ $offer = merge $offer (dict "price" $price "priceCurrency" "EUR") }}{{ end }}
+{{ $offer = merge $offer (dict "price" $price "priceCurrency" "EUR") }}
 {{/* `validFrom` : mise en ligne de l'événement, bornée pour ne jamais dépasser la
      date de l'événement. C'est le *premier* commit du fichier qui compte, pas le
      dernier : le premier est la vraie date de publication, et il est immuable —
