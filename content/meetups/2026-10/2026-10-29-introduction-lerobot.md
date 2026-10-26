@@ -3,6 +3,7 @@ title: "An introduction to the fabulous world of LeRobot 🤖"
 description: "Emmanuel Virot (Wormsensing) introduces Hugging Face's LeRobot ecosystem and SpectRobot, a robot trained to identify hidden box contents by shaking them and reading tactile vibrations."
 startDate: "2026-10-29"
 startTime: "19:00"
+endTime: "20:00"
 groups: ["grenoble-data-science"]
 location:
   name: "Cowork In Grenoble"
@@ -11,6 +12,8 @@ links:
   - url: "https://sites.google.com/view/grenobledatascience/#h.6er7hu3w0knd"
     label: "S'inscrire"
 ---
+
+Salle Calypso.
 
 Not so long ago, training a robot to manipulate objects required a lab budget, proprietary hardware and a team of specialists. LeRobot, Hugging Face's open-source robotics library, is changing that. With a low-cost arm, a couple of webcams and a PC with a good GPU, anyone can now record demonstrations by teleoperation, share datasets on the Hugging Face Hub, and train state-of-the-art imitation learning policies.
 
