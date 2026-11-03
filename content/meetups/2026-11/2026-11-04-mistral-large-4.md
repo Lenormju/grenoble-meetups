@@ -11,6 +11,7 @@ location:
 links:
   - url: "https://www.meetup.com/grenoble-open-artificial-intelligence-meetup-group/events/316957986/"
     label: "S'inscrire"
+aliases: ["/meetups/2026-10/2026-10-28-mistral-large-4/"]
 ---
 
 Rencontre informelle au bar du Minimistan.
