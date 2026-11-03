@@ -1,7 +1,7 @@
 ---
 title: "Mistral large 4 - AI Dev & IA locale 🤖"
 description: "Rencontre informelle au bar du Minimistan autour de Mistral Large 4, du développement avec l'IA et des solutions open-source pour une IA locale et privée."
-startDate: "2026-10-28"
+startDate: "2026-11-04"
 startTime: "19:00"
 endTime: "20:30"
 groups: ["open-ia"]
