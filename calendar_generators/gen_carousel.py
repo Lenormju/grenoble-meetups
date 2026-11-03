@@ -114,6 +114,13 @@ def load_font_css() -> str:
 
 # ── HTML builders ─────────────────────────────────────────────────────────────
 
+# Slide 1 only, filled by hand for a month when a crowded day overflows its cell
+# (reset them for the next month): a title can be shortened, or an event left off
+# the grid (it keeps its own day card). Keyed by file stem, e.g. "2026-11-17-temps-et-bugs".
+OVERVIEW_SHORT_LABELS: dict[str, str] = {}
+OVERVIEW_HIDDEN: set[str] = set()
+
+
 def overview_html(year: int, month: int, events: list[Event], font_css: str) -> str:
     """Slide 1 — the whole month as a Mon-Fri grid."""
     weeks = cal_module.Calendar(firstweekday=0).monthdayscalendar(year, month)
@@ -122,8 +129,11 @@ def overview_html(year: int, month: int, events: list[Event], font_css: str) -> 
     # A multi-day event shows on every weekday it spans, like the calendar image.
     by_day: dict[int, list[str]] = {}
     for e in events:
+        if e.slug in OVERVIEW_HIDDEN:
+            continue
+        label = OVERVIEW_SHORT_LABELS.get(e.slug, e.title) + e.span_suffix
         for day in e.days_in_month(year, month):
-            by_day.setdefault(day, []).append(escape(e.title + e.span_suffix))
+            by_day.setdefault(day, []).append(escape(label))
 
     day_names_html = "".join(f'<div class="dn">{d}</div>' for d in DAYS_SHORT[:5])
 
@@ -233,7 +243,8 @@ def main() -> None:
     print("Loading font…")
     font_css = load_font_css()
 
-    out = Path(__file__).parent
+    out = Path(__file__).parent / f"{year:04d}-{month:02d}"
+    out.mkdir(exist_ok=True)
     prefix = f"carousel_{FR_MONTHS[month - 1].lower()}_{year}"
     png_paths: list[Path] = []
 

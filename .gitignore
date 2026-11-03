@@ -8,4 +8,5 @@ resources/
 # with the scripts rather than committing them.
 calendar_generators/*.png
 calendar_generators/*.pdf
+calendar_generators/20*/
 __pycache__/

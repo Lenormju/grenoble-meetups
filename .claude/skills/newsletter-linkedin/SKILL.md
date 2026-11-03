@@ -124,7 +124,7 @@ uv run --with playwright python3 -m playwright install chromium
 
 ### Sorties
 
-Dans `calendar_generators/`, toutes gitignorées (ce sont des artefacts, régénérables en quelques secondes) :
+Dans `calendar_generators/YYYY-MM/` (un dossier par mois, créé au besoin), toutes gitignorées (ce sont des artefacts, régénérables en quelques secondes) :
 
 - `carousel_<mois>_<année>_NN.png` — les slides
 - `carousel_<mois>_<année>.pdf` — **c'est ce fichier qu'on uploade sur LinkedIn**

@@ -110,7 +110,7 @@ def load_events(year: int, month: int) -> list[Event]:
     """
     Read content/meetups/YYYY-MM/ into Event objects, sorted chronologically.
 
-    Cancelled events are skipped, as are files whose date falls outside the
+    Cancelled events and drafts are skipped, as are files whose date falls outside the
     month (which shouldn't happen, but the site is the source of truth).
     """
     month_dir = CONTENT_DIR / f"{year:04d}-{month:02d}"
@@ -125,10 +125,10 @@ def load_events(year: int, month: int) -> list[Event]:
         if len(parts) < 3:
             continue
         fm = yaml.safe_load(parts[1])
-        if not fm or fm.get("cancelled"):
+        if not fm or fm.get("cancelled") or fm.get("draft"):
             continue
 
-        start = _as_date(fm.get("date"))
+        start = _as_date(fm.get("startDate"))
         if not start or start.month != month or start.year != year:
             continue
         end = _as_date(fm.get("endDate")) or start
@@ -139,7 +139,7 @@ def load_events(year: int, month: int) -> list[Event]:
             title=fm.get("title") or f.stem,
             start=start,
             end=end,
-            time=fm.get("time"),
+            time=fm.get("startTime"),
             location=loc if isinstance(loc, dict) else {},
             description=fm.get("description") or "",
         ))
