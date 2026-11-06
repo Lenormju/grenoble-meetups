@@ -7,5 +7,5 @@ endTime: "19:30"
 groups: ["cara"]
 location:
   name: "Le Minimistan"
-  address: "Cour Marcel Reymond, Rue des Minimes, 38000 Grenoble"
+  address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
 ---

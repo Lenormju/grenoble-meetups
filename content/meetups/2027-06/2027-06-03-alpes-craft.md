@@ -8,7 +8,7 @@ endTime: "18:00"
 groups: ["alpes-craft"]
 location:
   name: "Alpexpo"
-  address: "Avenue d'Innsbruck, 38100 Grenoble"
+  address: "Avenue d'Innsbruck, Grenoble"
 price: 60
 links:
   - url: "https://www.alpescraft.fr/"

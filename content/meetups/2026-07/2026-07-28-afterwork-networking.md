@@ -5,8 +5,8 @@ startDate: "2026-07-28"
 startTime: "18:30"
 groups: ["femmes-tech-isere"]
 location:
-  name: "Minimistan"
-  address: "Cour Marcel Reymond, rue des Minimes, 38000 Grenoble"
+  name: "Le Minimistan"
+  address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
 links:
   - url: "https://www.linkedin.com/feed/update/urn:li:activity:7480290708508061696/"
     label: "Plus d'infos"

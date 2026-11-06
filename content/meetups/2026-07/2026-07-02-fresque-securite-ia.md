@@ -5,8 +5,8 @@ startDate: "2026-07-02"
 startTime: "18:00"
 groups: ["pause-ia", "centre-securite-ia"]
 location:
-  name: "Turbine.Coop"
-  address: "5 Esplanade Andry Farcy, 38000 Grenoble"
+  name: "La Turbine.Coop"
+  address: "5 Esplanade Andry Farcy, Grenoble"
 links:
   - url: "https://luma.com/f7ks4u49"
     label: "S'inscrire"

@@ -9,8 +9,7 @@ groups: ["cara"]
 price: 20
 location:
   name: "CIO (Centre d'Information et d'Orientation) Local ALEC - 2ème étage"
-  address: "22 Avenue Benoît Frachon, 38400 Saint-Martin-d'Hères"
-  city: "Saint-Martin-d'Hères"
+  address: "22 Avenue Benoît Frachon, Saint-Martin-d'Hères"
 links:
   - url: "https://www.eventbrite.fr/e/atelier-entreprises-dans-la-penurie-de-ressources-grenoble-tickets-2003825678546"
     label: "Billetterie (événement payant)"

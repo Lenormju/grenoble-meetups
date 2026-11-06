@@ -5,9 +5,8 @@ startDate: "2026-06-16"
 groups: ["femmes-tech-isere"]
 startTime: "12:00"
 location:
-  name: "Critéo"
-  address: "4 Rue des Méridiens, 38130 Échirolles"
-  city: "Échirolles"
+  name: "Criteo"
+  address: "4 Rue des Méridiens, Échirolles"
 links:
   - url: "https://forms.gle/Tj94JmGxx2TkZWsE9"
     label: "S'inscrire"

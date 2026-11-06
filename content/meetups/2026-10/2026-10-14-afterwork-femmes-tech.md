@@ -6,8 +6,7 @@ startTime: "18:30"
 groups: ["femmes-tech-isere"]
 location:
   name: "St Augustin"
-  address: "10 avenue du Granier, 38240 Meylan"
-  city: "Meylan"
+  address: "10 avenue du Granier, Meylan"
 links:
   - url: "https://www.linkedin.com/feed/update/urn:li:activity:7514260817161207808"
     label: "Plus d'infos"

@@ -7,7 +7,7 @@ endTime: "20:30"
 groups: ["la-casemate"]
 location:
   name: "La Casemate"
-  address: "2 Place Saint-Laurent, 38000 Grenoble"
+  address: "2 Place Saint-Laurent, Grenoble"
 links:
   - url: "https://les-mardis-du-futur.mapado.com/event/864075-ia-aimer-une-machine-cycle-les-mardis-du-futur-lia-entre-science-et-fiction"
     label: "S'inscrire"

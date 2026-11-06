@@ -7,7 +7,7 @@ endTime: "14:00"
 groups: ["femmes-tech-isere"]
 location:
   name: "Hardis Group"
-  address: "8 Place de la Résistance, 38000 Grenoble"
+  address: "8 Place de la Résistance, Grenoble"
 ---
 
 Lunch du collectif Femmes dans la Tech Isère, accueilli chez Hardis Group.

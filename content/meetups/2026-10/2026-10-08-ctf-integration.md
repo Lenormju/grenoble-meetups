@@ -7,7 +7,6 @@ groups: ["securimag"]
 location:
   name: "Ensimag — bâtiment H"
   address: "681 rue de la Passerelle, Saint-Martin-d'Hères"
-  city: "Saint-Martin-d'Hères"
 links:
   - url: "https://www.helloasso.com/associations/securimag/evenements/ctf-d-integration-securimag-2026"
     label: "S'inscrire (payant, 1 €)"

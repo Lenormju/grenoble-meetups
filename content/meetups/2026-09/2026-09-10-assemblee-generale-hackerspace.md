@@ -7,7 +7,6 @@ groups: ["hackerspace"]
 location:
   name: "Grenoble Hackerspace"
   address: "17 rue du Pré Ruffier, Saint-Martin-d'Hères"
-  city: "Saint-Martin-d'Hères"
 ---
 
 Le Hackerspace de Grenoble vous invite à l'Assemblée Générale du mois de septembre, au 17 rue du Pré Ruffier, 38400 Saint-Martin-d'Hères. Venez comme vous êtes ;)

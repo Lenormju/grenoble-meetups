@@ -6,7 +6,7 @@ startTime: "19:00"
 groups: ["humantalks"]
 location:
   name: "Samse"
-  address: "2 Rue Raymond Pitet, 38030 Grenoble"
+  address: "2 Rue Raymond Pitet, Grenoble"
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/314277821/"
     label: "S'inscrire"

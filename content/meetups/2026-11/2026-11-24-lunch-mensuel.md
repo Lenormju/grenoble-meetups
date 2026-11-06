@@ -7,8 +7,7 @@ endTime: "14:00"
 groups: ["femmes-tech-isere"]
 location:
   name: "Aledia"
-  address: "Rue des Lavières - ZAC du Saut du moine, 38800 Champagnier"
-  city: "Champagnier"
+  address: "Rue des Lavières - ZAC du Saut du moine, Champagnier"
 links:
   - url: "https://forms.gle/pG1ui9t6NvxXDerV6"
     label: "S'inscrire"

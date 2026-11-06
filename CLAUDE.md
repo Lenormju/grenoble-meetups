@@ -38,8 +38,7 @@ endDate: "YYYY-MM-DD"  # optional, for multi-day events
 endTime: "20:00"       # optional — time on endDate if set, else on startDate; same grammar as startTime
 location:            # optional
   name: "La Casemate"
-  address: "1 Place Saint-Laurent, Grenoble"  # optional
-  city: "Échirolles"   # optional — omit for Grenoble (the default); drives addressLocality in the JSON-LD
+  address: "1 Place Saint-Laurent, Grenoble"  # optional — one line, city last; feeds the JSON-LD streetAddress
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"

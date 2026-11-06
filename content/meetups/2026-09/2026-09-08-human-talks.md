@@ -6,7 +6,7 @@ startTime: "19:00"
 groups: ["humantalks"]
 location:
   name: "SII"
-  address: "31 Rue Gustave Eiffel, 38000 Grenoble"
+  address: "31 Rue Gustave Eiffel, Grenoble"
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/315719531/"
     label: "S'inscrire"

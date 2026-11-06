@@ -7,7 +7,6 @@ groups: ["qualisphere"]
 location:
   name: "Prizoners — Bar, Lounge & Restaurant"
   address: "13 Rue de la Condamine, Gières"
-  city: "Gières"
 links:
   - url: "https://www.linkedin.com/events/laqualisphere-tablerondeia-24no7505896814261207041/"
     label: "S'inscrire"

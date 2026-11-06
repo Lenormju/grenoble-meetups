@@ -6,8 +6,7 @@ startTime: "19:00"
 groups: ["alpesjug"]
 location:
   name: "Salesforce"
-  address: "29 Bd des Alpes"
-  city: "Meylan"
+  address: "29 Bd des Alpes, Meylan"
 links:
   - url: "https://www.meetup.com/alpesjug/events/316501713/"
 ---

@@ -6,8 +6,7 @@ startTime: "19:00"
 groups: ["tupper-rust"]
 location:
   name: "Kaizen Solutions"
-  address: "26 Av. Jean Kuntzmann"
-  city: "Montbonnot-Saint-Martin"
+  address: "26 Av. Jean Kuntzmann, Montbonnot-Saint-Martin"
 links:
   - url: "https://www.meetup.com/tupperlibre/events/316762329/"
     label: "S'inscrire"

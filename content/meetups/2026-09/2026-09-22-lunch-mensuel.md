@@ -6,7 +6,7 @@ startTime: "12:00"
 groups: ["femmes-tech-isere"]
 location:
   name: "Gtec"
-  address: "9 Quai Créqui, 38000 Grenoble"
+  address: "9 Quai Créqui, Grenoble"
 links:
   - url: "https://docs.google.com/forms/d/e/1FAIpQLSdKZEYJsKqyxwaQeBE5vviPQYgbfGShuSFRGijp7d4-QmsfeQ/viewform"
     label: "S'inscrire"

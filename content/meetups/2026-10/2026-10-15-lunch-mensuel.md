@@ -7,6 +7,7 @@ endTime: "14:00"
 groups: ["femmes-tech-isere"]
 location:
   name: "Phelma"
+  address: "3 Parvis Louis Néel, Grenoble"
 ---
 
 Jeu sérieux des Petits Pas, créé par Céline Ternon et axé sur l'épanouissement personnel et professionnel.

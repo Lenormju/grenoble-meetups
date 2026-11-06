@@ -6,7 +6,7 @@ startTime: "19:00"
 groups: ["humantalks"]
 location:
   name: "Hardis Group"
-  address: "8 Place de la Résistance, 38000 Grenoble"
+  address: "8 Place de la Résistance, Grenoble"
 links:
   - url: "https://www.meetup.com/humantalks-grenoble/events/315719535/"
     label: "S'inscrire"

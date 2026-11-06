@@ -7,7 +7,7 @@ endTime: "20:30"
 groups: ["la-casemate"]
 location:
   name: "La Casemate"
-  address: "2 Place Saint-Laurent, 38000 Grenoble"
+  address: "2 Place Saint-Laurent, Grenoble"
 links:
   - url: "https://les-mardis-du-futur.mapado.com/event/864057-superintelligence-lia-peut-elle-nous-echapper-cycle-les-mardis-du-futur-lia-entre-science-et-fiction"
     label: "S'inscrire"

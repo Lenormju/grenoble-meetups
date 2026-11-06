@@ -6,7 +6,7 @@ startTime: "12:00"
 groups: ["femmes-tech-isere"]
 location:
   name: "GEM (Grenoble École de Management)"
-  address: "12 Rue Pierre Semard, 38000 Grenoble"
+  address: "12 Rue Pierre Semard, Grenoble"
 links:
   - url: "https://docs.google.com/forms/d/e/1FAIpQLSfKY3ATNxbRxem3V1r918bi12qEFJs3f_dm7CgkRdXbOAZyfA/viewform"
     label: "S'inscrire"

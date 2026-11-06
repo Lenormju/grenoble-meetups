@@ -13,11 +13,20 @@
   {{ $startDate = $t.start.Format "2006-01-02T15:04:05-07:00" }}
   {{ $endDate = $t.end.Format "2006-01-02T15:04:05-07:00" }}
 {{ end }}
-{{/* Grenoble par défaut ; `location.city` pour les lieux hors Grenoble. */}}
-{{ $city := "Grenoble" }}
-{{ with .Params.location }}{{ with .city }}{{ $city = . }}{{ end }}{{ end }}
-{{ $address := dict "@type" "PostalAddress" "addressLocality" $city "addressCountry" "FR" }}
-{{ with .Params.location }}{{ with .address }}{{ $address = merge $address (dict "streetAddress" .) }}{{ end }}{{ end }}
+{{/* Adresse complète sur une ligne (ville incluse) ; le pays est fixe, le site ne couvre que Grenoble.
+     Un `location` sans `address` fait échouer le build : Google exige un `address` sur le lieu.
+     Sans `location` (appel à contributions, billetterie, événement en ligne) il n'y a pas de lieu à
+     décrire, et `addressLocality` retombe sur Grenoble. */}}
+{{ $address := dict "@type" "PostalAddress" "addressCountry" "FR" }}
+{{ with .Params.location }}
+  {{ with .address }}
+    {{ $address = merge $address (dict "streetAddress" .) }}
+  {{ else }}
+    {{ errorf "%s : location.name = %q n'a pas d'address. Renseignez-la (forme « rue, Ville »), ou retirez location." $.File.Path .name }}
+  {{ end }}
+{{ else }}
+  {{ $address = merge $address (dict "addressLocality" "Grenoble") }}
+{{ end }}
 {{ $placeName := cond (and .Params.location .Params.location.name) .Params.location.name "Grenoble" }}
 {{ $location := dict "@type" "Place" "name" $placeName "address" $address }}
 {{ $desc := cond (ne .Description "") .Description (printf "%s — meetup tech à Grenoble" .Title) }}

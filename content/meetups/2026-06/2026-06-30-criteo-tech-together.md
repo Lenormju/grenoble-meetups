@@ -6,8 +6,7 @@ startTime: "18:00"
 groups: ["criteo-tech-together"]
 location:
   name: "Criteo"
-  address: "4 Rue des Méridiens, 38130 Échirolles"
-  city: "Échirolles"
+  address: "4 Rue des Méridiens, Échirolles"
 links:
   - url: "https://luma.com/drpt66m2"
     label: "S'inscrire"

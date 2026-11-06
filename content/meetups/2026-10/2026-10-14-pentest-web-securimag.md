@@ -7,7 +7,6 @@ groups: ["securimag"]
 location:
   name: "UFR IM²AG — bâtiment F, amphi F018"
   address: "60 rue de la Chimie, Saint-Martin-d'Hères"
-  city: "Saint-Martin-d'Hères"
 links:
   - url: "https://securimag.org/"
     label: "Prochaines conférences"

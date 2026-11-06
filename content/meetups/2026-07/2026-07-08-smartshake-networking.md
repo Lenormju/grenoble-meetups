@@ -6,7 +6,7 @@ startTime: "18:30"
 groups: ["smartshake"]
 location:
   name: "Le Jardin"
-  address: "18 rue Thiers, 38000 Grenoble"
+  address: "18 rue Thiers, Grenoble"
 links:
   - url: "https://www.meetup.com/smartshake/events/315504512/"
     label: "S'inscrire"
