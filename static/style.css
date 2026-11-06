@@ -139,6 +139,12 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   white-space: nowrap;
 }
 .month-nav a:hover { text-decoration: underline; }
+/* Narrow screens: side columns are at least as wide as their link (equal when room allows, so the title stays centred); the title column shrinks and wraps */
+@media (max-width: 600px) {
+  .month-nav { grid-template-columns: minmax(auto, 1fr) minmax(0, auto) minmax(auto, 1fr); gap: 0.5rem; }
+  .month-nav h1 { font-size: 1.2rem; }
+  .month-nav a { font-size: 0.85rem; }
+}
 
 /* ─── Calendar day headers ───────────────────── */
 .calendar-day-headers {
