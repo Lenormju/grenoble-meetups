@@ -199,6 +199,19 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   margin-bottom: 0.3rem;
 }
 
+/* Text for screen readers only. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Visually hidden on desktop (the column header shows the day) but still read
    by screen readers, which skip the aria-hidden header: "mercredi 4". */
 .day-name-mobile {
