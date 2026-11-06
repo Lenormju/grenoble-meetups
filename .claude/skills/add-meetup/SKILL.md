@@ -30,7 +30,6 @@ groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or
 location:       # optional — omit if unknown
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional
-  city: "Échirolles"  # optional — REQUIRED when the venue is outside Grenoble (Échirolles, Saint-Martin-d'Hères, Montbonnot-Saint-Martin…); omit for Grenoble
 links:                 # a venue or map link goes here, not under `location` — see below
   - url: "https://..."   # optional — omit if no URL provided
     label: "S'inscrire"  # always set one — see "Link labels" below
@@ -95,9 +94,18 @@ remain a number.
 
 1. **Read two existing event files** from the most recent month to confirm current conventions before generating anything.
 1b. **Identify the organizer group(s).** Check `content/groups/` for an existing slug matching the organizer. If no match exists, create `content/groups/<new-slug>/_index.md` with `title: "Organizer Name"` before creating the event file. Every event must have at least one group.
-1c. **Reuse known venue locations.** If a venue name is given (or inferable), search past events for it first, e.g. `grep -ril "turbine" content/meetups/` then check the matching `location:` blocks. Match loosely — punctuation/case/typo variants like "La Turbine.coop" and "Turbine.Coop" are the same venue. If found, reuse that exact `name`/`address`/`city` rather than asking the user or inventing a new address. `location` has no `url` field: nothing renders it (`single.html` prints only `name` and `address`, and the JSON-LD `Place` uses only `name`/`address`/`city`), so a venue or map link belongs in `links` — `label: "Plus d'infos"` is what the Turbine event pages use. If multiple past events disagree on the address, prefer the most recent one and flag the mismatch to the user.
-   - **Grenoble has two valid postcodes, 38000 and 38100, but each address has only one canonical form.** When the same street address appears with both, it's a mistake, not a variant — ask which is right instead of copying the most recent. Known: `31 Rue Gustave Eiffel` is 38000.
-   - **One street address can host several venues.** `31 Rue Gustave Eiffel` is both SII and Wizbii. Match on the venue *name* first; a shared address is not evidence that two events were at the same place, and the name the user gives wins over the one already on file.
+1c. **Normalise the venue against `venues.yaml`.** The canonical list of venues already used is `.claude/skills/add-meetup/venues.yaml`; query it with the lookup script rather than eyeballing the file, whether the user gave a venue name, a street address, or both:
+   ```bash
+   uv run --with pyyaml .claude/skills/add-meetup/venue_lookup.py "<name or address as given>"
+   ```
+   It matches case/accent/punctuation-insensitively, ignores articles, street types and postcodes, and prints every candidate tagged `exact-name`, `name` (partial) or `address`. Act on the result:
+   - **One candidate** (or one `exact-name` and the user named no room): copy its `name`/`address` verbatim into `location:` — never the user's spelling, never an address from a past event. Do not ask.
+   - **Several candidates:** show them and let the user choose (`AskUserQuestion`), with "new venue" as an option. This is the normal outcome for a street shared by two venues (`31 Rue Gustave Eiffel` → SII or Wizbii; `Cour Marcel Reymond` → Minimistan or Cowork In Grenoble) and for room-level variants (`Ensimag` vs `Ensimag — bâtiment H`, `Alpexpo` vs `Alpexpo — Espace 1968`). Different names are different venues even at one address; never merge them.
+   - **No match:** it is a new venue. Use name and address as given (ask if the address is missing), put the address in the canonical form below, then **append an entry to `venues.yaml`** and tell the user.
+   - **Canonical form of `address`: `<street>, <City>`** — no postcode (Grenoble has 38000 and 38100, and the same street appears with both), city always last, even for Grenoble. There is no `city` field: the JSON-LD hard-codes the country (FR) and takes the whole line as `streetAddress`.
+   - **`aliases`** in `venues.yaml` exist only for names the lookup cannot reach by itself ("Saint Augustin" for "St Augustin"). Don't list case, accent, article or shortened-name variants.
+   - The list is the authority: if an existing event disagrees with it on a venue, mention the mismatch to the user.
+   - `location` has no `url` field: nothing renders it (`single.html` prints only `name` and `address`, and the JSON-LD `Place` uses only `name`/`address`), so a venue or map link belongs in `links` — `label: "Plus d'infos"` is what the Turbine event pages use.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
@@ -130,7 +138,7 @@ isn't a registration page.
 - When the exact hour is unknown, prefer a fuzzy value (`midi` / `après-midi` / `soir`) over omitting `startTime` or `endTime` altogether — an omitted time reads as all-day/midnight, which is worse than an approximate one.
 - Derive the slug from the French or English event name; strip accents, lowercase, hyphenate.
 - If a month `_index.md` already exists, do not overwrite it.
-- If a venue name is given but no address, check for a known location first (see step 1c) before asking the user or omitting `location`.
+- If a venue name is given but no address, look it up in `venues.yaml` first (see step 1c) before asking the user or omitting `location`.
 
 ## Titles
 

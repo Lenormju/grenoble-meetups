@@ -1,0 +1,85 @@
+# Canonical venues for the add-meetup skill (see step 1c in SKILL.md).
+# Query it with: uv run --with pyyaml .claude/skills/add-meetup/venue_lookup.py "<name or address>"
+#
+# `name` and `address` are copied verbatim into an event's `location:` block.
+#
+# Canonical form of `address`: "<street>, <City>" — street first, city always last, no
+# postcode (Grenoble has both 38000 and 38100 and the same street shows up with each).
+# There is no separate `city` field: the full line goes to the JSON-LD as `streetAddress`.
+# `aliases` are for names the lookup cannot reach on its own. Case, accents, punctuation,
+# a leading "Le/La" and a shortened name ("Casemate" for "La Casemate") are already handled
+# by the lookup, so don't list them.
+#
+# One street address can host several venues (Minimistan / Cowork In Grenoble,
+# SII / Wizbii): the lookup returns all of them and the user picks. Keep the entries apart.
+# Add any new venue here when creating an event.
+
+venues:
+  - name: "La Turbine.Coop"
+    address: "5 Esplanade Andry Farcy, Grenoble"
+  - name: "Le Minimistan"
+    address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
+  - name: "Grenoble Hackerspace"
+    address: "17 rue du Pré Ruffier, Saint-Martin-d'Hères"
+  - name: "UFR IM²AG — bâtiment F, amphi F018"
+    address: "60 rue de la Chimie, Saint-Martin-d'Hères"
+  - name: "La Casemate"
+    address: "2 Place Saint-Laurent, Grenoble"
+  - name: "Emmaüs Connect Grenoble"
+    address: "53 avenue Alsace Lorraine, Grenoble"
+  - name: "Zenika"
+    address: "8 Avenue Alsace-Lorraine, Grenoble"
+  - name: "Salesforce"
+    address: "29 Bd des Alpes, Meylan"
+  - name: "Hardis Group"
+    address: "8 Place de la Résistance, Grenoble"
+  - name: "ENSIMAG"
+    address: "681 Rue de la Passerelle, Saint-Martin-d'Hères"
+  - name: "Ensimag — bâtiment H"
+    address: "681 rue de la Passerelle, Saint-Martin-d'Hères"
+  - name: "Bureau Manabiya"
+    address: "3 Rue des Pins, Grenoble (5e étage, bâtiment Arc en Ciel 3)"
+  - name: "Wizbii"
+    address: "31 Rue Gustave Eiffel, Grenoble"
+  - name: "SII"
+    address: "31 Rue Gustave Eiffel, Grenoble"
+  - name: "Cowork In Grenoble"
+    address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
+  - name: "St Augustin"
+    address: "10 avenue du Granier, Meylan"
+    aliases: ["Saint Augustin"]
+  - name: "Samse"
+    address: "2 Rue Raymond Pitet, Grenoble"
+  - name: "Prizoners — Bar, Lounge & Restaurant"
+    address: "13 Rue de la Condamine, Gières"
+  - name: "Phelma"
+    address: "3 Parvis Louis Néel, Grenoble"
+  - name: "Moody's à Montbonnot"
+    address: "20 Rue Lavoisier, Montbonnot-Saint-Martin"
+  - name: "MINATEC"
+    address: "3 Parvis Louis Néel, Grenoble"
+  - name: "Maison des Isles"
+    address: "rue de l'Espace Rhône, La Bruyère, Brégnier-Cordon"
+  - name: "Le Jardin"
+    address: "18 rue Thiers, Grenoble"
+  - name: "La Rampe"
+    address: "15 Avenue du 8 Mai 1945, Échirolles"
+  - name: "Kaizen Solutions"
+    address: "26 Av. Jean Kuntzmann, Montbonnot-Saint-Martin"
+  - name: "Gtec"
+    address: "9 Quai Créqui, Grenoble"
+  - name: "GEM (Grenoble École de Management)"
+    address: "12 Rue Pierre Semard, Grenoble"
+  - name: "Criteo"
+    address: "4 Rue des Méridiens, Échirolles"
+  - name: "CIO (Centre d'Information et d'Orientation) Local ALEC - 2ème étage"
+    address: "22 Avenue Benoît Frachon, Saint-Martin-d'Hères"
+    aliases: ["CIO Local ALEC"]
+  - name: "Applied Materials"
+    address: "4 Place Robert Schuman, Grenoble"
+  - name: "Alpexpo — Espace 1968"
+    address: "Avenue d'Innsbruck, Grenoble"
+  - name: "Alpexpo"
+    address: "Avenue d'Innsbruck, Grenoble"
+  - name: "Aledia"
+    address: "Rue des Lavières - ZAC du Saut du moine, Champagnier"
