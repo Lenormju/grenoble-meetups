@@ -610,11 +610,11 @@ footer {
 
 .subscribe-zones {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1.25rem;
 }
 @media (max-width: 640px) {
-  .subscribe-zones { grid-template-columns: 1fr; }
+  .subscribe-zones { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* All 6 zones share identical chrome — same level, no favoritism */
