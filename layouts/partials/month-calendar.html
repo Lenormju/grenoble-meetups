@@ -177,6 +177,9 @@
 </script>
 {{ if $groupSlugs }}
 <script>
+/* Deliberate asymmetry: on desktop the filter highlights (.cell-match) because
+   the whole month stays in view; on mobile it hides (.cell-no-match is
+   display:none in style.css) because space is tight. Not an oversight. */
 (function () {
   var tags = document.querySelectorAll('.group-filters .group-tag');
   tags.forEach(function (btn) {

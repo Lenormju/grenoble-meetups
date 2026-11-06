@@ -130,7 +130,8 @@ linkedinPost: "https://..."   # optional
 - `layouts/index.html` — real homepage at `/`, shows the current month's meetups
 - `layouts/meetups/list.html` — renders `/meetups/` (current month calendar + past months list) and `/meetups/YYYY-MM/` (single month calendar)
 - `layouts/meetups/single.html` — event detail page
-- `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans. The one place that still reads `startTime` directly and prints it raw, rather than going through `event-times.html`
+- `layouts/partials/month-calendar.html` — calendar grid partial; supports `endDate` for multi-day event spans. The one place that still reads `startTime` directly and prints it raw, rather than going through `event-times.html`. Its group filter behaves differently by viewport, on purpose: on desktop it *highlights* matching days (`.cell-match`) because the whole month stays visible and should stay in view; on mobile it *hides* the others (`.cell-no-match` is `display:none`) because space is tight. Don't "fix" one to match the other
+- `layouts/partials/event-title.html` — an event title with its trailing emoji wrapped in `aria-hidden` (decorative, would be read aloud); the content files keep the emoji. Use it wherever an event title is rendered as HTML
 - `layouts/partials/fr-month-name.html` — French month name helper
 - `layouts/partials/seo.html` — meta description, canonical, Open Graph and Twitter tags; called from `baseof.html` for every page
 - `layouts/partials/og-image.html` — builds the social card, returns its absolute URL

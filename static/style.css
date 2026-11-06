@@ -498,6 +498,8 @@ footer {
   /* Hide empty cells (days with no events) on mobile */
   .calendar-cell.empty,
   .calendar-cell.no-events,
+  /* Mobile hides what the filter excludes; desktop only highlights (see the
+     comment in month-calendar.html). */
   .calendar-cell.cell-no-match { display: none; }
   .event-links { display: none; }
 
