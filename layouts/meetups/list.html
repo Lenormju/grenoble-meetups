@@ -18,10 +18,10 @@
   {{ $nextMonth := $firstOfMonth.AddDate 0 1 0 }}
 
   <nav class="month-nav">
-    <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }}{{ if ne $prevMonth.Year $now.Year }} {{ $prevMonth.Year }}{{ end }}</a>
+    {{ if .Site.GetPage (printf "/meetups/%s" ($prevMonth.Format "2006-01")) }}<a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }}{{ if ne $prevMonth.Year $now.Year }} {{ $prevMonth.Year }}{{ end }}</a>{{ else }}<span></span>{{ end }}
     {{ $monthPermalink := printf "/meetups/%s/" ($now.Format "2006-01") | absURL }}
     <h1>{{ partial "fr-month-name.html" $now }} {{ $now.Year }} <a href="{{ $monthPermalink }}" class="permalink-btn" title="Copier le lien" onclick="event.preventDefault();navigator.clipboard.writeText(this.href).then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</a></h1>
-    <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }}{{ if ne $nextMonth.Year $now.Year }} {{ $nextMonth.Year }}{{ end }} →</a>
+    {{ if .Site.GetPage (printf "/meetups/%s" ($nextMonth.Format "2006-01")) }}<a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }}{{ if ne $nextMonth.Year $now.Year }} {{ $nextMonth.Year }}{{ end }} →</a>{{ else }}<span></span>{{ end }}
   </nav>
 
   {{ if not $monthEvents }}
@@ -71,9 +71,9 @@
   {{ $nextMonth := $month.AddDate 0 1 0 }}
 
   <nav class="month-nav">
-    <a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }}{{ if ne $prevMonth.Year $month.Year }} {{ $prevMonth.Year }}{{ end }}</a>
+    {{ if .Site.GetPage (printf "/meetups/%s" ($prevMonth.Format "2006-01")) }}<a href="{{ printf "/meetups/%s/" ($prevMonth.Format "2006-01") | relURL }}">← {{ partial "fr-month-name.html" $prevMonth }}{{ if ne $prevMonth.Year $month.Year }} {{ $prevMonth.Year }}{{ end }}</a>{{ else }}<span></span>{{ end }}
     <h1>{{ partial "fr-month-name.html" $month }} {{ $month.Year }} <a href="{{ .Permalink }}" class="permalink-btn" title="Copier le lien" onclick="event.preventDefault();navigator.clipboard.writeText(this.href).then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},2000)})">🔗</a></h1>
-    <a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }}{{ if ne $nextMonth.Year $month.Year }} {{ $nextMonth.Year }}{{ end }} →</a>
+    {{ if .Site.GetPage (printf "/meetups/%s" ($nextMonth.Format "2006-01")) }}<a href="{{ printf "/meetups/%s/" ($nextMonth.Format "2006-01") | relURL }}">{{ partial "fr-month-name.html" $nextMonth }}{{ if ne $nextMonth.Year $month.Year }} {{ $nextMonth.Year }}{{ end }} →</a>{{ else }}<span></span>{{ end }}
   </nav>
 
   {{ if not .Pages }}

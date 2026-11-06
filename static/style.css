@@ -120,17 +120,17 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 
 /* ─── Month navigation ───────────────────────── */
 .month-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
 }
+.month-nav > :last-child { justify-self: end; }
 .month-nav h1 {
   font-size: 1.4rem;
   margin: 0;
   text-align: center;
-  flex: 1;
 }
 .month-nav a {
   font-size: 0.9rem;
