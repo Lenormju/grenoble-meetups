@@ -19,7 +19,7 @@
 <body>
   {{ partial "banner-afup.html" . }}
   <header>
-    <a href="{{ "/" | relURL }}" class="site-title">{{ .Site.Title }}</a>
+    <a href="{{ "/" | relURL }}" class="site-title" translate="no">{{ .Site.Title }}</a>
     <nav>
       <a href="{{ "/meetups/" | relURL }}">Tous les meetups</a>
       <a href="{{ "/groups/" | relURL }}">Tous les groupes</a>

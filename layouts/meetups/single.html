@@ -89,7 +89,7 @@
   <p class="event-groups">
     {{ range $slug := . }}
       {{ with site.GetPage (printf "/groups/%s" $slug) }}
-        <a href="{{ .RelPermalink }}" class="group-tag">{{ .Title }}</a>
+        <a href="{{ .RelPermalink }}" class="group-tag" translate="no">{{ .Title }}</a>
       {{ end }}
     {{ end }}
   </p>
@@ -108,7 +108,7 @@
 
   {{ with .Params.location }}
   <p class="event-location">
-    <span aria-hidden="true">📍</span> {{ .name }}{{ with .address }} — {{ . }}{{ end }}
+    <span aria-hidden="true">📍</span> <span translate="no">{{ .name }}</span>{{ with .address }} — {{ . }}{{ end }}
   </p>
   {{ end }}
 

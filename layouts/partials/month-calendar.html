@@ -75,7 +75,7 @@
 <div class="group-filters">
   <button class="group-tag active" data-filter="all" aria-pressed="true">Tous</button>
   {{ range $groupItems }}
-    <button class="group-tag" data-filter="{{ .slug }}" aria-pressed="false">{{ .title }}</button>
+    <button class="group-tag" data-filter="{{ .slug }}" aria-pressed="false" translate="no">{{ .title }}</button>
   {{ end }}
 </div>
 {{ end }}
