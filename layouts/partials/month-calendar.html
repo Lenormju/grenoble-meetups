@@ -178,7 +178,7 @@
 {{ if $groupSlugs }}
 <script>
 (function () {
-  var tags = document.querySelectorAll('.group-tag');
+  var tags = document.querySelectorAll('.group-filters .group-tag');
   tags.forEach(function (btn) {
     btn.addEventListener('click', function () {
       var filter = this.classList.contains('active') && this.dataset.filter !== 'all'
@@ -186,7 +186,7 @@
         : this.dataset.filter;
       tags.forEach(function (b) { b.classList.remove('active'); });
       if (filter === 'all') {
-        document.querySelector('.group-tag[data-filter="all"]').classList.add('active');
+        document.querySelector('.group-filters .group-tag[data-filter="all"]').classList.add('active');
       } else {
         this.classList.add('active');
       }
