@@ -24,10 +24,7 @@
 </nav>
 
 {{ if not $monthEvents }}
-  <div class="todo-banner">
-    <span class="todo-label">TODO</span>
-    <span class="todo-sub">Aucun événement annoncé pour ce mois.</span>
-  </div>
+  {{ partial "empty-month.html" . }}
 {{ end }}
 
 {{ partial "month-calendar.html" (dict "events" $monthEvents "month" $now) }}
