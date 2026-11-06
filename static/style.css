@@ -199,7 +199,19 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   margin-bottom: 0.3rem;
 }
 
-.day-name-mobile { display: none; }
+/* Visually hidden on desktop (the column header shows the day) but still read
+   by screen readers, which skip the aria-hidden header: "mercredi 4". */
+.day-name-mobile {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* ─── Events in a cell ───────────────────────── */
 .day-events {
@@ -488,7 +500,15 @@ footer {
     color: var(--text-dim);
     margin-bottom: 0.2rem;
   }
-  .day-name-mobile { display: inline; }
+  .day-name-mobile {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
   .event-item a { font-size: 0.9rem; }
   .event-time { font-size: 0.75rem; }
 }
