@@ -59,7 +59,7 @@ a:hover { color: var(--text-muted); }
   border-left-width: 4px;
   border-radius: 4px;
   color: var(--banner-text);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   line-height: 1.4;
   text-decoration: none;
 }
@@ -80,7 +80,7 @@ a:hover { color: var(--text-muted); }
   .support-banner {
     flex-wrap: wrap;
     gap: 0.35rem 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
   }
   .support-banner-text { flex: 1 1 calc(100% - 2rem); }
   .support-banner-cta { flex-basis: 100%; }
@@ -143,7 +143,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 @media (max-width: 600px) {
   .month-nav { grid-template-columns: minmax(auto, 1fr) minmax(0, auto) minmax(auto, 1fr); gap: 0.5rem; }
   .month-nav h1 { font-size: 1.2rem; }
-  .month-nav a { font-size: 0.85rem; }
+  .month-nav a { font-size: 0.875rem; }
 }
 
 /* ─── Calendar day headers ───────────────────── */
@@ -155,7 +155,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .calendar-day-headers span {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -193,7 +193,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 /* ─── Day number ─────────────────────────────── */
 .day-number {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--text-dim);
   margin-bottom: 0.3rem;
@@ -247,7 +247,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .event-time {
   display: inline-block;
-  font-size: 0.65rem;
+  font-size: 0.875rem;
   color: var(--text);
   background: var(--bg-muted);
   padding: 0 0.25rem;
@@ -256,19 +256,19 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   font-variant-numeric: tabular-nums;
 }
 .event-item a {
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   text-decoration: underline;
   word-break: break-word;
 }
 
 /* ─── Counts and dates in lists ──────────────── */
 .event-count {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--text-dim);
   font-weight: normal;
 }
 .event-day {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
   min-width: 1.2rem;
@@ -290,7 +290,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.15rem 0.4rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: var(--text-faint);
   cursor: pointer;
   font-family: inherit;
@@ -308,7 +308,7 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 /* ─── Single event page ──────────────────────── */
 .back-link {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
   text-decoration: none;
 }
@@ -432,7 +432,7 @@ footer {
   margin-top: 3rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-sub);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--text-faint);
 }
 
@@ -459,7 +459,7 @@ footer {
     margin: 0.25rem 0;
   }
   .day-number {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     color: var(--text-dim);
     margin-bottom: 0.2rem;
   }
@@ -473,7 +473,7 @@ footer {
     white-space: normal;
   }
   .event-item a { font-size: 0.9rem; }
-  .event-time { font-size: 0.75rem; }
+  .event-time { font-size: 0.875rem; }
 }
 
 .week-label, .week-no-events, .week-filtered { display: none; }
@@ -482,7 +482,7 @@ footer {
     display: block;
     background: var(--bg-muted);
     padding: 0.35rem 0.75rem;
-    font-size: 0.7rem;
+    font-size: 0.875rem;
     font-weight: 700;
     color: var(--text-muted);
     letter-spacing: 0.07em;
@@ -493,7 +493,7 @@ footer {
   .week-no-events,
   .week-filtered {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     font-style: italic;
     color: var(--text-dim);
     padding: 0.3rem 0.75rem 0.5rem;
@@ -513,7 +513,7 @@ footer {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.2rem 0.65rem;
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   cursor: pointer;
   color: var(--text-muted);
   font-family: inherit;
@@ -667,7 +667,7 @@ footer {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   overflow-x: auto;
   white-space: nowrap;
   flex: 1 1 100%;
