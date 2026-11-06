@@ -106,7 +106,7 @@
       <div class="week-label" aria-hidden="true">Semaine du {{ $day }}</div>
       {{ if $weekHasEvents }}<div class="week-filtered"></div>{{ else }}<div class="week-no-events">Pas d'événement annoncé</div>{{ end }}
     {{ end }}
-    <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
+    <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}" data-date="{{ $date.Format "2006-01-02" }}">
       <span class="day-number"><span class="day-name-mobile">{{ index $frDays (int $date.Weekday) }}</span> {{ $day }}</span>
       {{ if $dayEvents }}
         {{ $labelToTime := dict "midi" "12:00" "après-midi" "14:00" "soir" "19:00" }}
@@ -139,6 +139,19 @@
     {{ end }}
   {{ end }}
 </div>
+<script>
+/* "Today" is only known in the browser (the site is static): mark past days
+   and today. Compared as ISO strings in Paris time so the result does not
+   depend on the visitor's timezone. */
+(function () {
+  var today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
+  document.querySelectorAll('.calendar-cell[data-date]').forEach(function (cell) {
+    var d = cell.dataset.date;
+    if (d < today) cell.classList.add('cell-past');
+    else if (d === today) cell.classList.add('cell-today');
+  });
+})();
+</script>
 {{ if $groupSlugs }}
 <script>
 /* Deliberate asymmetry: on desktop the filter highlights (.cell-match) because

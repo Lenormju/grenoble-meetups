@@ -190,6 +190,13 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   border-color: var(--border);
 }
 
+/* Time markers, set by the script in month-calendar.html. Separate channels
+   from the filter: past days dim only their content (so a filter match keeps
+   its full blue cell), today is an inset ring that stacks on top of a match. */
+.calendar-cell.cell-past .day-number,
+.calendar-cell.cell-past .day-events { opacity: 0.65; }
+.calendar-cell.cell-today { box-shadow: inset 0 0 0 3px #d97706; }
+
 /* ─── Day number ─────────────────────────────── */
 .day-number {
   display: block;
