@@ -20,7 +20,7 @@
     {{ range $future.ByDate }}
     <li>
       <span class="event-day">{{ .Date.Format "02/01/2006" }}</span>
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <a href="{{ .RelPermalink }}">{{ partial "event-title.html" . }}</a>
     </li>
     {{ end }}
   </ul>
@@ -34,7 +34,7 @@
     {{ range $past.ByDate.Reverse }}
     <li>
       <span class="event-day">{{ .Date.Format "02/01/2006" }}</span>
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <a href="{{ .RelPermalink }}">{{ partial "event-title.html" . }}</a>
     </li>
     {{ end }}
   </ul>

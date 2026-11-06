@@ -115,7 +115,7 @@
             {{ $e := .event }}
             <li class="event-item{{ if $e.Params.endDate }} event-multiday{{ end }}"{{ with $e.Params.groups }} data-groups="{{ delimit . " " }}"{{ end }}>
               {{ with $e.Params.startTime }}<span class="event-time">{{ . }}</span>{{ end }}
-              <a href="{{ $e.RelPermalink }}">{{ $e.Title }}</a>
+              <a href="{{ $e.RelPermalink }}">{{ partial "event-title.html" $e }}</a>
               {{ with $e.Params.links }}
                 <ul class="event-links">
                   {{ range . }}

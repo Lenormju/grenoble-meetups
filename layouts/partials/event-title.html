@@ -1,0 +1,14 @@
+{{- /*
+  Event title with its trailing emoji hidden from screen readers.
+  The emoji is decoration ("🎤" read as "microphone"), and stays in the content
+  files: only the rendering changes. Same emoji ranges as og-image.html.
+  Input: a page. Output: safe HTML.
+*/ -}}
+{{- $emoji := `[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{2B00}-\x{2BFF}\x{FE0F}\x{200D}\x{20E3}]` -}}
+{{- $tail := index (findRE (printf `(?:%s[\s]*)+$` $emoji) .Title 1) 0 | default "" -}}
+{{- $text := strings.TrimSuffix $tail .Title -}}
+{{- if $tail -}}
+{{ $text | htmlEscape | safeHTML }}<span aria-hidden="true">{{ $tail | htmlEscape | safeHTML }}</span>
+{{- else -}}
+{{ .Title }}
+{{- end -}}
