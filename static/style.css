@@ -476,7 +476,7 @@ footer {
   .event-time { font-size: 0.75rem; }
 }
 
-.week-label { display: none; }
+.week-label, .week-no-events { display: none; }
 @media (max-width: 640px) {
   .week-label {
     display: block;

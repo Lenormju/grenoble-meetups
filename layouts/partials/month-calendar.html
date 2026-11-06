@@ -98,6 +98,14 @@
     {{ $key := printf "d%d" $day }}
     {{ $dayEvents := $s.Get $key }}
     {{ $date := time (printf "%d-%02d-%02dT12:00:00Z" $year $monthNum $day) }}
+    {{/* Mobile week headers (hidden on desktop by CSS): one before the first day of each Mon–Sun week */}}
+    {{ if or (eq $day 1) (eq (mod (add (sub $day 1) $offset) 7) 0) }}
+      {{ $weekEnd := math.Min $daysInMonth (sub (mul 7 (add (div (add (sub $day 1) $offset) 7) 1)) $offset) }}
+      {{ $weekHasEvents := false }}
+      {{ range seq $day $weekEnd }}{{ if $s.Get (printf "d%d" .) }}{{ $weekHasEvents = true }}{{ end }}{{ end }}
+      <div class="week-label" aria-hidden="true">Semaine du {{ $day }}</div>
+      {{ if not $weekHasEvents }}<div class="week-no-events">Pas d'événement annoncé</div>{{ end }}
+    {{ end }}
     <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
       <span class="day-number"><span class="day-name-mobile">{{ index $frDays (int $date.Weekday) }}</span> {{ $day }}</span>
       {{ if $dayEvents }}
@@ -131,43 +139,6 @@
     {{ end }}
   {{ end }}
 </div>
-<script>
-(function () {
-  if (!window.matchMedia('(max-width: 640px)').matches) return;
-  var offset = {{ $offset }};
-  var currentWeek = -1;
-  var weekHasEvents = false;
-  var weekLabelEl = null;
-  document.querySelectorAll('.calendar-grid .calendar-cell:not(.empty)').forEach(function (cell) {
-    var day = parseInt(cell.id.replace('day-', ''), 10);
-    var week = Math.floor((day - 1 + offset) / 7);
-    if (week !== currentWeek) {
-      if (currentWeek !== -1 && !weekHasEvents && weekLabelEl) {
-        var msg = document.createElement('div');
-        msg.className = 'week-no-events';
-        msg.textContent = 'Pas d\'événement annoncé';
-        weekLabelEl.parentNode.insertBefore(msg, weekLabelEl.nextSibling);
-      }
-      currentWeek = week;
-      weekHasEvents = false;
-      weekLabelEl = document.createElement('div');
-      weekLabelEl.className = 'week-label';
-      weekLabelEl.setAttribute('aria-hidden', 'true');
-      weekLabelEl.textContent = 'Semaine du ' + day;
-      cell.parentNode.insertBefore(weekLabelEl, cell);
-    }
-    if (!cell.classList.contains('no-events')) {
-      weekHasEvents = true;
-    }
-  });
-  if (currentWeek !== -1 && !weekHasEvents && weekLabelEl) {
-    var msg = document.createElement('div');
-    msg.className = 'week-no-events';
-    msg.textContent = 'Pas d\'événement annoncé';
-    weekLabelEl.parentNode.insertBefore(msg, weekLabelEl.nextSibling);
-  }
-})();
-</script>
 {{ if $groupSlugs }}
 <script>
 /* Deliberate asymmetry: on desktop the filter highlights (.cell-match) because
