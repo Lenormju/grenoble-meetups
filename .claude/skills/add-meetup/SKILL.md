@@ -109,6 +109,7 @@ remain a number.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).
+   - If this creates a **new** month section, also create every intermediate month between the latest existing month and the new one, each with its `_index.md`, so the prev/next month links (only rendered when the target month exists) never have gaps.
    - Create one `.md` file per event.
 3. **Fill the description** by working down the "Descriptions" list — resolve the event's link before
    settling for a derived one. Report which ones you sourced and which you derived.
