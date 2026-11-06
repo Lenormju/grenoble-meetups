@@ -108,7 +108,7 @@
 
   {{ with .Params.location }}
   <p class="event-location">
-    📍 {{ .name }}{{ with .address }} — {{ . }}{{ end }}
+    <span aria-hidden="true">📍</span> {{ .name }}{{ with .address }} — {{ . }}{{ end }}
   </p>
   {{ end }}
 
