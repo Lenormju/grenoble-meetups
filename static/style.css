@@ -235,11 +235,6 @@ header nav { display: flex; align-items: center; gap: 1rem; }
   text-decoration: underline;
   word-break: break-word;
 }
-.event-multiday .event-item a::before {
-  content: "⟷ ";
-  font-size: 0.65rem;
-  color: var(--text-faint);
-}
 .event-links {
   list-style: none;
   margin: 0.15rem 0 0 0;
@@ -258,36 +253,11 @@ header nav { display: flex; align-items: center; gap: 1rem; }
 }
 .event-links a:hover { text-decoration: underline; }
 
-/* ─── Archive page ───────────────────────────── */
-.archive-month {
-  margin-bottom: 2rem;
-}
-.archive-month h2 {
-  font-size: 1.1rem;
-  margin: 0 0 0.5rem 0;
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-.archive-month h2 a { text-decoration: none; }
-.archive-month h2 a:hover { text-decoration: underline; }
+/* ─── Counts and dates in lists ──────────────── */
 .event-count {
   font-size: 0.8rem;
   color: var(--text-dim);
   font-weight: normal;
-}
-.archive-event-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.archive-event-list li {
-  padding: 0.25rem 0;
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--border-sub);
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
 }
 .event-day {
   font-size: 0.75rem;
