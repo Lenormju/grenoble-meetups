@@ -104,7 +104,7 @@
       {{ $weekHasEvents := false }}
       {{ range seq $day $weekEnd }}{{ if $s.Get (printf "d%d" .) }}{{ $weekHasEvents = true }}{{ end }}{{ end }}
       <div class="week-label" aria-hidden="true">Semaine du {{ $day }}</div>
-      {{ if not $weekHasEvents }}<div class="week-no-events">Pas d'événement annoncé</div>{{ end }}
+      {{ if $weekHasEvents }}<div class="week-filtered"></div>{{ else }}<div class="week-no-events">Pas d'événement annoncé</div>{{ end }}
     {{ end }}
     <div class="calendar-cell{{ if not $dayEvents }} no-events{{ end }}" id="day-{{ $day }}">
       <span class="day-number"><span class="day-name-mobile">{{ index $frDays (int $date.Weekday) }}</span> {{ $day }}</span>
@@ -180,6 +180,22 @@
           cell.classList.toggle('cell-match', hasMatch);
           cell.classList.toggle('cell-no-match', !hasMatch);
         }
+      });
+      /* Mobile only (the label is display:none on desktop): a week whose events
+         are all hidden by the filter says so, rather than showing a bare header. */
+      document.querySelectorAll('.week-filtered').forEach(function (msg) {
+        var hidden = {};
+        var shown = 0;
+        for (var el = msg.nextElementSibling; el && !el.classList.contains('week-label'); el = el.nextElementSibling) {
+          if (!el.classList.contains('calendar-cell')) continue;
+          el.querySelectorAll('.event-item').forEach(function (item) {
+            var groups = item.dataset.groups ? item.dataset.groups.split(' ') : [];
+            if (filter === 'all' || groups.indexOf(filter) !== -1) { shown++; return; }
+            hidden[item.querySelector('a').getAttribute('href')] = true;
+          });
+        }
+        var n = Object.keys(hidden).length;
+        msg.textContent = shown || !n ? '' : n + (n > 1 ? ' événements masqués' : ' événement masqué') + ' par le filtre';
       });
     });
   });
