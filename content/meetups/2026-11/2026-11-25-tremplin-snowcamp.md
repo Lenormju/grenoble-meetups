@@ -5,6 +5,7 @@ startDate: "2026-11-25"
 startTime: "18:00"
 endTime: "22:00"
 groups: ["snowcamp", "crafts-records"]
+aliases: ["/meetups/2026-11/2026-11-26-tremplin-snowcamp/"]
 location:
   name: "Bull"
   address: "3 Rue de Provence, Échirolles"

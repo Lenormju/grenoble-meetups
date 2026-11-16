@@ -4,6 +4,7 @@ description: "Rendez vos MOTD stylés et faites le plus beau des zines grâce à
 startDate: "2026-10-22"
 startTime: "18:00"
 groups: ["hackerspace"]
+aliases: ["/meetups/2026-10/2026-10-20-atelier-ascii-art/"]
 location:
   name: "Grenoble Hackerspace"
   address: "17 rue du Pré Ruffier, Saint-Martin-d'Hères"

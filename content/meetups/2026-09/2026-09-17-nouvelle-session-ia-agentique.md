@@ -4,6 +4,7 @@ description: "Session pratique pour connecter Claude à ses outils du quotidien 
 startDate: "2026-09-17"
 startTime: "18:00"
 groups: ["aixperience"]
+aliases: ["/meetups/2026-08/2026-08-27-nouvelle-session-ia-agentique/"]
 location:
   name: "Le Minimistan"
   address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
