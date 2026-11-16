@@ -33,6 +33,7 @@ location:       # optional — omit if unknown
 links:                 # a venue or map link goes here, not under `location` — see below
   - url: "https://..."   # optional — omit if no URL provided
     label: "S'inscrire"  # always set one — see "Link labels" below
+aliases: ["/meetups/YYYY-MM/old-file-name/"]  # only when an existing event is renamed/moved — see "Moving or renaming an event"
 price: "payant"  # optional — omit if free (the default); "payant" for a ticketed event whose tarif we don't track, or a number for a known price in EUR
 ---
 ```
@@ -116,6 +117,31 @@ remain a number.
 4. **Suggest missing optional fields.** After creating each event file, if any optional field was omitted, ask the user if they want to provide it — lead with the start time, since it's the field most worth chasing down (see "What to infer" below). If the event has an `endDate`, chase the end time just as hard — without it the span shows all-day and `startTime` drops out of the feed. Example: *"Tu peux aussi me donner : l'heure de début (format HH:MM comme "19:00", ou midi/après-midi/soir — important, sinon l'évènement apparaît toute la journée dans le calendrier), l'heure de fin si tu la connais (surtout si l'événement dure plusieurs jours), le lieu (nom, adresse, lien maps), et/ou un lien."*
 5. **Hugo hides future-dated content by default.** After generating, remind the user to build with `hugo --buildFuture` or set `buildFuture = true` in `hugo.toml` to see upcoming events locally.
 6. List every file created so the user can verify before committing.
+
+## Moving or renaming an event
+
+The file name *is* the URL: `2026-10-20-atelier-ascii-art.md` is published at
+`/meetups/2026-10/2026-10-20-atelier-ascii-art/`. When an event is rescheduled, the date prefix (and
+sometimes the month directory) changes, so the file is renamed and the old URL starts returning 404.
+Google has usually already crawled it and reports it in Search Console as "Not found (404)"; three
+events produced exactly that before this rule existed.
+
+**Whenever you `git mv` an event file (date change, slug change, month change), add the old URL as an
+alias in the renamed file's front matter**, right after `groups:`:
+
+```yaml
+groups: ["hackerspace"]
+aliases: ["/meetups/2026-10/2026-10-20-atelier-ascii-art/"]
+```
+
+- Format: absolute path from the site root, with a leading and trailing slash, quoted:
+  `/meetups/<old-month>/<old-file-name-without-.md>/`.
+- Hugo then generates a redirect page at the old URL pointing to the new one. Redirected pages are not
+  added to the sitemap, so nothing else to do.
+- If the event has already been renamed once, keep the earlier aliases and add the new one to the list.
+- Changing only the title or description (file name untouched) needs no alias.
+- Deleting an event outright (cancelled for good, not `cancelled: true`) has no target to redirect to;
+  a 404 is then the correct answer.
 
 ## Link labels
 
