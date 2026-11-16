@@ -4,7 +4,7 @@ description: "La billetterie de Snowcamp ouvre le 17 novembre 2026 à 11 h : les
 startDate: "2026-11-17"
 startTime: "11:00"
 groups: ["snowcamp"]
-price: 80
+price: 121
 links:
   - url: "https://snowcamp.io/tickets/"
     label: "Billetterie"
