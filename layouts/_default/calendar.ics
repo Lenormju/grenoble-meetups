@@ -35,7 +35,7 @@ DTEND:{{ ($t.end.UTC).Format "20060102T150405Z" }}
 {{- end }}
 SUMMARY:{{ template "ics-escape" .Title }}
 {{- with .Params.location }}
-LOCATION:{{ if .address }}{{ template "ics-escape" (printf "%s, %s" .name .address) }}{{ else }}{{ template "ics-escape" .name }}{{ end }}
+LOCATION:{{ $name := .name }}{{ $loc := $name }}{{ with .address }}{{ $loc = printf "%s, %s" $name . }}{{ end }}{{ with .details }}{{ $loc = printf "%s (%s)" $loc . }}{{ end }}{{ template "ics-escape" $loc }}
 {{- end }}
 {{- with .Params.description }}
 DESCRIPTION:{{ template "ics-escape" . }}

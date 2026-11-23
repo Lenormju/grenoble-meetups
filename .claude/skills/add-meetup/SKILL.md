@@ -28,8 +28,9 @@ endDate: "YYYY-MM-DD"  # optional — only for multi-day events (conferences, fe
 endTime: "20:00"  # optional — time on endDate (else startDate); same grammar as startTime, HH:MM/midi/après-midi/soir
 groups: ["slug"]  # required — organizer group slug(s), e.g. ["humantalks"] or ["securimag", "hackerspace"]
 location:       # optional — omit if unknown
-  name: "La Casemate"
-  address: "1 Place Saint-Laurent, Grenoble"  # optional
+  name: "Le Minimistan / Cowork in Grenoble"
+  address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"  # optional
+  details: "Salle Jumanji, à l'étage"  # optional — how to find the room; copy it from venues.yaml when the venue has one
 links:                 # a venue or map link goes here, not under `location` — see below
   - url: "https://..."   # optional — omit if no URL provided
     label: "S'inscrire"  # always set one — see "Link labels" below
@@ -100,13 +101,13 @@ remain a number.
    uv run --with pyyaml .claude/skills/add-meetup/venue_lookup.py "<name or address as given>"
    ```
    It matches case/accent/punctuation-insensitively, ignores articles, street types and postcodes, and prints every candidate tagged `exact-name`, `name` (partial) or `address`. Act on the result:
-   - **One candidate** (or one `exact-name` and the user named no room): copy its `name`/`address` verbatim into `location:` — never the user's spelling, never an address from a past event. Do not ask.
+   - **One candidate** (or one `exact-name` and the user named no room): copy its `name`/`address` (and `details`, if it has one) verbatim into `location:` — never the user's spelling, never an address from a past event. Do not ask.
    - **Several candidates:** show them and let the user choose (`AskUserQuestion`), with "new venue" as an option. This is the normal outcome for a street shared by two venues (`31 Rue Gustave Eiffel` → SII or Wizbii; `Cour Marcel Reymond` → Minimistan or Cowork In Grenoble) and for room-level variants (`Ensimag` vs `Ensimag — bâtiment H`, `Alpexpo` vs `Alpexpo — Espace 1968`). Different names are different venues even at one address; never merge them.
    - **No match:** it is a new venue. Use name and address as given (ask if the address is missing), put the address in the canonical form below, then **append an entry to `venues.yaml`** and tell the user.
    - **Canonical form of `address`: `<street>, <City>`** — no postcode (Grenoble has 38000 and 38100, and the same street appears with both), city always last, even for Grenoble. There is no `city` field: the JSON-LD hard-codes the country (FR) and takes the whole line as `streetAddress`.
    - **`aliases`** in `venues.yaml` exist only for names the lookup cannot reach by itself ("Saint Augustin" for "St Augustin"). Don't list case, accent, article or shortened-name variants.
    - The list is the authority: if an existing event disagrees with it on a venue, mention the mismatch to the user.
-   - `location` has no `url` field: nothing renders it (`single.html` prints only `name` and `address`, and the JSON-LD `Place` uses only `name`/`address`), so a venue or map link belongs in `links` — `label: "Plus d'infos"` is what the Turbine event pages use.
+   - `location` has no `url` field: nothing renders it (`single.html` prints only `name`, `address` and `details`, and the JSON-LD `Place` uses only `name`/`address`), so a venue or map link belongs in `links` — `label: "Plus d'infos"` is what the Turbine event pages use.
 2. **Group events by month.** For each month:
    - Create `content/meetups/YYYY-MM/` directory if it does not exist.
    - Create `_index.md` if it does not exist (no `linkedinPost` until provided).

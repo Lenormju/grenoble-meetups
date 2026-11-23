@@ -82,6 +82,8 @@ def main(query):
         print(f'  name: "{v["name"]}"')
         if v.get("address"):
             print(f'  address: "{v["address"]}"')
+        if v.get("details"):
+            print(f'  details: "{v["details"]}"')
     return 0
 
 

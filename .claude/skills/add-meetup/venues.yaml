@@ -6,6 +6,10 @@
 # Canonical form of `address`: "<street>, <City>" — street first, city always last, no
 # postcode (Grenoble has both 38000 and 38100 and the same street shows up with each).
 # There is no separate `city` field: the full line goes to the JSON-LD as `streetAddress`.
+# `details` (optional) is how to find the room once on site; it is copied verbatim into
+# `location.details`, shown on the event page and in the iCal LOCATION, not in the JSON-LD.
+# A venue whose rooms are hard to find gets its own entry per room (Le Minimistan, whose main
+# area is easy to find, vs "Le Minimistan / Cowork in Grenoble", upstairs).
 # `aliases` are for names the lookup cannot reach on its own. Case, accents, punctuation,
 # a leading "Le/La" and a shortened name ("Casemate" for "La Casemate") are already handled
 # by the lookup, so don't list them.
@@ -19,6 +23,9 @@ venues:
     address: "5 Esplanade Andry Farcy, Grenoble"
   - name: "Le Minimistan"
     address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
+  - name: "Le Minimistan / Cowork in Grenoble"
+    address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
+    details: "Salle Jumanji, à l'étage"
   - name: "Grenoble Hackerspace"
     address: "17 rue du Pré Ruffier, Saint-Martin-d'Hères"
   - name: "UFR IM²AG — bâtiment F, amphi F018"

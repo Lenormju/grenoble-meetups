@@ -39,6 +39,7 @@ endTime: "20:00"       # optional — time on endDate if set, else on startDate;
 location:            # optional
   name: "La Casemate"
   address: "1 Place Saint-Laurent, Grenoble"  # optional — one line, city last; feeds the JSON-LD streetAddress
+  details: "Salle Jumanji, à l'étage"  # optional — how to find the room on site; see "Venue details" below
 links:
   - url: "https://..."
     label: "Custom label"  # optional, defaults to "S'inscrire"
@@ -54,6 +55,12 @@ The offer's `url` is the first entry of `links`, falling back to the event's own
 The offer's `validFrom` needs no front matter: it comes from the **first** commit touching the file (`enableGitInfo`, via `.GitInfo.Ancestors.Reverse`), clamped so it is never later than the event date. Files not yet committed fall back to the event date.
 
 It must be the *first* commit, not `.GitInfo`'s own (which is the **latest**). The first commit is the real publication date and it is immutable — no later edit can rewrite it. Using the latest meant the value drifted on every subsequent edit: 32 of 114 pages had already silently moved off their publication date that way, and a single repo-wide reformat reset 36 more at once. Deriving published data from git history is only safe if you reach for the end of it that doesn't move.
+
+### Venue details
+
+`location.details` is free text for attendees who must find the room once on site (`Salle Jumanji, à l'étage`). It is printed on a second line under the venue on the event page and appended in parentheses to the iCal `LOCATION`. It is deliberately **not** in the `Event` JSON-LD: `Place.name` and `streetAddress` stay clean, and Google has no use for the room.
+
+It belongs to the *venue entry*, not to the event: `.claude/skills/add-meetup/venues.yaml` holds one entry per place that needs it, and the skill copies `name`/`address`/`details` verbatim. Le Minimistan has two — `Le Minimistan` (the main area, easy to find) and `Le Minimistan / Cowork in Grenoble` (rooms upstairs, with `details`). Different names are different venues even at one address.
 
 ### Field naming and ordering
 
