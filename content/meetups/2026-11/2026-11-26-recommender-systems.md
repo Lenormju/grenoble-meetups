@@ -3,10 +3,12 @@ title: "From IDs to LLMs: What Actually Helps Modern Recommender Systems — Les
 description: "Artem Betlei (Criteo AI Lab) explique ce qui aide vraiment les systèmes de recommandation modernes : encodeurs de contenu, Semantic IDs, modèles qui raisonnent et proxys d'A/B test hors ligne."
 startDate: "2026-11-26"
 startTime: "19:00"
+endTime: "20:00"
 groups: ["grenoble-data-science"]
 location:
-  name: "Cowork In Grenoble"
+  name: "Le Minimistan / Cowork in Grenoble"
   address: "Cour Marcel Reymond, Rue des Minimes, Grenoble"
+  details: "Salle Jumanji, à l'étage"
 links:
   - url: "https://sites.google.com/view/grenobledatascience/#h.6er7hu3w0knd"
   - url: "https://www.linkedin.com/feed/update/urn:li:activity:7527302598933114880/"
