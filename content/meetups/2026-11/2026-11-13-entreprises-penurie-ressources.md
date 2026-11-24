@@ -5,7 +5,7 @@ description: "Jeu Memory pour aborder concrètement les pratiques régénérativ
 startDate: "2026-11-13"
 startTime: "18:00"
 endTime: "20:00"
-groups: ["cara"]
+groups: ["cara", "genact"]
 price: 20
 location:
   name: "CIO (Centre d'Information et d'Orientation) Local ALEC - 2ème étage"
