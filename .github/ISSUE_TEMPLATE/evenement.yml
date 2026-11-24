@@ -1,0 +1,42 @@
+name: Évènement à ajouter ou corriger
+description: Un évènement manque, ou une information est incorrecte (date, lieu, annulation…)
+title: "[Évènement] "
+labels: ["contenu"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: De quoi s'agit-il ?
+      options:
+        - Ajouter un évènement
+        - Corriger un évènement existant
+        - Signaler une annulation
+    validations:
+      required: true
+  - type: input
+    id: nom
+    attributes:
+      label: Nom de l'évènement
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date et heure
+      description: Par exemple « 12 décembre 2026, 19h ».
+    validations:
+      required: true
+  - type: input
+    id: lieu
+    attributes:
+      label: Lieu
+      description: Nom et adresse, et la salle si elle est utile pour s'y retrouver.
+  - type: input
+    id: lien
+    attributes:
+      label: Lien d'inscription ou page de l'évènement
+  - type: textarea
+    id: details
+    attributes:
+      label: Autres précisions
+      description: Organisateur, ce qui est incorrect, etc.

@@ -37,6 +37,10 @@ buildFuture = true
   home = ['HTML', 'RSS', 'CALENDAR']
 
 [params]
+  # Dépôt public : alimente le lien d'édition et le formulaire de ticket du pied de page.
+  repo = "https://github.com/Lenormju/grenoble-meetups"
+  # Alias de redirection côté OVH, pas une vraie boîte aux lettres.
+  contactEmail = "contact@grenoble-meetups.fr"
   description = "Retrouvez tous les meetups tech de Grenoble : développement, IA, jeux vidéo, sécurité, python, data, product, et plus encore."
   # Accroche des cards sociales (voir layouts/partials/og-image.html). Distincte
   # de `description` : une seule ligne doit tenir sur l'image, là où la méta
