@@ -24,6 +24,7 @@ Au programme :
 - *Retour d'expérience sur Coder : comment développer depuis son smartphone en 2026 ?* — Nicolas DRUFIN
 - *De l'artisanat de confection au développement logiciel : récit d'une reconvertie* — Géraldine ROUY
 - *Snapshot testing : des assertions lisibles et maintenables sans effort !* — Brice DECAESTECKER
-- Deux autres talks, annoncés très bientôt
+- *« Cette réunion aurait pu être un e-mail » : cas d'usage d'une entreprise full-remote et asynchrone* — Louve LESCARRET
+- *Zero Trust : chronique d'un périmètre qui prend l'eau* — Hicham BENALI
 
 La soirée se termine par un moment convivial.
